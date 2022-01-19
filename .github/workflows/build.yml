@@ -14,7 +14,7 @@ jobs:
 
     runs-on: [ self-hosted ]
     container:
-      image: art.sec.samsung.net/new-life-experience_docker/java-builder/base:1.0.0
+      image: art.sec.samsung.net/new-life-experience_docker/android:31-system
 
     steps:
       - uses: actions/checkout@v2
