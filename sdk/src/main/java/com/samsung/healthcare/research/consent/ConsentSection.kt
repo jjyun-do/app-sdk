@@ -8,20 +8,20 @@ open class ConsentSection(
 ) {
 
     enum class Type(val title: String) {
-        OVERVIEW("Overview"),
+        Overview("Overview"),
 
-        DATA_GATHERING("Data Gathering"),
+        DataGathering("Data Gathering"),
 
-        PRIVACY("Privacy"),
+        Privacy("Privacy"),
 
-        DATA_USE("Data Use"),
+        DataUse("Data Use"),
 
-        TIME_COMMITMENT("Time Commitment"),
+        TimeCommitment("Time Commitment"),
 
-        STUDY_TASKS("Study Tasks"),
+        StudyTasks("Study Tasks"),
 
-        STUDY_SURVEY("Study Survey"),
+        StudySurvey("Study Survey"),
 
-        WITHDRAWING("Withdrawing"),
+        Withdrawing("Withdrawing"),
     }
 }

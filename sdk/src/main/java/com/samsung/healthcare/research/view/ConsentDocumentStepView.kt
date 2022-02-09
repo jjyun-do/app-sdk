@@ -140,12 +140,12 @@ private fun ConsentSectionSummaryView(
 
 private fun ConsentSection.getImageResourceId(): Int =
     when (this.type) {
-        ConsentSection.Type.OVERVIEW -> R.drawable.ic_consent_section_overview
-        ConsentSection.Type.DATA_GATHERING -> R.drawable.ic_consent_section_data_gathering
-        ConsentSection.Type.PRIVACY -> R.drawable.ic_consent_section_privacy
-        ConsentSection.Type.DATA_USE -> R.drawable.ic_consent_section_data_use
-        ConsentSection.Type.TIME_COMMITMENT -> R.drawable.ic_consent_section_time_commitment
-        ConsentSection.Type.STUDY_TASKS -> R.drawable.ic_consent_section_study_tasks
-        ConsentSection.Type.STUDY_SURVEY -> R.drawable.ic_consent_section_study_survey
-        ConsentSection.Type.WITHDRAWING -> R.drawable.ic_consent_section_withdrawing
+        ConsentSection.Type.Overview -> R.drawable.ic_consent_section_overview
+        ConsentSection.Type.DataGathering -> R.drawable.ic_consent_section_data_gathering
+        ConsentSection.Type.Privacy -> R.drawable.ic_consent_section_privacy
+        ConsentSection.Type.DataUse -> R.drawable.ic_consent_section_data_use
+        ConsentSection.Type.TimeCommitment -> R.drawable.ic_consent_section_time_commitment
+        ConsentSection.Type.StudyTasks -> R.drawable.ic_consent_section_study_tasks
+        ConsentSection.Type.StudySurvey -> R.drawable.ic_consent_section_study_survey
+        ConsentSection.Type.Withdrawing -> R.drawable.ic_consent_section_withdrawing
     }
