@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HealthcareResearchKit</string>
+    <string name="open_source_licence">Open Source Licence</string>
+    <string name="open_source_licence_textfiled_label">Licence</string>
 </resources>
