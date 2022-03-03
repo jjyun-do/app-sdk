@@ -1,9 +1,19 @@
 package com.samsung.healthcare.research.view
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -14,6 +24,33 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.samsung.healthcare.research.view.common.BottomBar
 import com.samsung.healthcare.research.view.common.TopBar
+
+private const val REVIEW_SAMPLE =
+    """Test Consent
+                          
+                            
+Welcome
+                            
+                            
+This survey will ask you three questions and you will also measure your tapping speed by performing a mall activity.
+                            
+                            
+Data Gathering
+                            
+                            
+This survey will ask you three questions and you will also measure your tapping speed by performing a small activity.
+                            
+                            
+Privacy
+                            
+                            
+ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST
+                            
+                            
+ABCDEF
+                            
+                            
+ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST."""
 
 @Composable
 fun ConsentReviewView(
@@ -78,15 +115,7 @@ fun ConsentReviewView(
                     verticalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     Text(
-                        text = "Test Consent\n\n" +
-                                "Welcome\n\n " +
-                                "This survey will ask you three questions and you will also measure your tapping speed by performing a mall activity.\n\n" +
-                                "Data Gathering\n\n" +
-                                "This survey will ask you three questions and you will also measure your tapping speed by performing a small activity.\n\n" +
-                                "Privacy\n\n" +
-                                "ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. \n\n" +
-                                "ABCDEF\n\n" +
-                                "ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. ABCDEF GHI J KLMNOP. QRST YV WXYZ ABCDEFGHIJ KLM OP QRST. \n\n",
+                        text = REVIEW_SAMPLE,
                         style = MaterialTheme.typography.h6,
                         lineHeight = 25.sp
                     )

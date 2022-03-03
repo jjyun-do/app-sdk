@@ -16,10 +16,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TopBar(title: String = "dummy title", color: Color = Color(0x970347F4), onClickBack: (() -> Unit)?, onClickCancel: () -> Unit) {
+fun TopBar(
+    title: String = "dummy title",
+    color: Color = Color(0x970347F4),
+    onClickBack: (() -> Unit)?,
+    onClickCancel: () -> Unit
+) {
     TopAppBar(
         navigationIcon = {
-            if(onClickBack != null) {
+            if (onClickBack != null) {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     modifier = Modifier
@@ -41,10 +46,12 @@ fun TopBar(title: String = "dummy title", color: Color = Color(0x970347F4), onCl
                 style = MaterialTheme.typography.subtitle1
             )
         },
-        title = { Text(
-            text = title,
-            color = color
-        ) },
+        title = {
+            Text(
+                text = title,
+                color = color
+            )
+        },
         backgroundColor = Color.White,
         elevation = 0.dp
     )

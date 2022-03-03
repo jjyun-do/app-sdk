@@ -1,8 +1,11 @@
 package com.samsung.healthcare.research.view.common
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,7 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BottomButton(text: String = "Dummy name", color: Color = Color(0x970347F4), onClick: () -> Unit) {
+fun BottomButton(
+    text: String = "Dummy name",
+    color: Color = Color(0x970347F4),
+    onClick: () -> Unit
+) {
     Button(
         modifier = Modifier
             .wrapContentSize(align = Alignment.BottomCenter)
