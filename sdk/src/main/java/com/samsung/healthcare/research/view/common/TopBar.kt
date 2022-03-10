@@ -8,19 +8,19 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun TopBar(
-    title: String = "dummy title",
+    title: String = "",
     color: Color = Color(0x970347F4),
     onClickBack: (() -> Unit)?,
-    onClickCancel: () -> Unit
+    onClickMoreVert: () -> Unit
 ) {
     TopAppBar(
         navigationIcon = {
@@ -36,14 +36,13 @@ fun TopBar(
             }
         },
         actions = {
-            Text(
-                text = "Cancel",
+            Icon(
+                imageVector = Icons.Default.MoreVert,
                 modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .clickable { onClickCancel.invoke() },
-                color = color,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.subtitle1
+                    .padding(12.dp)
+                    .clickable { onClickMoreVert?.invoke() },
+                contentDescription = "",
+                tint = color,
             )
         },
         title = {
@@ -52,7 +51,7 @@ fun TopBar(
                 color = color
             )
         },
-        backgroundColor = Color.White,
+        backgroundColor = MaterialTheme.colors.background.copy(alpha = 0f),
         elevation = 0.dp
     )
 }
@@ -60,5 +59,5 @@ fun TopBar(
 @Preview(showBackground = true)
 @Composable
 fun ConsentTopBarPreview() {
-    TopBar(onClickBack = {}, onClickCancel = {})
+    TopBar(onClickBack = {}, onClickMoreVert = {})
 }
