@@ -32,7 +32,7 @@ object ConsentDocumentModule {
         ConsentDocumentStep(
             id = "consent-document-step-id",
             consentDocument = consentDocument(context)
-        )
+        ) { }
 
     private fun consentDocument(@ApplicationContext context: Context): ConsentDocument {
         val types = ConsentSection.Type.values()

@@ -4,7 +4,12 @@ class ConsentDocument(
     val title: String,
     private val sections: List<ConsentSection>
 ) {
-    fun getSection(index: Int) = sections[index]
+    fun getSection(index: Int): ConsentSection = sections[index]
 
-    val size = sections.size
+    val size: Int = sections.size
+
+    enum class ConsentResult {
+        Agree,
+        Disagree
+    }
 }

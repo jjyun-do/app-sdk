@@ -74,6 +74,9 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.1"
+
+    testImplementation "io.mockk:mockk:$mockk_version"
+    androidTestImplementation "io.mockk:mockk-android:$mockk_version"
     // android test for Junit5
     androidTestImplementation "androidx.test:runner:1.4.0"
     androidTestImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
