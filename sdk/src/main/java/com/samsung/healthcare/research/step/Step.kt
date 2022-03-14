@@ -1,6 +1,5 @@
 package com.samsung.healthcare.research.step
 
-import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 
 abstract class Step<R>(
@@ -11,7 +10,6 @@ abstract class Step<R>(
 
     abstract fun getResult(): R
 
-    @VisibleForTesting
     internal fun completed() {
         onComplete(getResult())
     }
