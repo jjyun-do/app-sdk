@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,7 +19,7 @@ import com.samsung.healthcare.research.step.QuestionStep
 import com.samsung.healthcare.research.step.SurveyStep
 import com.samsung.healthcare.research.survey.ChoiceQuestion
 import com.samsung.healthcare.research.survey.TextInputQuestion
-import com.samsung.healthcare.research.view.common.RoundButton
+import com.samsung.healthcare.research.view.common.BottomBar
 import com.samsung.healthcare.research.view.common.TopBar
 import com.samsung.healthcare.research.view.survey.SliderChoiceQuestionForm
 
@@ -35,6 +33,11 @@ fun SinglePageSurveyLayout(
     Scaffold(
         // TODO should receive callback function(back, more vert) and apply it.
         topBar = { TopBar(title = title, {}, {}) },
+        bottomBar = {
+            BottomBar(text = "Submit") {
+                onCompleted()
+            }
+        }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,17 +54,6 @@ fun SinglePageSurveyLayout(
                     )
                 )
             }
-
-            RoundButton(
-                text = "Submit",
-                buttonColor = MaterialTheme.colors.primary,
-                modifier = Modifier
-                    .height(44.dp)
-                    .width(212.dp)
-            ) {
-                onCompleted()
-            }
-            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
