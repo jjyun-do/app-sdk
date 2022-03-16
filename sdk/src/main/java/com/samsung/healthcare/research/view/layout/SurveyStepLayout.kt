@@ -9,12 +9,13 @@ fun SurveyStepLayout(
     title: String,
     questionSteps: List<QuestionStep<*>>,
     pageable: Boolean = true,
-    onCompleted: () -> Unit = {}
+    onCompleted: () -> Unit = {},
+    onClickBack: () -> Unit = {}
 ) {
     if (pageable) {
-        MultiPageSurveyLayout(title, questionSteps, onCompleted)
+        MultiPageSurveyLayout(title, questionSteps, onCompleted, onClickBack)
     } else {
-        SinglePageSurveyLayout(title, questionSteps, onCompleted)
+        SinglePageSurveyLayout(title, questionSteps, onCompleted, onClickBack)
     }
 }
 

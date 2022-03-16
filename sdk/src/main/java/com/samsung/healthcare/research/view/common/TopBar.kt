@@ -59,31 +59,27 @@ fun TopBar(
 @Composable
 fun TopBar(
     title: String,
-    onClickBack: (() -> Unit)? = null,
-    onClickMoreVert: (() -> Unit)? = null
+    onClickBack: (() -> Unit),
+    onClickMoreVert: (() -> Unit)
 ) {
     TopAppBar(
-        navigationIcon = onClickBack?.let { onClick ->
-            {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowLeft,
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .clickable { onClick() },
-                    contentDescription = "back button icon",
-                    tint = MaterialTheme.colors.primary,
-                )
-            }
+        navigationIcon = {
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowLeft,
+                modifier = Modifier
+                    .padding(12.dp)
+                    .clickable { onClickBack() },
+                contentDescription = "back button icon",
+                tint = MaterialTheme.colors.primary,
+            )
         },
         actions = {
-            onClickMoreVert?.let { onClick ->
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    modifier = Modifier.clickable { onClick() },
-                    contentDescription = "more",
-                    tint = MaterialTheme.colors.primary,
-                )
-            }
+            Icon(
+                imageVector = Icons.Default.MoreVert,
+                modifier = Modifier.clickable { onClickMoreVert() },
+                contentDescription = "more",
+                tint = MaterialTheme.colors.primary,
+            )
         },
         title = {
             Text(text = title)

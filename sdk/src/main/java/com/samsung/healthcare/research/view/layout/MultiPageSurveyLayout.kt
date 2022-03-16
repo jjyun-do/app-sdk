@@ -30,13 +30,14 @@ import com.samsung.healthcare.research.view.survey.SliderChoiceQuestionForm
 fun MultiPageSurveyLayout(
     title: String,
     questionSteps: List<QuestionStep<*>>,
-    onCompleted: () -> Unit
+    onCompleted: () -> Unit,
+    onClickBack: () -> Unit = {}
 ) {
     var index by remember { mutableStateOf(0) }
 
     Scaffold(
         // TODO should receive callback function(back, more vert) and apply it.
-        topBar = { TopBar(title = title, {}, {}) },
+        topBar = { TopBar(title = title, { onClickBack() }, {}) },
         bottomBar = {
             BottomBar(
                 leftButtonText = "Previous",

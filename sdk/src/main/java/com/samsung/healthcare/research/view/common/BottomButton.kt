@@ -1,10 +1,17 @@
 package com.samsung.healthcare.research.view.common
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,6 +42,34 @@ fun BottomButton(
             text = text,
             color = color,
         )
+    }
+}
+
+@Composable
+fun BottomRoundButton(
+    text: String,
+    onClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+        )
+        RoundButton(
+            text = text,
+            buttonColor = MaterialTheme.colors.primary,
+            modifier = Modifier
+                .height(44.dp)
+                .width(212.dp)
+        ) {
+            onClick()
+        }
     }
 }
 

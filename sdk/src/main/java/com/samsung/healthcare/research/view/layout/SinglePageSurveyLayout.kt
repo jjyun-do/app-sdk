@@ -2,7 +2,7 @@ package com.samsung.healthcare.research.view.layout
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -19,7 +19,7 @@ import com.samsung.healthcare.research.step.QuestionStep
 import com.samsung.healthcare.research.step.SurveyStep
 import com.samsung.healthcare.research.survey.ChoiceQuestion
 import com.samsung.healthcare.research.survey.TextInputQuestion
-import com.samsung.healthcare.research.view.common.BottomBar
+import com.samsung.healthcare.research.view.common.BottomRoundButton
 import com.samsung.healthcare.research.view.common.TopBar
 import com.samsung.healthcare.research.view.survey.SliderChoiceQuestionForm
 
@@ -27,22 +27,24 @@ import com.samsung.healthcare.research.view.survey.SliderChoiceQuestionForm
 fun SinglePageSurveyLayout(
     title: String,
     questionSteps: List<QuestionStep<*>>,
-    onCompleted: () -> Unit
+    onCompleted: () -> Unit = {},
+    onClickBack: () -> Unit = {},
 ) {
     val scrollSate = rememberScrollState()
     Scaffold(
         // TODO should receive callback function(back, more vert) and apply it.
-        topBar = { TopBar(title = title, {}, {}) },
-        bottomBar = {
-            BottomBar(text = "Submit") {
-                onCompleted()
-            }
-        }
+        topBar = {
+            TopBar(
+                title = title,
+                onClickBack = { onClickBack() },
+                onClickMoreVert = {}
+            )
+        },
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .fillMaxWidth(1f)
+                .fillMaxSize()
                 .padding(horizontal = 24.dp)
                 .verticalScroll(scrollSate)
         ) {
@@ -53,6 +55,9 @@ fun SinglePageSurveyLayout(
                         if (index == questionSteps.size - 1) 55.dp else 64.dp
                     )
                 )
+            }
+            BottomRoundButton(text = "Submit") {
+                onCompleted()
             }
         }
     }
