@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 
 abstract class Step<R>(
     val id: String,
-    val onComplete: (R) -> Unit
+    var onComplete: (R) -> Unit,
 ) {
     abstract val composable: @Composable () -> Unit
 

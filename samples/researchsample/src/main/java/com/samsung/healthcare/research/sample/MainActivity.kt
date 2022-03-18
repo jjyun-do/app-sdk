@@ -5,8 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.samsung.healthcare.research.R
 import com.samsung.healthcare.research.step.ConsentDocumentStep
+import com.samsung.healthcare.research.step.QuestionStep
+import com.samsung.healthcare.research.step.Step
+import com.samsung.healthcare.research.step.SurveyStep
+import com.samsung.healthcare.research.survey.ChoiceQuestion
+import com.samsung.healthcare.research.survey.Question
+import com.samsung.healthcare.research.survey.TextInputQuestion
+import com.samsung.healthcare.research.task.OrderedTask
+import com.samsung.healthcare.research.view.layout.SurveyStepLayout
+import com.samsung.healthcare.research.view.survey.SliderChoiceQuestionForm
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -20,10 +31,55 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             Surface {
-                consentDocumentStep.composable()
+                HealthApp()
             }
         }
     }
+}
+
+@Composable
+fun HealthApp() {
+    val surveyStep = makeSurveyStep {}
+    val steps: List<Step<*>> = listOf(surveyStep)
+
+    OrderedTask(
+        id = "id",
+        steps = steps,
+    )
+}
+
+@Composable
+fun makeSurveyStep(onCompleted: (List<Question<*>>) -> Unit): SurveyStep {
+    val surveyStep =
+        SurveyStep("survey", "Survey", onCompleted) { title, questionSteps, onCompleted ->
+            SurveyStepLayout(title, questionSteps, true, onCompleted)
+        }
+
+    val choiceQuestion = ChoiceQuestion(
+        title = "Gender",
+        description = stringResource(id = R.string.lorem_ipsum),
+        candidates = listOf("Male", "Female", "Rather not say")
+    )
+    surveyStep.addQuestionStep(QuestionStep(choiceQuestion))
+
+    val sliderChoiceQuestion = ChoiceQuestion(
+        title = "Slider Choice",
+        description = stringResource(id = R.string.lorem_ipsum),
+        candidates = listOf("One", "Two", "Three", "Four", "Five")
+    )
+    surveyStep.addQuestionStep(
+        QuestionStep(sliderChoiceQuestion) {
+            SliderChoiceQuestionForm(it)
+        }
+    )
+
+    val textInputQuestion = TextInputQuestion(
+        title = "Text Input Question",
+        description = stringResource(id = R.string.lorem_ipsum),
+    )
+    surveyStep.addQuestionStep(QuestionStep(textInputQuestion))
+
+    return surveyStep
 }
 
 @Preview
