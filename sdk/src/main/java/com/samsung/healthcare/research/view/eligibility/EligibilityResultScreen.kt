@@ -6,14 +6,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.samsung.healthcare.research.R
 import com.samsung.healthcare.research.eligibility.EligibilityResultMessage
+import com.samsung.healthcare.research.theme.AppTheme
 import com.samsung.healthcare.research.view.common.BottomRoundButton
 import com.samsung.healthcare.research.view.common.TopBar
 
@@ -39,7 +42,8 @@ fun EligibilityResultScreen(
                 Image(
                     painter = painterResource(drawableId),
                     contentDescription = "Eligibility Image",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth
                 )
             }
             Spacer(modifier = Modifier.height(6.dp))
@@ -48,10 +52,15 @@ fun EligibilityResultScreen(
             ) {
                 Text(
                     resultMessage.subTitle,
-                    fontStyle = MaterialTheme.typography.subtitle1.fontStyle
+                    style = AppTheme.typography.title2,
+                    color = AppTheme.colors.textPrimaryAccent
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(resultMessage.message)
+                Spacer(modifier = Modifier.height(28.dp))
+                Text(
+                    resultMessage.message,
+                    style = AppTheme.typography.body1,
+                    color = AppTheme.colors.textPrimary
+                )
             }
 
             if (isEligibility) {
@@ -60,5 +69,22 @@ fun EligibilityResultScreen(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EligibilityResultScreenPreview() {
+    AppTheme {
+        val successMessage = EligibilityResultMessage(
+            "Great! You’re in!",
+            "Congratulations! You are eligible for the study.",
+            drawableId = R.drawable.sample_image2
+        )
+        EligibilityResultScreen(
+            "Eligibility Result",
+            successMessage,
+            true
+        )
     }
 }

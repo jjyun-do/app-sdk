@@ -179,7 +179,7 @@ fun lightColors(
     isLight: Boolean = true,
     primaryDark: Color = Color(0xFF443F36),
     textPrimary: Color = Color(0xFF130C00),
-    textPrimaryAccent: Color = Color(0xFF443F36),
+    textPrimaryAccent: Color = Color(0xFFFF9E00),
     textSecondary: Color = Color(0xFF443F36),
     textHint: Color = Color(0xFF746B5C),
 ): AppColors = AppColors(
