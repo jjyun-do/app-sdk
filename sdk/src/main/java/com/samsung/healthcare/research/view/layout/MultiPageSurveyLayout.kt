@@ -37,7 +37,11 @@ fun MultiPageSurveyLayout(
 
     Scaffold(
         // TODO should receive callback function(back, more vert) and apply it.
-        topBar = { TopBar(title = title, { onClickBack() }, {}) },
+        topBar = {
+            TopBar(title = title) {
+                onClickBack()
+            }
+        },
         bottomBar = {
             BottomBar(
                 leftButtonText = "Previous",
@@ -90,15 +94,17 @@ fun MultiPageSurveyLayoutPreview() {
         }
 
     val choiceQuestion = ChoiceQuestion(
-        title = "Gender",
-        description = stringResource(id = R.string.lorem_ipsum),
+        "1",
+        query = "Gender",
+        explanation = stringResource(id = R.string.lorem_ipsum),
         candidates = listOf("Male", "Female", "Rather not say")
     )
     surveyStep.addQuestionStep(QuestionStep(choiceQuestion))
 
     val sliderChoiceQuestion = ChoiceQuestion(
-        title = "Slider Choice",
-        description = stringResource(id = R.string.lorem_ipsum),
+        "2",
+        query = "Slider Choice",
+        explanation = stringResource(id = R.string.lorem_ipsum),
         candidates = listOf("One", "Two", "Three", "Four", "Five")
     )
     surveyStep.addQuestionStep(
@@ -108,8 +114,9 @@ fun MultiPageSurveyLayoutPreview() {
     )
 
     val textInputQuestion = TextInputQuestion(
-        title = "Text Input Question",
-        description = stringResource(id = R.string.lorem_ipsum),
+        "3",
+        query = "Text Input Question",
+        explanation = stringResource(id = R.string.lorem_ipsum),
     )
     surveyStep.addQuestionStep(QuestionStep(textInputQuestion))
 

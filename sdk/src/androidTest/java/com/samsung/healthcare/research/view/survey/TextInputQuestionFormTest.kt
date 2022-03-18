@@ -18,8 +18,8 @@ internal class TextInputQuestionFormTest {
     @Test
     fun getResult_should_return_input_value() {
         val textInputQuestion = TextInputQuestion(
-            title = "title",
-            description = "description"
+            query = "title",
+            explanation = "description"
         )
 
         composeTestRule.setContent {

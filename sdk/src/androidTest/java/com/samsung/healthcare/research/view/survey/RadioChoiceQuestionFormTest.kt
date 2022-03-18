@@ -18,8 +18,8 @@ internal class RadioChoiceQuestionFormTest {
     @Test
     fun getResult_should_return_selected_value_when_selection_is_changed() {
         val choiceQuestion = ChoiceQuestion(
-            title = "title",
-            description = "description",
+            query = "title",
+            explanation = "description",
             candidates = listOf("Male", "Female", "Rather not say")
         )
 

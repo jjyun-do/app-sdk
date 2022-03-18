@@ -81,7 +81,7 @@ private fun EligibilityOverviewScreen(
 ) {
     Scaffold(
         topBar = {
-            TopBar(title = eligibility.title, {}, {})
+            TopBar(title = eligibility.title) { }
         },
     ) {
         Column(
@@ -156,11 +156,13 @@ fun EligibilityScreenPreview() {
         eligibilityChecker = EligibilityChecker(
             questions = listOf(
                 ChoiceQuestion(
+                    "1",
                     "Do you have any existing cardiac conditions?",
                     "Examples of cardiac conditions include abnormal heart rhythms, or arrhythmias",
                     listOf("Yes", "No")
                 ),
                 ChoiceQuestion(
+                    "2",
                     "Do you currently own a wearable device?",
                     "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
                     listOf("Yes", "No")

@@ -1,10 +1,11 @@
 package com.samsung.healthcare.research.survey
 
 class ChoiceQuestion<R>(
-    title: String,
-    description: String,
+    id: String,
+    query: String,
+    explanation: String,
     val candidates: List<R>
-) : Question<R>(title, description) {
+) : Question<R>(id, query, explanation) {
     var selection: Int = 0
         set(value) {
             if (value < 0 || candidates.size <= value)

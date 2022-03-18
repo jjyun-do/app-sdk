@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.samsung.healthcare.research.R
 import com.samsung.healthcare.research.survey.ChoiceQuestion
+import com.samsung.healthcare.research.theme.AppTheme
 import kotlin.math.roundToInt
 
 @Composable
@@ -33,7 +33,11 @@ fun <T> SliderGroup(question: ChoiceQuestion<T>, modifier: Modifier) {
     Column(modifier = modifier) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             question.candidates.forEach {
-                Text(text = it.toString())
+                Text(
+                    text = it.toString(),
+                    style = AppTheme.typography.body1,
+                    color = AppTheme.colors.textPrimary,
+                )
             }
         }
         Slider(
@@ -52,11 +56,12 @@ fun <T> SliderGroup(question: ChoiceQuestion<T>, modifier: Modifier) {
 @Composable
 fun SliderChoiceQuestionFormPreview() {
     val choiceQuestion = ChoiceQuestion(
-        title = "Slider Choice",
-        description = stringResource(id = R.string.lorem_ipsum),
+        id = "1",
+        query = "Slider Choice",
+        explanation = stringResource(id = R.string.lorem_ipsum),
         candidates = listOf("One", "Two", "Three", "Four", "Five")
     )
-    MaterialTheme {
+    AppTheme {
         SliderChoiceQuestionForm(choiceQuestion)
     }
 }

@@ -34,5 +34,5 @@ internal class ChoiceQuestionTest {
     }
 
     fun <T> choiceOf(candidates: List<T>): ChoiceQuestion<T> =
-        ChoiceQuestion("title", "description", candidates)
+        ChoiceQuestion("id", "query", "xx", candidates)
 }

@@ -1,9 +1,10 @@
 package com.samsung.healthcare.research.survey
 
 class TextInputQuestion(
-    title: String,
-    description: String,
-) : Question<String>(title, description) {
+    id: String,
+    query: String,
+    explanation: String,
+) : Question<String>(id, query, explanation) {
     var text: String = ""
 
     override fun getResult(): String = text

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -14,31 +13,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.research.R
 import com.samsung.healthcare.research.survey.TextInputQuestion
+import com.samsung.healthcare.research.theme.AppTheme
 
 @Composable
 fun TextInputQuestionForm(question: TextInputQuestion) {
     Column {
-        Text(
-            text = question.title,
-            fontStyle = MaterialTheme.typography.subtitle1.fontStyle,
-            fontWeight = FontWeight.Bold,
-            fontSize = MaterialTheme.typography.subtitle1.fontSize
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        Text(
-            text = question.description,
-            fontStyle = MaterialTheme.typography.body1.fontStyle,
-            fontWeight = FontWeight.Normal,
-            fontSize = MaterialTheme.typography.body1.fontSize
-        )
+        QuestionQueryForm(question)
+
         Spacer(modifier = Modifier.height(29.dp))
         var text by remember { mutableStateOf(question.text) }
         InputTextField(
@@ -60,8 +47,9 @@ private fun InputTextField(text: String, modifier: Modifier, onValueChange: (Str
         modifier = modifier,
         placeholder = { Text("Input text") },
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.White,
-            unfocusedIndicatorColor = Color.Blue
+            textColor = AppTheme.colors.textPrimary,
+            backgroundColor = AppTheme.colors.background,
+            unfocusedIndicatorColor = AppTheme.colors.primary
         ),
         singleLine = true,
         onValueChange = { onValueChange(it) },
@@ -72,10 +60,11 @@ private fun InputTextField(text: String, modifier: Modifier, onValueChange: (Str
 @Composable
 fun TextInputQuestionFormPreview() {
     val question = TextInputQuestion(
-        title = "Text Input Question",
-        description = stringResource(id = R.string.lorem_ipsum),
+        id = "1",
+        query = "Text Input Question",
+        explanation = stringResource(id = R.string.lorem_ipsum),
     )
-    MaterialTheme {
+    AppTheme {
         TextInputQuestionForm(question)
     }
 }

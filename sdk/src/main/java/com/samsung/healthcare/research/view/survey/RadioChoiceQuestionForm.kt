@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.research.R
 import com.samsung.healthcare.research.survey.ChoiceQuestion
+import com.samsung.healthcare.research.theme.AppTheme
 
 @Composable
 fun <T> RadioChoiceQuestionForm(choiceQuestion: ChoiceQuestion<T>) {
@@ -40,11 +40,18 @@ fun <T> RadioGroup(choiceQuestion: ChoiceQuestion<T>, modifier: Modifier) {
                         choiceQuestion.selection = index
                     },
                     enabled = true,
-                    modifier = Modifier.testTag(candidate.toString())
+                    modifier = Modifier.testTag(candidate.toString()),
                 )
-                Text(text = candidate.toString(), modifier = Modifier.padding(start = 8.dp))
+                Text(
+                    text = candidate.toString(),
+                    style = AppTheme.typography.body1,
+                    color = AppTheme.colors.textPrimary,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
             }
-            Spacer(modifier = Modifier.height(24.dp))
+            if (index != choiceQuestion.candidates.size - 1) {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
         }
     }
 }
@@ -53,11 +60,12 @@ fun <T> RadioGroup(choiceQuestion: ChoiceQuestion<T>, modifier: Modifier) {
 @Composable
 fun RadioChoiceQuestionFormPreview() {
     val choiceQuestion = ChoiceQuestion(
-        title = "Gender",
-        description = stringResource(id = R.string.lorem_ipsum),
+        id = "1",
+        query = "Gender",
+        explanation = stringResource(id = R.string.lorem_ipsum),
         candidates = listOf("Male", "Female", "Rather not say")
     )
-    MaterialTheme {
+    AppTheme {
         RadioChoiceQuestionForm(choiceQuestion)
     }
 }

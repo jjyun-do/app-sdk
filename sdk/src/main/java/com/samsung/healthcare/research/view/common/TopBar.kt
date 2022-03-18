@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.samsung.healthcare.research.theme.AppTheme
 
 @Composable
 fun TopBar(
@@ -59,8 +60,7 @@ fun TopBar(
 @Composable
 fun TopBar(
     title: String,
-    onClickBack: (() -> Unit),
-    onClickMoreVert: (() -> Unit)
+    onClickBack: (() -> Unit)
 ) {
     TopAppBar(
         navigationIcon = {
@@ -70,21 +70,17 @@ fun TopBar(
                     .padding(12.dp)
                     .clickable { onClickBack() },
                 contentDescription = "back button icon",
-                tint = MaterialTheme.colors.primary,
-            )
-        },
-        actions = {
-            Icon(
-                imageVector = Icons.Default.MoreVert,
-                modifier = Modifier.clickable { onClickMoreVert() },
-                contentDescription = "more",
-                tint = MaterialTheme.colors.primary,
+                tint = AppTheme.colors.textSecondary,
             )
         },
         title = {
-            Text(text = title)
+            Text(
+                text = title,
+                style = AppTheme.typography.subHeader1,
+                color = AppTheme.colors.textPrimary
+            )
         },
-        backgroundColor = MaterialTheme.colors.background,
+        backgroundColor = AppTheme.colors.background,
         elevation = 0.dp
     )
 }

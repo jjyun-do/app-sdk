@@ -1,8 +1,9 @@
 package com.samsung.healthcare.research.survey
 
 abstract class Question<R>(
-    val title: String,
-    val description: String
+    val id: String,
+    val query: String,
+    val explanation: String
 ) {
 
     abstract fun getResult(): R
