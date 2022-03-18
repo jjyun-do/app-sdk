@@ -34,7 +34,9 @@ fun ConsentTextLayout(
 ) {
     Scaffold(
         topBar = {
-            TopBar(title = title, { onClickBack() }, {})
+            TopBar(title = title) {
+                onClickBack()
+            }
         },
     ) {
         Column(

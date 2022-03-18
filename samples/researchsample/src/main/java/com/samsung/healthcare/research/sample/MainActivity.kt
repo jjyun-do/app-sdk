@@ -49,22 +49,24 @@ fun HealthApp() {
 }
 
 @Composable
-fun makeSurveyStep(onCompleted: (List<Question<*>>) -> Unit): SurveyStep {
+fun makeSurveyStep(onComplete: (List<Question<*>>) -> Unit): SurveyStep {
     val surveyStep =
-        SurveyStep("survey", "Survey", onCompleted) { title, questionSteps, onCompleted ->
+        SurveyStep("survey", "Survey", onComplete) { title, questionSteps, onCompleted ->
             SurveyStepLayout(title, questionSteps, true, onCompleted)
         }
 
     val choiceQuestion = ChoiceQuestion(
-        title = "Gender",
-        description = stringResource(id = R.string.lorem_ipsum),
+        id = "1",
+        query = "Gender",
+        explanation = stringResource(id = R.string.lorem_ipsum),
         candidates = listOf("Male", "Female", "Rather not say")
     )
     surveyStep.addQuestionStep(QuestionStep(choiceQuestion))
 
     val sliderChoiceQuestion = ChoiceQuestion(
-        title = "Slider Choice",
-        description = stringResource(id = R.string.lorem_ipsum),
+        id = "2",
+        query = "Slider Choice",
+        explanation = stringResource(id = R.string.lorem_ipsum),
         candidates = listOf("One", "Two", "Three", "Four", "Five")
     )
     surveyStep.addQuestionStep(
@@ -74,8 +76,9 @@ fun makeSurveyStep(onCompleted: (List<Question<*>>) -> Unit): SurveyStep {
     )
 
     val textInputQuestion = TextInputQuestion(
-        title = "Text Input Question",
-        description = stringResource(id = R.string.lorem_ipsum),
+        id = "3",
+        query = "Text Input Question",
+        explanation = stringResource(id = R.string.lorem_ipsum),
     )
     surveyStep.addQuestionStep(QuestionStep(textInputQuestion))
 
