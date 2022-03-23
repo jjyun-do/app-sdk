@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +26,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.research.R
-import com.samsung.healthcare.research.R.string
 import com.samsung.healthcare.research.eligibility.Eligibility
 import com.samsung.healthcare.research.eligibility.EligibilityChecker
 import com.samsung.healthcare.research.eligibility.EligibilityResult
@@ -83,13 +85,16 @@ private fun EligibilityOverviewScreen(
     eligibility: Eligibility,
     onStart: () -> Unit
 ) {
+    val scrollSate = rememberScrollState()
     Scaffold(
         topBar = {
             TopBar(title = eligibility.title) { }
         },
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(1f)
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollSate)
         ) {
             eligibility.drawableId?.let { drawableId ->
                 Image(
@@ -105,7 +110,7 @@ private fun EligibilityOverviewScreen(
             ) {
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
-                    stringResource(string.lorem_ipsum),
+                    eligibility.description,
                     color = AppTheme.colors.textPrimary
                 )
                 Spacer(modifier = Modifier.height(12.dp))
@@ -162,6 +167,7 @@ private enum class EligibilityState {
 @Composable
 fun EligibilityScreenPreview() {
     val eligibility = Eligibility(
+        description = stringResource(id = R.string.lorem_ipsum),
         sections = listOf(
             EligibilitySection(
                 "Medical eligibility",
