@@ -39,7 +39,7 @@ import com.samsung.healthcare.research.theme.AppTheme
 fun SdkCard(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
-    color: Color = AppTheme.colors.background,
+    color: Color = AppTheme.colors.onBackground,
     contentColor: Color = AppTheme.colors.textPrimaryAccent,
     border: BorderStroke? = null,
     elevation: Dp = 0.dp,
