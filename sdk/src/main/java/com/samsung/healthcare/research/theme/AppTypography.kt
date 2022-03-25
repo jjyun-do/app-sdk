@@ -34,6 +34,12 @@ val OpenSans: FontFamily = FontFamily(
 )
 
 data class AppTypography(
+    var appTitle: TextStyle = TextStyle(
+        fontFamily = Lato,
+        fontWeight = FontWeight.Bold,
+        fontStyle = FontStyle.Italic,
+        fontSize = 40.sp
+    ),
     val title1: TextStyle = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.Medium,
@@ -58,6 +64,13 @@ data class AppTypography(
         fontWeight = FontWeight.W400,
         fontStyle = FontStyle.Normal,
         fontSize = 18.sp
+    ),
+
+    val subHeader2: TextStyle = TextStyle(
+        fontFamily = OpenSans,
+        fontWeight = FontWeight.W500,
+        fontStyle = FontStyle.Italic,
+        fontSize = 20.sp
     ),
 
     val body1: TextStyle = TextStyle(
