@@ -18,7 +18,7 @@ internal class ChoiceQuestionTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 1, 2, 3, 4])
     fun `getResult should return selected value`(selection: Int) {
-        val candidates = listOf("jlego", "jjyun", "cubiest", "yur2", "culater")
+        val candidates = listOf("jlego", "jjyun", "cubist", "yur2", "culater")
         val question = choiceOf(candidates)
         question.selection = selection
         assertEquals(candidates[selection], question.getResult())
