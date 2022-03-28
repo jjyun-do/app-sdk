@@ -96,26 +96,47 @@ private fun EligibilityOverviewScreen(
                 .fillMaxSize()
                 .verticalScroll(scrollSate)
         ) {
-            eligibility.drawableId?.let { drawableId ->
-                Image(
-                    painter = painterResource(drawableId),
-                    contentDescription = "Eligibility Image",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
-                )
+            when (eligibility.viewType) {
+                Eligibility.ViewType.Paragraph -> {
+                    eligibility.drawableId?.let { drawableId ->
+                        Image(
+                            painter = painterResource(drawableId),
+                            contentDescription = "Eligibility Image",
+                            modifier = Modifier.fillMaxWidth(),
+                            contentScale = ContentScale.FillWidth
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier.padding(12.dp)
+                    ) {
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Text(
+                            eligibility.description,
+                            color = AppTheme.colors.textPrimary
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        EligibilitySectionForm(eligibility)
+                    }
+                }
+                Eligibility.ViewType.Card -> {
+                    EligibilityOverviewTab(
+                        modifier = Modifier,
+                        sections = eligibility.sections,
+                    )
+
+                    Column(
+                        modifier = Modifier.padding(12.dp)
+                    ) {
+                        Text(
+                            eligibility.description,
+                            color = AppTheme.colors.textPrimary
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
+                }
             }
 
-            Column(
-                modifier = Modifier.padding(12.dp)
-            ) {
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    eligibility.description,
-                    color = AppTheme.colors.textPrimary
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                EligibilitySectionForm(eligibility)
-            }
             Box(
                 modifier = Modifier
                     .weight(1f)

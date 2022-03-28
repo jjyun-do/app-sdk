@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -40,7 +41,7 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.samsung.healthcare.research.R
-import com.samsung.healthcare.research.model.eligibility.EligibilityOverviewContent
+import com.samsung.healthcare.research.eligibility.EligibilitySection
 import com.samsung.healthcare.research.theme.AppTheme
 import com.samsung.healthcare.research.view.common.SdkCard
 import kotlinx.coroutines.launch
@@ -52,10 +53,11 @@ fun EligibilityOverviewTab(
     modifier: Modifier = Modifier,
     unselectedTabIcon: Int = R.drawable.tab_icon_unselected,
     selectedTabIcon: Int = R.drawable.tab_icon_selected,
-    contents: List<EligibilityOverviewContent>,
+    sections: List<EligibilitySection>,
     contentPadding: PaddingValues = PaddingValues(horizontal = 50.dp),
     startScale: Float = 1f,
     startAlpha: Float = 1f,
+    backgroundColor: Color = AppTheme.colors.background,
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -65,19 +67,21 @@ fun EligibilityOverviewTab(
     ) {
         EligibilityOverviewCards(
             pagerState = pagerState,
-            contents = contents,
+            contents = sections,
             contentPadding = contentPadding,
             startScale = startScale,
             startAlpha = startAlpha,
+            backgroundColor = backgroundColor,
         )
         Row(
             modifier = Modifier
                 .wrapContentSize()
                 .align(Alignment.CenterHorizontally),
         ) {
-            contents.forEachIndexed { index, _ ->
+            sections.forEachIndexed { index, _ ->
                 Surface(
                     modifier = Modifier.width(20.dp),
+                    color = backgroundColor,
                 ) {
                     val selected = pagerState.currentPage == index
                     Tab(
@@ -115,10 +119,11 @@ fun EligibilityOverviewTab(
 fun EligibilityOverviewCards(
     modifier: Modifier = Modifier,
     pagerState: PagerState = rememberPagerState(),
-    contents: List<EligibilityOverviewContent>,
+    contents: List<EligibilitySection>,
     contentPadding: PaddingValues = PaddingValues(horizontal = 50.dp),
     startScale: Float = 1f,
     startAlpha: Float = 1f,
+    backgroundColor: Color = AppTheme.colors.background,
 ) {
     HorizontalPager(
         count = contents.size,
@@ -146,6 +151,7 @@ fun EligibilityOverviewCards(
                 )
             },
             content = contents[page],
+            backgroundColor = backgroundColor,
         )
     }
 }
@@ -155,7 +161,8 @@ fun EligibilityOverviewCard(
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     imageId: Int = R.drawable.card_sample_image,
-    content: EligibilityOverviewContent,
+    content: EligibilitySection,
+    backgroundColor: Color = AppTheme.colors.background,
 ) {
     SdkCard(
         modifier = modifier
@@ -166,6 +173,7 @@ fun EligibilityOverviewCard(
             .padding(bottom = 16.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = 10.dp,
+        color = backgroundColor,
     ) {
         Column(
             modifier = Modifier
@@ -192,7 +200,7 @@ fun EligibilityOverviewCard(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
-                        text = content.title,
+                        text = content.sectionTitle,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.h6,
@@ -200,7 +208,7 @@ fun EligibilityOverviewCard(
                         modifier = Modifier.padding(horizontal = 24.dp)
                     )
                     Spacer(modifier = Modifier.height(4.dp))
-                    content.subTitles.forEachIndexed() { index, subTitle ->
+                    content.constraints.forEachIndexed() { index, subTitle ->
                         if (index < 3) {
                             Text(
                                 text = "• $subTitle",
@@ -232,9 +240,9 @@ private fun lerp(start: Float, stop: Float, fraction: Float): Float =
 @Composable
 fun EligibilityCardPreview() {
     EligibilityOverviewCard(
-        content = EligibilityOverviewContent(
-            title = "Test Title",
-            subTitles = listOf("One", "Two", "Three", "Four", "Five"),
+        content = EligibilitySection(
+            sectionTitle = "Test Title",
+            constraints = listOf("One", "Two", "Three", "Four", "Five"),
         )
     )
 }
@@ -244,25 +252,25 @@ fun EligibilityCardPreview() {
 fun EligibilityCardsPreview() {
     EligibilityOverviewCards(
         contents = listOf(
-            EligibilityOverviewContent(
-                title = "Medical Eligibilities",
-                subTitles = listOf(
+            EligibilitySection(
+                sectionTitle = "Medical Eligibilities",
+                constraints = listOf(
                     "Pre-existing condition(s)",
                     "Prescription(s)",
                     "Living in the United States"
                 ),
             ),
-            EligibilityOverviewContent(
-                title = "Medical Eligibilities",
-                subTitles = listOf(
+            EligibilitySection(
+                sectionTitle = "Medical Eligibilities",
+                constraints = listOf(
                     "Pre-existing condition(s)",
                     "Prescription(s)",
                     "Living in the United States"
                 ),
             ),
-            EligibilityOverviewContent(
-                title = "Medical Eligibilities",
-                subTitles = listOf(
+            EligibilitySection(
+                sectionTitle = "Medical Eligibilities",
+                constraints = listOf(
                     "Pre-existing condition(s)",
                     "Prescription(s)",
                     "Living in the United States"

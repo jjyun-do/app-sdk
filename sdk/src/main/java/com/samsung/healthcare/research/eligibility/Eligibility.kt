@@ -3,6 +3,7 @@ package com.samsung.healthcare.research.eligibility
 import com.samsung.healthcare.research.survey.Question
 
 class Eligibility(
+    val viewType: ViewType = ViewType.Paragraph,
     val title: String = "Eligibility",
     val description: String = "",
     val sections: List<EligibilitySection>,
@@ -16,4 +17,9 @@ class Eligibility(
 
     fun eligibilityResultMessage(): EligibilityResultMessage =
         eligibilityChecker.eligibilityResultMessage()
+
+    enum class ViewType() {
+        Card,
+        Paragraph,
+    }
 }

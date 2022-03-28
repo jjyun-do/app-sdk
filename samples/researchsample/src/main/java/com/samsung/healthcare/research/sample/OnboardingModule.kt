@@ -49,6 +49,7 @@ object OnboardingModule {
         )
 
     private fun eligibility(@ApplicationContext context: Context) = Eligibility(
+        viewType = Eligibility.ViewType.Card,
         description = context.getString(R.string.lorem_ipsum_short),
         sections = eligibilitySections(),
         drawableId = R.drawable.sample_image1,
