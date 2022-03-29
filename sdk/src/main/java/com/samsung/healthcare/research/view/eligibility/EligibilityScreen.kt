@@ -16,7 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -47,7 +47,7 @@ fun EligibilityScreen(
     eligibility: Eligibility,
     onComplete: () -> Unit
 ) {
-    var state by remember { mutableStateOf(Overview) }
+    var state by rememberSaveable { mutableStateOf(Overview) }
 
     when (state) {
         Overview -> {
