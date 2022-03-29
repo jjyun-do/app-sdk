@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.research.theme.AppTheme
@@ -21,7 +22,8 @@ fun TopBar(
     title: String = "",
     color: Color = Color(0x970347F4),
     onClickBack: (() -> Unit)?,
-    onClickMoreVert: () -> Unit
+    onClickAction: () -> Unit,
+    actionIcon: ImageVector = Icons.Default.MoreVert,
 ) {
     TopAppBar(
         navigationIcon = {
@@ -38,10 +40,10 @@ fun TopBar(
         },
         actions = {
             Icon(
-                imageVector = Icons.Default.MoreVert,
+                imageVector = actionIcon,
                 modifier = Modifier
                     .padding(12.dp)
-                    .clickable { onClickMoreVert?.invoke() },
+                    .clickable { onClickAction?.invoke() },
                 contentDescription = "",
                 tint = color,
             )
@@ -88,5 +90,5 @@ fun TopBar(
 @Preview(showBackground = true)
 @Composable
 fun ConsentTopBarPreview() {
-    TopBar(onClickBack = {}, onClickMoreVert = {})
+    TopBar(onClickBack = {}, onClickAction = {})
 }

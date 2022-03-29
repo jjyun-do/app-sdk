@@ -49,7 +49,7 @@ fun LoginView(
                 title = topBarTitle,
                 color = topBarColor,
                 onClickBack = onClickBack,
-                onClickMoreVert = onClickMoreVert,
+                onClickAction = onClickMoreVert,
             )
         },
     ) {

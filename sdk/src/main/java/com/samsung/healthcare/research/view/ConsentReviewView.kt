@@ -67,7 +67,7 @@ fun ConsentReviewView(
             TopBar(
                 title = topBarTitle,
                 onClickBack = onClickBack,
-                onClickMoreVert = onClickCancel
+                onClickAction = onClickCancel
             )
         },
         bottomBar = {

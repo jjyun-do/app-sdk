@@ -37,7 +37,7 @@ fun ConsentWelcomeView(
             TopBar(
                 title = topBarTitle,
                 onClickBack = null,
-                onClickMoreVert = onClickCancel
+                onClickAction = onClickCancel
             )
         }
     ) {

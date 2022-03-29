@@ -1,5 +1,6 @@
 package com.samsung.healthcare.research.view.common
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -9,12 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.samsung.healthcare.research.theme.AppTheme
 
 @Composable
 fun RoundButton(
     text: String = "",
-    buttonColor: Color = Color(0xFFD0D7DF),
-    textColor: Color = Color.Black,
+    buttonColor: Color = AppTheme.colors.primary,
+    textColor: Color = AppTheme.colors.background,
+    border: BorderStroke? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -23,6 +26,7 @@ fun RoundButton(
         shape = RoundedCornerShape(50),
         colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor),
         elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
+        border = border,
         onClick = onClick,
     ) {
         Text(

@@ -43,7 +43,7 @@ fun ConsentDocumentView(
             TopBar(
                 title = topBarTitle,
                 onClickBack = onClickBack,
-                onClickMoreVert = onClickCancel
+                onClickAction = onClickCancel
             )
         }
     ) {
