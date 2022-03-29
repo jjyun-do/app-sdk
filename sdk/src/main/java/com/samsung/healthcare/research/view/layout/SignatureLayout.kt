@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.pm.ActivityInfo
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,12 +33,14 @@ import com.samsung.healthcare.research.theme.AppTheme
 import com.samsung.healthcare.research.view.common.RoundButton
 import com.samsung.healthcare.research.view.common.SdkCard
 import com.samsung.healthcare.research.view.common.TopBar
-import se.warting.signaturepad.BuildConfig
 import se.warting.signaturepad.SignaturePadAdapter
 import se.warting.signaturepad.SignaturePadView
 
 @Composable
-fun SignatureView() {
+fun SignatureLayout(
+    onClickDone: (String) -> Unit = {},
+    onClickCancel: () -> Unit = {},
+) {
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 
     val mutableSvg = remember { mutableStateOf("") }
@@ -50,7 +51,9 @@ fun SignatureView() {
         topBar = {
             TopBar(
                 onClickBack = null,
-                onClickAction = {},
+                onClickAction = {
+                    onClickCancel()
+                },
                 actionIcon = ImageVector.vectorResource(R.drawable.ic_cancel),
             )
         }
@@ -72,24 +75,6 @@ fun SignatureView() {
                         signaturePadAdapter = it
                     },
                     penColor = penColor.value,
-                    onSigned = {
-                        if (BuildConfig.DEBUG) {
-                            Log.d("ComposeActivity", "onSigned")
-                        }
-                    },
-                    onClear = {
-                        if (BuildConfig.DEBUG) {
-                            Log.d(
-                                "ComposeActivity",
-                                "onClear isEmpty:" + signaturePadAdapter?.isEmpty
-                            )
-                        }
-                    },
-                    onStartSigning = {
-                        if (BuildConfig.DEBUG) {
-                            Log.d("ComposeActivity", "onStartSigning")
-                        }
-                    },
                 )
             }
             Row(
@@ -122,7 +107,7 @@ fun SignatureView() {
                     border = BorderStroke(width = 1.dp, color = AppTheme.colors.primary),
                     onClick = {
                         mutableSvg.value = signaturePadAdapter?.getSignatureSvg() ?: ""
-                        Log.d("SignatureView", mutableSvg.value)
+                        onClickDone(mutableSvg.value)
                     }
                 )
             }
@@ -153,5 +138,5 @@ fun Context.findActivity(): Activity? = when (this) {
 @Preview(showBackground = true)
 @Composable
 fun SignatureViewPreview() {
-    SignatureView()
+    SignatureLayout()
 }

@@ -19,10 +19,12 @@ fun RoundButton(
     textColor: Color = AppTheme.colors.background,
     border: BorderStroke? = null,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
         modifier = modifier,
+        enabled = enabled,
         shape = RoundedCornerShape(50),
         colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor),
         elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),

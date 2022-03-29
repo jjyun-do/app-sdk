@@ -1,7 +1,7 @@
 package com.samsung.healthcare.research.step
 
 import androidx.compose.runtime.Composable
-import com.samsung.healthcare.research.view.layout.ConsentTextLayout
+import com.samsung.healthcare.research.view.layout.ConsentTextScreen
 
 class ConsentTextStep(
     id: String,
@@ -12,7 +12,7 @@ class ConsentTextStep(
     onCompleted: (Boolean) -> Unit,
     private val layout: @Composable (String, String, String, List<String>, () -> Unit) -> Unit =
         { title, subTitle, description, checkBoxTexts, callback ->
-            ConsentTextLayout(title, subTitle, description, checkBoxTexts) { callback() }
+            ConsentTextScreen(title, subTitle, description, checkBoxTexts) { callback() }
         }
 ) : Step<Boolean>(id, onCompleted) {
     override val composable: @Composable () -> Unit = {

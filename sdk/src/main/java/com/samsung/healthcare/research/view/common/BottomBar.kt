@@ -73,7 +73,8 @@ fun BottomBar(
 @Composable
 fun BottomBar(
     text: String,
-    onClick: () -> Unit
+    buttonEnabled: Boolean = true,
+    onClick: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -84,9 +85,10 @@ fun BottomBar(
         RoundButton(
             text = text,
             buttonColor = MaterialTheme.colors.primary,
+            enabled = buttonEnabled,
             modifier = Modifier
                 .height(44.dp)
-                .width(212.dp)
+                .width(320.dp)
         ) {
             onClick()
         }

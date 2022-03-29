@@ -23,6 +23,7 @@ class AppColors(
     onError: Color,
     isLight: Boolean,
     // Extension
+    lightBackground: Color,
     primaryDark: Color,
     textPrimary: Color,
     textPrimaryAccent: Color,
@@ -68,6 +69,9 @@ class AppColors(
     var isLight by mutableStateOf(isLight)
         private set
 
+    var lightBackground by mutableStateOf(lightBackground)
+        private set
+
     var primaryDark by mutableStateOf(primaryDark)
         private set
 
@@ -97,6 +101,7 @@ class AppColors(
         onSurface: Color = this.onSurface,
         onError: Color = this.onError,
         isLight: Boolean = this.isLight,
+        lightBackground: Color = this.lightBackground,
         primaryDark: Color = this.primaryDark,
         textPrimary: Color = this.textPrimary,
         textPrimaryAccent: Color = this.textPrimaryAccent,
@@ -116,6 +121,7 @@ class AppColors(
         onSurface,
         onError,
         isLight,
+        lightBackground,
         primaryDark,
         textPrimary,
         textPrimaryAccent,
@@ -137,6 +143,7 @@ class AppColors(
         onSurface = other.onSurface
         onError = other.onError
         isLight = other.isLight
+        lightBackground = other.lightBackground
         primaryDark = other.primaryDark
         textPrimary = other.textPrimary
         textPrimaryAccent = other.textPrimaryAccent
@@ -177,6 +184,7 @@ fun lightColors(
     onSurface: Color = Color(0xFFFF9E00),
     onError: Color = Color(0xFFFF9E00),
     isLight: Boolean = true,
+    lightBackground: Color = Color(0xFFFFFFFF),
     primaryDark: Color = Color(0xFF443F36),
     textPrimary: Color = Color(0xFF130C00),
     textPrimaryAccent: Color = Color(0xFFFF9E00),
@@ -196,6 +204,7 @@ fun lightColors(
     onSurface = onSurface,
     onError = onError,
     isLight = isLight,
+    lightBackground = lightBackground,
     primaryDark = primaryDark,
     textPrimary = textPrimary,
     textSecondary = textSecondary,
@@ -218,6 +227,7 @@ fun darkColors(
     onSurface: Color = Color(0xFFFF9E00),
     onError: Color = Color(0xFFFF9E00),
     isLight: Boolean = true,
+    lightBackground: Color = Color(0xFF5A5A5A),
     primaryDark: Color = Color(0xFFFF9E00),
     textPrimary: Color = Color(0xFFFFFFFF),
     textPrimaryAccent: Color = Color(0xFFFF9E00),
@@ -237,6 +247,7 @@ fun darkColors(
     onSurface = onSurface,
     onError = onError,
     isLight = isLight,
+    lightBackground = lightBackground,
     primaryDark = primaryDark,
     textPrimary = textPrimary,
     textSecondary = textSecondary,
