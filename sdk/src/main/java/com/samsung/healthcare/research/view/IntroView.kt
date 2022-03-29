@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.research.intro.Intro
 import com.samsung.healthcare.research.theme.AppTheme
-import com.samsung.healthcare.research.view.common.BottomRoundButton
+import com.samsung.healthcare.research.view.common.BottomBar
 
 @Composable
 fun IntroView(
@@ -39,15 +39,16 @@ fun IntroView(
     val scrollState = rememberScrollState()
     Scaffold(
         bottomBar = {
-            BottomRoundButton(
+            BottomBar(
                 text = "Get Started",
             ) { onComplete() }
         }
-    ) {
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState),
+                .verticalScroll(scrollState)
+                .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Surface(
