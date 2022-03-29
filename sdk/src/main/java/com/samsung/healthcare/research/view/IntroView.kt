@@ -22,30 +22,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.samsung.healthcare.research.R
+import com.samsung.healthcare.research.intro.Intro
 import com.samsung.healthcare.research.theme.AppTheme
 import com.samsung.healthcare.research.view.common.BottomRoundButton
 
 @Composable
 fun IntroView(
-    title: String = "SleepCare",
-    drawableId: Int = R.drawable.sample_image4,
-    logoDrawableId: Int = R.drawable.ic_sample_icon,
-    summaryList: List<Pair<Int, String>> = listOf(),
-    descriptionList: List<Pair<String, String>> = listOf(
-        Pair(
-            "Description",
-            stringResource(id = R.string.lorem_ipsum)
-        ),
-        Pair("Description", stringResource(id = R.string.lorem_ipsum)),
-        Pair("Description", stringResource(id = R.string.lorem_ipsum))
-    ),
+    intro: Intro,
     onComplete: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
@@ -80,7 +68,7 @@ fun IntroView(
                                 .fillMaxWidth()
                                 .align(Alignment.TopCenter)
                                 .height(200.dp),
-                            painter = painterResource(id = drawableId),
+                            painter = painterResource(id = intro.drawableId),
                             contentDescription = "",
                             contentScale = ContentScale.FillWidth
                         )
@@ -100,21 +88,21 @@ fun IntroView(
                                         shape = CircleShape,
                                         clip = false
                                     ),
-                                painter = painterResource(logoDrawableId),
+                                painter = painterResource(intro.logoDrawableId),
                                 contentDescription = "",
                                 contentScale = ContentScale.Fit
                             )
                             Text(
-                                text = title,
+                                text = intro.title,
                                 style = AppTheme.typography.appTitle,
-                                color = AppTheme.colors.textPrimary,
+                                color = Color(0xff130C00),
                             )
                         }
                     }
                 }
             }
 
-            if (summaryList.isNotEmpty()) {
+            if (intro.summaryList.isNotEmpty()) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
@@ -123,7 +111,7 @@ fun IntroView(
                         .padding(vertical = 10.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    summaryList.forEach() { (icon, title) ->
+                    intro.summaryList.forEach() { (icon, title) ->
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
@@ -148,8 +136,12 @@ fun IntroView(
                 }
             }
 
-            descriptionList.forEach() { (title, description) ->
-                Column(modifier = Modifier.padding(vertical = 10.dp, horizontal = 20.dp)) {
+            intro.descriptionList.forEach() { (title, description) ->
+                Column(
+                    modifier = Modifier
+                        .padding(vertical = 10.dp, horizontal = 20.dp)
+                        .fillMaxWidth()
+                ) {
                     Text(
                         text = title,
                         style = AppTheme.typography.subHeader2,
@@ -165,16 +157,4 @@ fun IntroView(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun IntroViewPreview() {
-    IntroView(
-        summaryList = listOf(
-            Pair(R.drawable.ic_watch, "Wear your watch"),
-            Pair(R.drawable.ic_clock, "10 min a day"),
-            Pair(R.drawable.ic_alarm, "2 surveys a week")
-        )
-    )
 }

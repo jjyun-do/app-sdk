@@ -7,8 +7,10 @@ import com.samsung.healthcare.research.eligibility.EligibilityChecker
 import com.samsung.healthcare.research.eligibility.EligibilityResult
 import com.samsung.healthcare.research.eligibility.EligibilityResultMessage
 import com.samsung.healthcare.research.eligibility.EligibilitySection
+import com.samsung.healthcare.research.intro.Intro
 import com.samsung.healthcare.research.step.ConsentTextStep
 import com.samsung.healthcare.research.step.EligibilityStep
+import com.samsung.healthcare.research.step.IntroStep
 import com.samsung.healthcare.research.survey.ChoiceQuestion
 import com.samsung.healthcare.research.survey.Question
 import com.samsung.healthcare.research.theme.AppColors
@@ -30,6 +32,14 @@ object OnboardingModule {
 
     @Singleton
     @Provides
+    fun providesIntroStep(@ApplicationContext context: Context): IntroStep =
+        IntroStep(
+            "intro-step",
+            intro(context)
+        )
+
+    @Singleton
+    @Provides
     fun providesEligibilityStep(@ApplicationContext context: Context): EligibilityStep =
         EligibilityStep(
             "eligibility-step",
@@ -47,6 +57,8 @@ object OnboardingModule {
             checkBoxTexts = listOf("I agree", "I agree to share my data.", "Some Message"),
             onCompleted = {}
         )
+
+    private fun intro(@ApplicationContext context: Context) = Intro()
 
     private fun eligibility(@ApplicationContext context: Context) = Eligibility(
         viewType = Eligibility.ViewType.Card,
