@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.toArgb
 import com.samsung.healthcare.research.step.ConsentTextStep
 import com.samsung.healthcare.research.step.EligibilityStep
 import com.samsung.healthcare.research.step.IntroStep
+import com.samsung.healthcare.research.step.RegistrationCompletedStep
 import com.samsung.healthcare.research.step.Step
 import com.samsung.healthcare.research.task.OrderedTask
 import com.samsung.healthcare.research.theme.AppColors
@@ -28,6 +29,9 @@ class MainActivity : ComponentActivity() {
     lateinit var consentStep: ConsentTextStep
 
     @Inject
+    lateinit var registrationCompletedStep: RegistrationCompletedStep
+
+    @Inject
     lateinit var appColors: AppColors
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +40,7 @@ class MainActivity : ComponentActivity() {
             Surface {
                 AppTheme(appColors) {
                     this.window.statusBarColor = AppTheme.colors.background.toArgb()
-                    HealthApp(listOf(introStep, eligibilityStep, consentStep))
+                    HealthApp(listOf(introStep, eligibilityStep, consentStep, registrationCompletedStep))
                 }
             }
         }

@@ -8,9 +8,11 @@ import com.samsung.healthcare.research.eligibility.EligibilityResult
 import com.samsung.healthcare.research.eligibility.EligibilityResultMessage
 import com.samsung.healthcare.research.eligibility.EligibilitySection
 import com.samsung.healthcare.research.intro.Intro
+import com.samsung.healthcare.research.model.SubTitleMessage
 import com.samsung.healthcare.research.step.ConsentTextStep
 import com.samsung.healthcare.research.step.EligibilityStep
 import com.samsung.healthcare.research.step.IntroStep
+import com.samsung.healthcare.research.step.RegistrationCompletedStep
 import com.samsung.healthcare.research.survey.ChoiceQuestion
 import com.samsung.healthcare.research.survey.Question
 import com.samsung.healthcare.research.theme.AppColors
@@ -55,6 +57,17 @@ object OnboardingModule {
             subTitle = "Privacy header",
             description = context.getString(R.string.lorem_ipsum_short),
             checkBoxTexts = listOf("I agree", "I agree to share my data.", "Some Message"),
+            onCompleted = {}
+        )
+
+    @Singleton
+    @Provides
+    fun providesRegistrationCompletedStep(@ApplicationContext context: Context): RegistrationCompletedStep =
+        RegistrationCompletedStep(
+            id = "registration-completed-step",
+            title = "Registration Completed",
+            message = registrationCompletedMessage(context),
+            buttonText = "Continue",
             onCompleted = {}
         )
 
@@ -112,6 +125,12 @@ object OnboardingModule {
         "You are not eligible for the study.",
         "Check back later and stay tuned for more studies coming soon!",
         drawableId = R.drawable.sample_image3
+    )
+
+    private fun registrationCompletedMessage(@ApplicationContext context: Context) = SubTitleMessage(
+        "You are done!",
+        "Congratulations! Everything is all set for you. Now please tap on the button below to start your SleepCare journey!",
+        drawableId = R.drawable.sample_image4
     )
 
     private fun checker() = { questions: List<Question<*>> ->
