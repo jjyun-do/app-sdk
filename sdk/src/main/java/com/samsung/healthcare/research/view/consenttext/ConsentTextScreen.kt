@@ -24,33 +24,30 @@ fun ConsentTextScreen(
     var mutableSvg = rememberSaveable { mutableStateOf("") }
     var signaturePadVisible by rememberSaveable { mutableStateOf(false) }
 
-    when (signaturePadVisible) {
-        false -> {
-            ConsentTextLayout(
-                signature = mutableSvg.value,
-                title = title,
-                subTitle = subTitle,
-                description = description,
-                checkBoxTexts = checkBoxTexts,
-                buttonText = buttonText,
-                onClickBack = onClickBack,
-                onComplete = onComplete,
-                onClickPad = {
-                    signaturePadVisible = true
-                }
-            )
+    ConsentTextLayout(
+        signature = mutableSvg.value,
+        title = title,
+        subTitle = subTitle,
+        description = description,
+        checkBoxTexts = checkBoxTexts,
+        buttonText = buttonText,
+        onClickBack = onClickBack,
+        onComplete = onComplete,
+        onClickPad = {
+            signaturePadVisible = true
         }
-        true -> {
-            SignatureLayout(
-                onClickDone = { svg ->
-                    mutableSvg.value = svg
-                    signaturePadVisible = false
-                },
-                onClickCancel = {
-                    signaturePadVisible = false
-                },
-            )
-        }
+    )
+
+    if (signaturePadVisible) {
+        SignatureLayout(
+            onClickDone = { svg ->
+                mutableSvg.value = svg
+                signaturePadVisible = false
+            },
+            onClickCancel = {
+                signaturePadVisible = false
+            },
+        )
     }
 }
 
