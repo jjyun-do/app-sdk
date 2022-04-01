@@ -1,7 +1,7 @@
 package com.samsung.healthcare.research.model
 
-data class SubTitleMessage(
-    val subTitle: String,
+data class ImageArticle(
+    val title: String,
     val description: String,
     val drawableId: Int? = null
 )

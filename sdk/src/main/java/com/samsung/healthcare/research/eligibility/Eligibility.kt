@@ -1,5 +1,6 @@
 package com.samsung.healthcare.research.eligibility
 
+import com.samsung.healthcare.research.model.ImageArticle
 import com.samsung.healthcare.research.survey.Question
 
 class Eligibility(
@@ -15,7 +16,7 @@ class Eligibility(
 
     fun isEligibility(): Boolean = eligibilityChecker.isEligibility()
 
-    fun eligibilityResultMessage(): EligibilityResultMessage =
+    fun eligibilityResultMessage(): ImageArticle =
         eligibilityChecker.eligibilityResultMessage()
 
     enum class ViewType() {

@@ -29,8 +29,8 @@ import com.samsung.healthcare.research.R
 import com.samsung.healthcare.research.eligibility.Eligibility
 import com.samsung.healthcare.research.eligibility.EligibilityChecker
 import com.samsung.healthcare.research.eligibility.EligibilityResult
-import com.samsung.healthcare.research.eligibility.EligibilityResultMessage
 import com.samsung.healthcare.research.eligibility.EligibilitySection
+import com.samsung.healthcare.research.model.ImageArticle
 import com.samsung.healthcare.research.step.QuestionStep
 import com.samsung.healthcare.research.survey.ChoiceQuestion
 import com.samsung.healthcare.research.theme.AppTheme
@@ -40,6 +40,7 @@ import com.samsung.healthcare.research.view.common.TopBar
 import com.samsung.healthcare.research.view.eligibility.EligibilityState.Check
 import com.samsung.healthcare.research.view.eligibility.EligibilityState.Overview
 import com.samsung.healthcare.research.view.eligibility.EligibilityState.Result
+import com.samsung.healthcare.research.view.layout.ImageArticleLayout
 import com.samsung.healthcare.research.view.layout.SurveyStepLayout
 
 @Composable
@@ -65,9 +66,10 @@ fun EligibilityScreen(
             )
         }
         Result -> {
-            EligibilityResultScreen(
+            ImageArticleLayout(
                 eligibility.title,
                 eligibility.eligibilityResultMessage(),
+                "Continue",
                 eligibility.isEligibility(),
                 onClickBack = { state = state.prev() },
                 onComplete = { onComplete() }
@@ -222,12 +224,12 @@ fun EligibilityScreenPreview() {
             },
             eligibilityResult = EligibilityResult(
                 "Eligibility result",
-                successMessage = EligibilityResultMessage(
+                successMessage = ImageArticle(
                     "Great! You’re in!",
                     "Congratulations! You are eligible for the study.",
                     drawableId = R.drawable.sample_image2
                 ),
-                failMessage = EligibilityResultMessage(
+                failMessage = ImageArticle(
                     "You are not eligible for the study.",
                     "Check back later and stay tuned for more studies coming soon!",
                     drawableId = R.drawable.sample_image3

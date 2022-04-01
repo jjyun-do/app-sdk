@@ -1,5 +1,6 @@
 package com.samsung.healthcare.research.eligibility
 
+import com.samsung.healthcare.research.model.ImageArticle
 import com.samsung.healthcare.research.survey.Question
 
 class EligibilityChecker(
@@ -9,6 +10,6 @@ class EligibilityChecker(
 ) {
     fun isEligibility(): Boolean = predicate(questions)
 
-    fun eligibilityResultMessage(): EligibilityResultMessage =
+    fun eligibilityResultMessage(): ImageArticle =
         eligibilityResult.getResultMessage(isEligibility())
 }

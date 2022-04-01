@@ -1,4 +1,4 @@
-package com.samsung.healthcare.research.view.eligibility
+package com.samsung.healthcare.research.view.layout
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,33 +17,44 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.research.R
-import com.samsung.healthcare.research.eligibility.EligibilityResultMessage
+import com.samsung.healthcare.research.model.ImageArticle
 import com.samsung.healthcare.research.theme.AppTheme
-import com.samsung.healthcare.research.view.common.BottomRoundButton
+import com.samsung.healthcare.research.view.common.BottomBar
 import com.samsung.healthcare.research.view.common.TopBar
 
 @Composable
-fun EligibilityResultScreen(
-    title: String,
-    resultMessage: EligibilityResultMessage,
-    isEligibility: Boolean,
+fun ImageArticleLayout(
+    topBarTitle: String,
+    message: ImageArticle,
+    buttonText: String,
+    buttonEnabled: Boolean = true,
     onClickBack: () -> Unit = {},
     onComplete: () -> Unit = {}
 ) {
+    val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
-            TopBar(title = title) {
+            TopBar(title = topBarTitle) {
                 onClickBack()
             }
         },
-    ) {
+        bottomBar = {
+            BottomBar(
+                text = buttonText,
+                buttonEnabled = buttonEnabled,
+            ) { onComplete() }
+        }
+    ) { innerPadding ->
         Column(
-            modifier = Modifier.fillMaxWidth(1f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scrollState)
+                .padding(innerPadding),
         ) {
-            resultMessage.drawableId?.let { drawableId ->
+            message.drawableId?.let { drawableId ->
                 Image(
                     painter = painterResource(drawableId),
-                    contentDescription = "Eligibility Image",
+                    contentDescription = "",
                     modifier = Modifier.fillMaxWidth(),
                     contentScale = ContentScale.FillWidth
                 )
@@ -51,22 +64,16 @@ fun EligibilityResultScreen(
                 modifier = Modifier.padding(24.dp)
             ) {
                 Text(
-                    resultMessage.subTitle,
+                    message.title,
                     style = AppTheme.typography.title2,
                     color = AppTheme.colors.textPrimaryAccent
                 )
                 Spacer(modifier = Modifier.height(28.dp))
                 Text(
-                    resultMessage.message,
+                    message.description,
                     style = AppTheme.typography.body1,
                     color = AppTheme.colors.textPrimary
                 )
-            }
-
-            if (isEligibility) {
-                BottomRoundButton(text = "Join study") {
-                    onComplete()
-                }
             }
         }
     }
@@ -74,16 +81,17 @@ fun EligibilityResultScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun EligibilityResultScreenPreview() {
+fun ArticleLayoutPreview() {
     AppTheme {
-        val successMessage = EligibilityResultMessage(
+        val successMessage = ImageArticle(
             "Great! You’re in!",
             "Congratulations! You are eligible for the study.",
             drawableId = R.drawable.sample_image2
         )
-        EligibilityResultScreen(
+        ImageArticleLayout(
             "Eligibility Result",
             successMessage,
+            "Continue",
             true
         )
     }

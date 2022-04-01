@@ -1,11 +1,13 @@
 package com.samsung.healthcare.research.eligibility
 
+import com.samsung.healthcare.research.model.ImageArticle
+
 class EligibilityResult(
     val title: String,
-    private val successMessage: EligibilityResultMessage,
-    private val failMessage: EligibilityResultMessage
+    private val successMessage: ImageArticle,
+    private val failMessage: ImageArticle,
 ) {
-    fun getResultMessage(isEligibility: Boolean): EligibilityResultMessage =
+    fun getResultMessage(isEligibility: Boolean): ImageArticle =
         if (isEligibility) successMessage
         else failMessage
 }

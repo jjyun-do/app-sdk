@@ -5,10 +5,9 @@ import com.samsung.healthcare.research.R
 import com.samsung.healthcare.research.eligibility.Eligibility
 import com.samsung.healthcare.research.eligibility.EligibilityChecker
 import com.samsung.healthcare.research.eligibility.EligibilityResult
-import com.samsung.healthcare.research.eligibility.EligibilityResultMessage
 import com.samsung.healthcare.research.eligibility.EligibilitySection
 import com.samsung.healthcare.research.intro.Intro
-import com.samsung.healthcare.research.model.SubTitleMessage
+import com.samsung.healthcare.research.model.ImageArticle
 import com.samsung.healthcare.research.step.ConsentTextStep
 import com.samsung.healthcare.research.step.EligibilityStep
 import com.samsung.healthcare.research.step.IntroStep
@@ -115,19 +114,19 @@ object OnboardingModule {
         ),
     )
 
-    private fun successMessage() = EligibilityResultMessage(
+    private fun successMessage() = ImageArticle(
         "Great! You’re in!",
         "Congratulations! You are eligible for the study.",
         drawableId = R.drawable.sample_image2
     )
 
-    private fun failMessage() = EligibilityResultMessage(
+    private fun failMessage() = ImageArticle(
         "You are not eligible for the study.",
         "Check back later and stay tuned for more studies coming soon!",
         drawableId = R.drawable.sample_image3
     )
 
-    private fun registrationCompletedMessage(@ApplicationContext context: Context) = SubTitleMessage(
+    private fun registrationCompletedMessage(@ApplicationContext context: Context) = ImageArticle(
         "You are done!",
         "Congratulations! Everything is all set for you. Now please tap on the button below to start your SleepCare journey!",
         drawableId = R.drawable.sample_image4
