@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.research.intro.Intro
 import com.samsung.healthcare.research.theme.AppTheme
-import com.samsung.healthcare.research.view.common.BottomBar
+import com.samsung.healthcare.research.view.common.BottomBarWithGradientBackground
 
 @Composable
 fun IntroView(
@@ -39,7 +39,7 @@ fun IntroView(
     val scrollState = rememberScrollState()
     Scaffold(
         bottomBar = {
-            BottomBar(
+            BottomBarWithGradientBackground(
                 text = "Get Started",
             ) { onComplete() }
         }

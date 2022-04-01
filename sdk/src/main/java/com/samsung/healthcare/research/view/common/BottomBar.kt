@@ -1,12 +1,15 @@
 package com.samsung.healthcare.research.view.common
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
@@ -15,9 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.samsung.healthcare.research.theme.AppTheme
 
 @Composable
 fun BottomBar(
@@ -91,6 +96,46 @@ fun BottomBar(
                 .width(320.dp)
         ) {
             onClick()
+        }
+    }
+}
+
+@Composable
+fun BottomBarWithGradientBackground(
+    text: String,
+    buttonEnabled: Boolean = true,
+    gradientBrush: Brush = Brush.verticalGradient(
+        0.0f to Color(0x00000000),
+        0.5f to AppTheme.colors.background,
+        startY = 0.0f,
+        endY = 100.0f
+    ),
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .wrapContentWidth()
+            .background(gradientBrush),
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+                .background(
+                    gradientBrush,
+                ),
+        ) {
+            RoundButton(
+                text = text,
+                buttonColor = MaterialTheme.colors.primary,
+                enabled = buttonEnabled,
+                modifier = Modifier
+                    .height(44.dp)
+                    .width(320.dp)
+            ) {
+                onClick()
+            }
         }
     }
 }

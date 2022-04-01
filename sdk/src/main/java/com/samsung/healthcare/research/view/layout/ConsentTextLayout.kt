@@ -33,7 +33,7 @@ import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import com.samsung.healthcare.research.theme.AppTheme
-import com.samsung.healthcare.research.view.common.BottomBar
+import com.samsung.healthcare.research.view.common.BottomBarWithGradientBackground
 import com.samsung.healthcare.research.view.common.TopBar
 import java.nio.ByteBuffer
 
@@ -58,7 +58,7 @@ fun ConsentTextLayout(
             }
         },
         bottomBar = {
-            BottomBar(
+            BottomBarWithGradientBackground(
                 text = buttonText,
                 buttonEnabled = (checkCount == checkBoxTexts.size && signature != "") ?: false,
             ) {
