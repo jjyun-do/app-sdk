@@ -29,6 +29,7 @@ class AppColors(
     textPrimaryAccent: Color,
     textSecondary: Color,
     textHint: Color,
+    border: Color,
 ) {
     var primary by mutableStateOf(primary)
         private set
@@ -87,6 +88,9 @@ class AppColors(
     var textHint by mutableStateOf(textHint)
         private set
 
+    var border by mutableStateOf(border)
+        private set
+
     fun copy(
         primary: Color = this.primary,
         primaryVariant: Color = this.primaryVariant,
@@ -107,6 +111,7 @@ class AppColors(
         textPrimaryAccent: Color = this.textPrimaryAccent,
         textSecondary: Color = this.textSecondary,
         textHint: Color = this.textHint,
+        border: Color = this.border,
     ): AppColors = AppColors(
         primary,
         primaryVariant,
@@ -127,6 +132,7 @@ class AppColors(
         textPrimaryAccent,
         textSecondary,
         textHint,
+        border,
     )
 
     fun updateColorsFrom(other: AppColors) {
@@ -149,6 +155,7 @@ class AppColors(
         textPrimaryAccent = other.textPrimaryAccent
         textSecondary = other.textPrimary
         textHint = other.textHint
+        border = other.border
     }
 
     fun materialColors(): Colors =
@@ -190,6 +197,7 @@ fun lightColors(
     textPrimaryAccent: Color = Color(0xFFFF9E00),
     textSecondary: Color = Color(0xFF443F36),
     textHint: Color = Color(0xFF746B5C),
+    border: Color = Color(0xFF343A40),
 ): AppColors = AppColors(
     primary = primary,
     primaryVariant = primaryVariant,
@@ -210,6 +218,7 @@ fun lightColors(
     textSecondary = textSecondary,
     textPrimaryAccent = textPrimaryAccent,
     textHint = textHint,
+    border = border
 )
 
 fun darkColors(
@@ -233,6 +242,7 @@ fun darkColors(
     textPrimaryAccent: Color = Color(0xFFFF9E00),
     textSecondary: Color = Color(0xFFFFFFFF),
     textHint: Color = Color(0xFFADA597),
+    border: Color = Color(0xFFFFFFFF),
 ): AppColors = AppColors(
     primary = primary,
     primaryVariant = primaryVariant,
@@ -253,6 +263,7 @@ fun darkColors(
     textSecondary = textSecondary,
     textPrimaryAccent = textPrimaryAccent,
     textHint = textHint,
+    border = border,
 )
 
 internal val LocalColors = staticCompositionLocalOf { lightColors() }
