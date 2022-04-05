@@ -12,6 +12,7 @@ import com.samsung.healthcare.research.step.ConsentTextStep
 import com.samsung.healthcare.research.step.EligibilityStep
 import com.samsung.healthcare.research.step.IntroStep
 import com.samsung.healthcare.research.step.RegistrationCompletedStep
+import com.samsung.healthcare.research.step.SignupStep
 import com.samsung.healthcare.research.survey.ChoiceQuestion
 import com.samsung.healthcare.research.survey.Question
 import com.samsung.healthcare.research.theme.AppColors
@@ -58,6 +59,11 @@ object OnboardingModule {
             checkBoxTexts = listOf("I agree", "I agree to share my data.", "Some Message"),
             onCompleted = {}
         )
+
+    @Singleton
+    @Provides
+    fun providesSignupStep(@ApplicationContext context: Context): SignupStep =
+        SignupStep(id = "signup-step")
 
     @Singleton
     @Provides

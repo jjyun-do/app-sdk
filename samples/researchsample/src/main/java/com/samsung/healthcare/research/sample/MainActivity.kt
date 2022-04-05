@@ -10,6 +10,7 @@ import com.samsung.healthcare.research.step.ConsentTextStep
 import com.samsung.healthcare.research.step.EligibilityStep
 import com.samsung.healthcare.research.step.IntroStep
 import com.samsung.healthcare.research.step.RegistrationCompletedStep
+import com.samsung.healthcare.research.step.SignupStep
 import com.samsung.healthcare.research.step.Step
 import com.samsung.healthcare.research.task.OrderedTask
 import com.samsung.healthcare.research.theme.AppColors
@@ -29,6 +30,9 @@ class MainActivity : ComponentActivity() {
     lateinit var consentStep: ConsentTextStep
 
     @Inject
+    lateinit var signupStep: SignupStep
+
+    @Inject
     lateinit var registrationCompletedStep: RegistrationCompletedStep
 
     @Inject
@@ -40,7 +44,15 @@ class MainActivity : ComponentActivity() {
             Surface {
                 AppTheme(appColors) {
                     this.window.statusBarColor = AppTheme.colors.background.toArgb()
-                    HealthApp(listOf(introStep, eligibilityStep, consentStep, registrationCompletedStep))
+                    HealthApp(
+                        listOf(
+                            introStep,
+                            eligibilityStep,
+                            consentStep,
+                            signupStep,
+                            registrationCompletedStep
+                        )
+                    )
                 }
             }
         }

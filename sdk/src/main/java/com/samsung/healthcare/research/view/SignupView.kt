@@ -67,7 +67,7 @@ fun SignupView(
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(backgroundColor = AppTheme.colors.background),
                     elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
-                    onClick = { /* TODO */ }
+                    onClick = { /* TODO */ onComplete() }
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -170,7 +170,7 @@ fun SignupView(
                     .height(56.dp),
                 text = "Sign Up",
                 textColor = AppTheme.colors.textPrimary,
-                onClick = { /* TODO */ }
+                onClick = { /* TODO */onComplete() }
             )
         }
     }
