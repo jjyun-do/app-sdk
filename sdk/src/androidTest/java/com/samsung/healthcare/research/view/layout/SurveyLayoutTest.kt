@@ -20,6 +20,7 @@ import org.junit.runner.RunWith
 
 internal val choiceQuestion by lazy {
     ChoiceQuestion(
+        id = "choice",
         query = "Gender",
         explanation = "description",
         candidates = listOf("Male", "Female", "Rather not say")
@@ -28,6 +29,7 @@ internal val choiceQuestion by lazy {
 
 internal val textInputQuestion by lazy {
     TextInputQuestion(
+        id = "text",
         query = "title",
         explanation = "description"
     )

@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,8 +41,11 @@ import se.warting.signaturepad.SignaturePadView
 fun SignatureLayout(
     onClickDone: (String) -> Unit = {},
     onClickCancel: () -> Unit = {},
+    lockLandscapeOrientation: Boolean = false,
 ) {
-    LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+    if (lockLandscapeOrientation) {
+        LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+    }
 
     val mutableSvg = remember { mutableStateOf("") }
     var signaturePadAdapter: SignaturePadAdapter? = null
@@ -102,7 +106,8 @@ fun SignatureLayout(
                 RoundButton(
                     modifier = Modifier
                         .height(44.dp)
-                        .width(140.dp),
+                        .width(140.dp)
+                        .testTag("signatureDoneButton"),
                     text = "Done",
                     border = BorderStroke(width = 1.dp, color = AppTheme.colors.primary),
                     onClick = {

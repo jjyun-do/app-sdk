@@ -18,6 +18,7 @@ internal class TextInputQuestionFormTest {
     @Test
     fun getResult_should_return_input_value() {
         val textInputQuestion = TextInputQuestion(
+            id = "1",
             query = "title",
             explanation = "description"
         )

@@ -19,7 +19,7 @@ class OrderedTaskTest {
 
     @Test
     fun orderedTask_should_show_steps_in_a_given_order() {
-        val dummyQuestion = ChoiceQuestion("", "", listOf(""))
+        val dummyQuestion = ChoiceQuestion("", "", "", listOf(""))
         val step1 =
             SurveyStep("s1", "Step1", {}) { title, questionSteps, onCompleted ->
                 SurveyStepLayout(title, questionSteps, true, onCompleted)
