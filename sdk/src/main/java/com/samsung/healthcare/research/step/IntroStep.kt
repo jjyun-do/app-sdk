@@ -12,9 +12,9 @@ class IntroStep(
         { i, callback -> IntroView(i, callback) }
 ) : Step<Boolean>(id, onComplete) {
 
-    override val composable: @Composable () -> Unit = {
+    override val stepView: @Composable (StepChangedListener) -> Unit = { stepChangedListener ->
         introView(intro) {
-            completed()
+            stepChangedListener.onStepForward()
         }
     }
 

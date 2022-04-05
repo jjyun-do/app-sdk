@@ -9,6 +9,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.samsung.healthcare.research.step.QuestionStep
+import com.samsung.healthcare.research.step.StepChangedListener
 import com.samsung.healthcare.research.step.SurveyStep
 import com.samsung.healthcare.research.survey.ChoiceQuestion
 import com.samsung.healthcare.research.survey.Question
@@ -35,6 +36,12 @@ internal val textInputQuestion by lazy {
     )
 }
 
+internal val stepSwitcher = object : StepChangedListener {
+    override fun onStepBack() {}
+
+    override fun onStepForward() {}
+}
+
 fun testSurveyStep(pageable: Boolean, onCompleted: (List<Question<*>>) -> Unit = {}): SurveyStep =
     SurveyStep("id", "Survey", onCompleted) { title, questionSteps, onComplete ->
         SurveyStepLayout(title, questionSteps, pageable, onComplete)
@@ -51,7 +58,7 @@ internal class MultiPageSurveyLayoutTest {
         surveyStep.addQuestionStep(QuestionStep(choiceQuestion))
 
         composeTestRule.setContent {
-            surveyStep.composable()
+            surveyStep.stepView(stepSwitcher)
         }
 
         composeTestRule.onNodeWithText("Previous")
@@ -65,7 +72,7 @@ internal class MultiPageSurveyLayoutTest {
         surveyStep.addQuestionStep(QuestionStep(textInputQuestion))
 
         composeTestRule.setContent {
-            surveyStep.composable()
+            surveyStep.stepView(stepSwitcher)
         }
 
         composeTestRule.onNodeWithText("Next")
@@ -78,7 +85,7 @@ internal class MultiPageSurveyLayoutTest {
         surveyStep.addQuestionStep(QuestionStep(choiceQuestion))
 
         composeTestRule.setContent {
-            surveyStep.composable()
+            surveyStep.stepView(stepSwitcher)
         }
 
         composeTestRule.onNodeWithText("Complete")
@@ -130,7 +137,7 @@ internal class MultiPageSurveyLayoutTest {
         surveyStep.addQuestionStep(QuestionStep(textInputQuestion))
 
         composeTestRule.setContent {
-            surveyStep.composable()
+            surveyStep.stepView(stepSwitcher)
         }
 
         return Pair(selection, text)

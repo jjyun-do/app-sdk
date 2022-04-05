@@ -46,13 +46,14 @@ import com.samsung.healthcare.research.view.layout.SurveyStepLayout
 @Composable
 fun EligibilityScreen(
     eligibility: Eligibility,
+    onClickBack: () -> Unit,
     onComplete: () -> Unit
 ) {
     var state by rememberSaveable { mutableStateOf(Overview) }
 
     when (state) {
         Overview -> {
-            EligibilityOverviewScreen(eligibility) {
+            EligibilityOverviewScreen(eligibility, onClickBack) {
                 state = state.next()
             }
         }
@@ -85,12 +86,15 @@ private fun createQuestionStep(eligibility: Eligibility) =
 @Composable
 private fun EligibilityOverviewScreen(
     eligibility: Eligibility,
+    onClickBack: () -> Unit,
     onStart: () -> Unit
 ) {
     val scrollSate = rememberScrollState()
     Scaffold(
         topBar = {
-            TopBar(title = eligibility.title) { }
+            TopBar(title = eligibility.title) {
+                onClickBack()
+            }
         },
     ) {
         Column(
@@ -238,6 +242,6 @@ fun EligibilityScreenPreview() {
         )
     )
     AppTheme(lightColors()) {
-        EligibilityScreen(eligibility) { }
+        EligibilityScreen(eligibility, {}) { }
     }
 }

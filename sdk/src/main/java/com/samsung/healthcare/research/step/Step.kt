@@ -6,7 +6,7 @@ abstract class Step<R>(
     val id: String,
     var onComplete: (R) -> Unit,
 ) {
-    abstract val composable: @Composable () -> Unit
+    abstract val stepView: @Composable (StepChangedListener) -> Unit
 
     abstract fun getResult(): R
 

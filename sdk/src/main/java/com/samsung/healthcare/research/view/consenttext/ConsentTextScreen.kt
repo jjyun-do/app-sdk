@@ -1,4 +1,4 @@
-package com.samsung.healthcare.research.view.layout
+package com.samsung.healthcare.research.view.consenttext
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -7,7 +7,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.samsung.healthcare.research.R
+import com.samsung.healthcare.research.R.string
 import com.samsung.healthcare.research.view.ConsentTextLayout
 import com.samsung.healthcare.research.view.SignatureLayout
 
@@ -57,7 +57,7 @@ fun ConsentTextLayoutPreview() {
     ConsentTextScreen(
         title = "Consent",
         subTitle = "Privacy header",
-        description = stringResource(R.string.lorem_ipsum_short),
+        description = stringResource(string.lorem_ipsum_short),
         checkBoxTexts = listOf("I agree", "I agree to share my data.", "Some Message"),
     )
 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.research.R
 import com.samsung.healthcare.research.step.QuestionStep
+import com.samsung.healthcare.research.step.StepChangedListener
 import com.samsung.healthcare.research.step.SurveyStep
 import com.samsung.healthcare.research.survey.ChoiceQuestion
 import com.samsung.healthcare.research.survey.TextInputQuestion
@@ -101,6 +102,12 @@ fun SinglePageSurveyLayoutPreview() {
         )
         surveyStep.addQuestionStep(QuestionStep(textInputQuestion))
 
-        surveyStep.composable()
+        surveyStep.stepView(object : StepChangedListener {
+            override fun onStepBack() {
+            }
+
+            override fun onStepForward() {
+            }
+        })
     }
 }

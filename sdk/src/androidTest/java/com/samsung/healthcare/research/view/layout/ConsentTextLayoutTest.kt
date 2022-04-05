@@ -15,10 +15,18 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-fun testConsentTextStep(checkBoxTexts: List<String>, onCompleted: (Boolean) -> Unit = {}): ConsentTextStep =
-    ConsentTextStep("id", "Consent", "SubTitle", "Description", checkBoxTexts, onCompleted) { title, subTitle, description, checkBoxTexts, callback ->
-        ConsentTextScreen(title, subTitle, description, checkBoxTexts) { callback() }
-    }
+fun testConsentTextStep(
+    checkBoxTexts: List<String>,
+    onCompleted: (Boolean) -> Unit = {}
+): ConsentTextStep =
+    ConsentTextStep(
+        "id",
+        "Consent",
+        "SubTitle",
+        "Description",
+        checkBoxTexts,
+        onCompleted
+    )
 
 @RunWith(AndroidJUnit4::class)
 internal class ConsentTextLayoutTest {
@@ -31,7 +39,7 @@ internal class ConsentTextLayoutTest {
         val consentTextStep = testConsentTextStep(checkBoxTexts)
 
         composeTestRule.setContent {
-            consentTextStep.composable()
+            consentTextStep.stepView(stepSwitcher)
         }
 
         composeTestRule.onNodeWithText("Done")
@@ -45,7 +53,7 @@ internal class ConsentTextLayoutTest {
 
         composeTestRule.setContent {
             AppTheme(darkColors()) {
-                consentTextStep.composable()
+                consentTextStep.stepView(stepSwitcher)
             }
         }
 

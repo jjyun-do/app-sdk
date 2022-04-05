@@ -36,6 +36,7 @@ fun SignupView(
     // TODO Get App information from context
     title: String = "SleepCare",
     logoDrawableId: Int? = null,
+    onClickBack: () -> Unit = {},
     onComplete: () -> Unit = {}
 ) {
 
@@ -47,7 +48,9 @@ fun SignupView(
         topBar = {
             TopBar(
                 title = "Register"
-            ) {}
+            ) {
+                onClickBack()
+            }
         },
         bottomBar = {
             Column(

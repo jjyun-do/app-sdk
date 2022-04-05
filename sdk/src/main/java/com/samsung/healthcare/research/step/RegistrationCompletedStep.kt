@@ -10,14 +10,19 @@ class RegistrationCompletedStep(
     private val message: ImageArticle,
     private val buttonText: String,
     onCompleted: (Boolean) -> Unit,
-    private val layout: @Composable (String, ImageArticle, String, () -> Unit) -> Unit =
-        { title, message, buttonText, onComplete ->
-            ImageArticleLayout(title, message, buttonText) { onComplete() }
+    private val layout: @Composable (String, ImageArticle, String, () -> Unit, () -> Unit) -> Unit =
+        { title, message, buttonText, onClickBack, onComplete ->
+            ImageArticleLayout(
+                title,
+                message,
+                buttonText,
+                onClickBack = onClickBack
+            ) { onComplete() }
         }
 ) : Step<Boolean>(id, onCompleted) {
-    override val composable: @Composable () -> Unit = {
-        layout(title, message, buttonText) {
-            completed()
+    override val stepView: @Composable (StepChangedListener) -> Unit = { stepChangedListener ->
+        layout(title, message, buttonText, stepChangedListener::onStepBack) {
+            stepChangedListener.onStepForward()
         }
     }
 

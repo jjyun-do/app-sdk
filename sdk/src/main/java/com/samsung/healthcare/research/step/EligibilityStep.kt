@@ -8,13 +8,13 @@ class EligibilityStep(
     id: String,
     private val eligibility: Eligibility,
     onComplete: (Boolean) -> Unit = {},
-    private val eligibilityScreen: @Composable (Eligibility, () -> Unit) -> Unit =
-        { e, callback -> EligibilityScreen(e, callback) }
+    private val eligibilityScreen: @Composable (Eligibility, () -> Unit, () -> Unit) -> Unit =
+        { e, onStepBack, onStepForward -> EligibilityScreen(e, onStepBack, onStepForward) }
 ) : Step<Boolean>(id, onComplete) {
 
-    override val composable: @Composable () -> Unit = {
-        eligibilityScreen(eligibility) {
-            completed()
+    override val stepView: @Composable (StepChangedListener) -> Unit = { stepChangedListener ->
+        eligibilityScreen(eligibility, stepChangedListener::onStepBack) {
+            stepChangedListener.onStepForward()
         }
     }
 

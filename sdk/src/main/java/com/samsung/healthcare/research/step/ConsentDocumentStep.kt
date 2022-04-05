@@ -11,7 +11,7 @@ class ConsentDocumentStep(
     onComplete: (ConsentResult) -> Unit
 ) : Step<ConsentResult>(id, onComplete) {
 
-    override val composable: @Composable () -> Unit = {
+    override val stepView: @Composable (StepChangedListener) -> Unit = {
         ConsentDocumentStepView(consentDocument)
     }
 

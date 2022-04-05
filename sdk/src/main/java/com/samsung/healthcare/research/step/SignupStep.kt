@@ -8,13 +8,20 @@ class SignupStep(
     private val title: String = "SleepCare",
     private val logoDrawableId: Int? = null,
     onComplete: (Boolean) -> Unit = {},
-    private val signupView: @Composable (String, Int?, () -> Unit) -> Unit =
-        { title, logoDrawableId, callback -> SignupView(title, logoDrawableId, callback) }
+    private val signupView: @Composable (String, Int?, () -> Unit, () -> Unit) -> Unit =
+        { title, logoDrawableId, onClickBack, callback ->
+            SignupView(
+                title,
+                logoDrawableId,
+                onClickBack,
+                callback
+            )
+        }
 ) : Step<Boolean>(id, onComplete) {
 
-    override val composable: @Composable () -> Unit = {
-        signupView(title, logoDrawableId) {
-            completed()
+    override val stepView: @Composable (StepChangedListener) -> Unit = { stepChangedListner ->
+        signupView(title, logoDrawableId, stepChangedListner::onStepBack) {
+            stepChangedListner.onStepForward()
         }
     }
 

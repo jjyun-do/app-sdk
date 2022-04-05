@@ -15,7 +15,7 @@ class SurveyStep(
         questionSteps.add(questionStep)
     }
 
-    override val composable: @Composable () -> Unit = {
+    override val stepView: @Composable (StepChangedListener) -> Unit = {
         surveyLayout(title, questionSteps) {
             completed()
         }
