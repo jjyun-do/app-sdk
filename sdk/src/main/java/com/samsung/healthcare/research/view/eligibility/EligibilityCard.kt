@@ -247,6 +247,7 @@ fun EligibilityCardPreview() {
     )
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Preview(showBackground = true)
 @Composable
 fun EligibilityCardsPreview() {
