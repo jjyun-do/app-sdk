@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 rootProject.name = "HealthcareResearchKit"
 include ':sdk'
 include ':samples:researchsample'
+include ':backbone'
