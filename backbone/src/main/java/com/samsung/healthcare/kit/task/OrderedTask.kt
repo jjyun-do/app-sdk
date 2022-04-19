@@ -1,16 +1,19 @@
 package com.samsung.healthcare.kit.task
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.MutableLiveData
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.Model
 import com.samsung.healthcare.kit.step.Step
 
-abstract class OrderedTask(
+open class OrderedTask(
     id: String,
     name: String,
     description: String,
     callback: () -> Unit,
-    val steps: List<Step<out Model, out Any>>,
+    val steps: List<Step<out Model, *>>,
 ) : Task(
     id,
     name,
@@ -41,4 +44,11 @@ abstract class OrderedTask(
                 if (hasPrev()) pageableStream.postValue(--progress.current)
             }
         }
+
+    @Composable
+    override fun Render() {
+        val cursor: Int? by pageableStream.observeAsState()
+
+        steps[cursor ?: -1].Render(pageCallbacks)
+    }
 }

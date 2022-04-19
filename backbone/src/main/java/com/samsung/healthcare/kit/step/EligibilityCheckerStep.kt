@@ -13,7 +13,6 @@ class EligibilityCheckerStep(
     view: EligibilityCheckerView,
     val subStepHolder: SubStepHolder,
 ) : Step<EligibilityCheckerModel, Boolean>(id, name, model, view, { true }) {
-
     @Composable
     override fun Render(callbackCollection: CallbackCollection): Unit =
         view.Render(model, callbackCollection, subStepHolder)
