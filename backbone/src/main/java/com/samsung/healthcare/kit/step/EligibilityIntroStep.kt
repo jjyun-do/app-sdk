@@ -10,7 +10,7 @@ class EligibilityIntroStep(
     name: String,
     model: EligibilityIntroModel,
     view: EligibilityIntroView,
-) : Step<EligibilityIntroModel, Boolean>(id, name, model, view, getResult = { true }) {
+) : Step<EligibilityIntroModel, Boolean>(id, name, model, view, { true }) {
 
     @Composable
     override fun Render(callbackCollection: CallbackCollection): Unit =
