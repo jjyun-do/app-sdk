@@ -2,6 +2,7 @@ package com.samsung.healthcare.kit.task
 
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.Model
+import com.samsung.healthcare.kit.step.ConsentTextStep
 import com.samsung.healthcare.kit.step.EligibilityCheckerStep
 import com.samsung.healthcare.kit.step.EligibilityIntroStep
 import com.samsung.healthcare.kit.step.EligibilityResultStep
@@ -38,9 +39,16 @@ class OnboardingTask private constructor(
         eligibilityIntroStep: EligibilityIntroStep,
         eligibilityCheckerStep: EligibilityCheckerStep,
         eligibilityResultStep: EligibilityResultStep,
+        consentTextStep: ConsentTextStep,
     ) : this(
         id, name, description, callback,
-        listOf(introStep, eligibilityIntroStep, eligibilityCheckerStep, eligibilityResultStep)
+        listOf(
+            introStep,
+            eligibilityIntroStep,
+            eligibilityCheckerStep,
+            eligibilityResultStep,
+            consentTextStep
+        )
     )
 
     var eligibility: Boolean = false

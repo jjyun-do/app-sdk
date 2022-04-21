@@ -1,12 +1,14 @@
 package com.samsung.healthcare.kit.sample
 
 import android.content.Context
+import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
 import com.samsung.healthcare.kit.model.EligibilityIntroModel
 import com.samsung.healthcare.kit.model.EligibilityResultModel
 import com.samsung.healthcare.kit.model.ImageArticleModel
 import com.samsung.healthcare.kit.model.IntroModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
+import com.samsung.healthcare.kit.step.ConsentTextStep
 import com.samsung.healthcare.kit.step.EligibilityCheckerStep
 import com.samsung.healthcare.kit.step.EligibilityIntroStep
 import com.samsung.healthcare.kit.step.EligibilityResultStep
@@ -16,6 +18,7 @@ import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.task.OnboardingTask
 import com.samsung.healthcare.kit.theme.AppColors
 import com.samsung.healthcare.kit.theme.darkColors
+import com.samsung.healthcare.kit.view.ConsentTextView
 import com.samsung.healthcare.kit.view.EligibilityCheckerView
 import com.samsung.healthcare.kit.view.EligibilityIntroView
 import com.samsung.healthcare.kit.view.EligibilityResultView
@@ -38,75 +41,89 @@ object OnboardingModule {
 
     @Singleton
     @Provides
-    fun providesIntroStep(@ApplicationContext context: Context): IntroStep =
-        IntroStep(
-            "intro-step",
-            "intro-step",
-            intro(context),
-            IntroView(),
-        )
-
-    @Singleton
-    @Provides
-    fun providesEligibilityIntroStep(@ApplicationContext context: Context): EligibilityIntroStep =
-        EligibilityIntroStep(
-            "eligibility-intro-step",
-            "eligibility-intro-step",
-            eligibilityIntro(context),
-            EligibilityIntroView(),
-        )
-
-    @Singleton
-    @Provides
-    fun providesEligibilityCheckerStep(@ApplicationContext context: Context): EligibilityCheckerStep =
-        EligibilityCheckerStep(
-            "eligibility-checker-step",
-            "eligibility-checker-step",
-            eligibilityChecker(context),
-            EligibilityCheckerView(),
-            questionnaireHolder
-        )
-
-    @Singleton
-    @Provides
-    fun providesOnboardingTask(
+    fun provideOnboardingTask(
         introStep: IntroStep,
         eligibilityIntroStep: EligibilityIntroStep,
         eligibilityCheckerStep: EligibilityCheckerStep,
         eligibilityResultStep: EligibilityResultStep,
+        consentTextStep: ConsentTextStep,
     ): OnboardingTask =
         OnboardingTask(
-            "81b36273-42c0-4fdc-a2d2-7ffff2cda61a",
+            "onboarding-task",
             "Sample-App-On-Boarding",
             "Introduce the project and determine whether the user is able to participate in this project or not.",
             {},
             introStep,
             eligibilityIntroStep,
             eligibilityCheckerStep,
-            eligibilityResultStep
+            eligibilityResultStep,
+            consentTextStep
         )
 
     @Singleton
     @Provides
-    fun providesEligibilityResultStep(@ApplicationContext context: Context): EligibilityResultStep =
+    fun provideIntroStep(@ApplicationContext context: Context): IntroStep =
+        IntroStep(
+            "intro-step",
+            "Intro-Step",
+            intro(context),
+            IntroView(),
+        )
+
+    @Singleton
+    @Provides
+    fun provideEligibilityIntroStep(@ApplicationContext context: Context): EligibilityIntroStep =
+        EligibilityIntroStep(
+            "eligibility-intro-step",
+            "Eligibility-Intro-Step",
+            eligibilityIntro(context),
+            EligibilityIntroView(),
+        )
+
+    @Singleton
+    @Provides
+    fun provideEligibilityCheckerStep(@ApplicationContext context: Context): EligibilityCheckerStep =
+        EligibilityCheckerStep(
+            "eligibility-checker-step",
+            "Eligibility-Checker-Step",
+            eligibilityChecker(context),
+            EligibilityCheckerView(),
+            SubStepHolder(
+                "sub-step-holder",
+                "Sub-Step-Holder",
+                questionnaireSubSteps
+            )
+        )
+
+    @Singleton
+    @Provides
+    fun provideEligibilityResultStep(@ApplicationContext context: Context): EligibilityResultStep =
         EligibilityResultStep(
             "eligibility-result-step",
-            "eligibility-result-step",
+            "Eligibility-Result-Step",
             eligibilityResult(context),
             EligibilityResultView(),
         )
 
-    private val summaries: List<Pair<Int, String>> = listOf(
-        R.drawable.ic_watch to "Wear your watch",
-        R.drawable.ic_clock to "10 min a day",
-        R.drawable.ic_alarm to "2 surveys a week"
-    )
+    @Singleton
+    @Provides
+    fun provideConsentTextStep(@ApplicationContext context: Context): ConsentTextStep =
+        ConsentTextStep(
+            "consent-text-step",
+            "Consent-Text-Step",
+            consentText(context),
+            ConsentTextView("Join Study")
+        )
 
     private fun intro(@ApplicationContext context: Context) = IntroModel(
-        id = "IntroModel",
-        title = "IntroTitle",
+        id = "intro-model",
+        title = "Intro-Title",
         R.drawable.ic_sample_icon,
-        summaries = summaries,
+        summaries = listOf(
+            R.drawable.ic_watch to "Wear your watch",
+            R.drawable.ic_clock to "10 min a day",
+            R.drawable.ic_alarm to "2 surveys a week"
+        ),
         descriptions = listOf(
             "Description" to context.getString(R.string.lorem_ipsum),
             "Description2" to context.getString(R.string.lorem_ipsum)
@@ -114,75 +131,41 @@ object OnboardingModule {
     )
 
     private fun eligibilityIntro(@ApplicationContext context: Context) = EligibilityIntroModel(
-        id = "EligibilityIntroModel",
-        title = "EligibilityIntroTitle",
+        id = "eligibility-intro-model",
+        title = "Eligibility-Intro-Title",
         description = context.getString(R.string.lorem_ipsum_short),
-        conditions = eligibilitySections(),
+        conditions = eligibilitySections,
         drawableId = R.drawable.sample_image1,
         viewType = EligibilityIntroModel.ViewType.Card
     )
 
     private fun eligibilityChecker(@ApplicationContext context: Context) = EligibilityCheckerModel(
-        id = "EligibilityCheckerModel",
-        title = "EligibilityCheckerTitle",
+        id = "eligibility-checker-model",
+        title = "Eligibility-Checker-Title",
         drawableId = R.drawable.sample_image1,
     )
 
     private fun eligibilityResult(@ApplicationContext context: Context) = EligibilityResultModel(
-        id = "EligibilityResultModel",
-        title = "EligibilityResultTitle",
+        id = "eligibility-result-model",
+        title = "Eligibility-Result-Title",
         drawableId = R.drawable.sample_image1,
-
-        successModel = successMessage,
-        failModel = failMessage,
+        successModel = eligibilitySuccessMessage,
+        failModel = eligibilityFailMessage,
     )
 
-    private val questionMiniSteps = listOf(
-        QuestionSubStep(
-            "question1_id",
-            "question1_name",
-            ChoiceQuestionModel(
-                "1",
-                "Do you have any existing cardiac conditions?",
-                "Examples of cardiac conditions include abnormal heart rhythms, or arrhythmias",
-                candidates = listOf("Yes", "No"),
-                answer = "Yes"
-            ),
-            ChoiceQuestionComponent(),
-        ),
-        QuestionSubStep(
-            "question2_id",
-            "question2_name",
-            ChoiceQuestionModel(
-                "2",
-                "Do you currently own a wearable device?",
-                "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
-                candidates = listOf("Yes", "No"),
-                answer = "Yes"
-            ),
-            ChoiceQuestionComponent(),
-        ),
-        QuestionSubStep(
-            "question3_id",
-            "question3_name",
-            ChoiceQuestionModel(
-                "3",
-                "test page?",
-                "test page",
-                candidates = listOf("Yes", "No"),
-                answer = "Yes"
-            ),
-            ChoiceQuestionComponent(),
+    private fun consentText(@ApplicationContext context: Context) = ConsentTextModel(
+        id = "consent-text-model",
+        title = "Informed Consent",
+        subTitle = "",
+        description = "Read the Terms of Service and Privacy Policy here.",
+        checkBoxTexts = listOf(
+            "I have read all the information above and I agree to join the study.",
+            "I agree to share my data with Samsung.",
+            "I agree to share my data with the research assistants in the study."
         )
     )
 
-    private val questionnaireHolder = SubStepHolder(
-        "substep_holder_id",
-        "substep_holder_name",
-        subSteps = questionMiniSteps
-    )
-
-    private fun eligibilitySections(): List<EligibilityIntroModel.EligibilityCondition> = listOf(
+    private val eligibilitySections: List<EligibilityIntroModel.EligibilityCondition> = listOf(
         EligibilityIntroModel.EligibilityCondition(
             "Medical eligibility",
             listOf("Condition(s)", "Prescription(s)", "Living in Europe")
@@ -193,17 +176,56 @@ object OnboardingModule {
         ),
     )
 
-    private val successMessage: ImageArticleModel = ImageArticleModel(
-        "successMessage",
+    private val eligibilitySuccessMessage: ImageArticleModel = ImageArticleModel(
+        "success-message",
         "Great! You’re in!",
         "Congratulations! You are eligible for the study.",
         drawableId = R.drawable.sample_image2
     )
 
-    private val failMessage: ImageArticleModel = ImageArticleModel(
-        "failMessage",
+    private val eligibilityFailMessage: ImageArticleModel = ImageArticleModel(
+        "fail-message",
         "You are not eligible for the study.",
         "Check back later and stay tuned for more studies coming soon!",
         drawableId = R.drawable.sample_image3
+    )
+
+    private val questionnaireSubSteps: List<QuestionSubStep<*, *>> = listOf(
+        QuestionSubStep(
+            "question-1",
+            "Question-Name-1",
+            ChoiceQuestionModel(
+                "choice-question-model-1",
+                "Do you have any existing cardiac conditions?",
+                "Examples of cardiac conditions include abnormal heart rhythms, or arrhythmias",
+                candidates = listOf("Yes", "No"),
+                answer = "Yes"
+            ),
+            ChoiceQuestionComponent(),
+        ),
+        QuestionSubStep(
+            "question-2",
+            "Question-Name-2",
+            ChoiceQuestionModel(
+                "choice-question-model-2",
+                "Do you currently own a wearable device?",
+                "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
+                candidates = listOf("Yes", "No"),
+                answer = "Yes"
+            ),
+            ChoiceQuestionComponent(),
+        ),
+        QuestionSubStep(
+            "question-3",
+            "Question-Name-3",
+            ChoiceQuestionModel(
+                "choice-question-model-3",
+                "test page?",
+                "test page",
+                candidates = listOf("Yes", "No"),
+                answer = "Yes"
+            ),
+            ChoiceQuestionComponent(),
+        )
     )
 }
