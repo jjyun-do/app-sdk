@@ -49,6 +49,6 @@ open class OrderedTask(
     override fun Render() {
         val cursor: Int? by pageableStream.observeAsState()
 
-        steps[cursor ?: -1].Render(pageCallbacks)
+        steps[cursor ?: 0].Render(pageCallbacks)
     }
 }
