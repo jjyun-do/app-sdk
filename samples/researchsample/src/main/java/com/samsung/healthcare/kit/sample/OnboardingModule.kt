@@ -7,6 +7,7 @@ import com.samsung.healthcare.kit.model.EligibilityIntroModel
 import com.samsung.healthcare.kit.model.EligibilityResultModel
 import com.samsung.healthcare.kit.model.ImageArticleModel
 import com.samsung.healthcare.kit.model.IntroModel
+import com.samsung.healthcare.kit.model.RegistrationCompletedModel
 import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
 import com.samsung.healthcare.kit.step.ConsentTextStep
@@ -14,6 +15,7 @@ import com.samsung.healthcare.kit.step.EligibilityCheckerStep
 import com.samsung.healthcare.kit.step.EligibilityIntroStep
 import com.samsung.healthcare.kit.step.EligibilityResultStep
 import com.samsung.healthcare.kit.step.IntroStep
+import com.samsung.healthcare.kit.step.RegistrationCompletedStep
 import com.samsung.healthcare.kit.step.SignUpStep
 import com.samsung.healthcare.kit.step.sub.QuestionSubStep
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
@@ -25,6 +27,7 @@ import com.samsung.healthcare.kit.view.EligibilityCheckerView
 import com.samsung.healthcare.kit.view.EligibilityIntroView
 import com.samsung.healthcare.kit.view.EligibilityResultView
 import com.samsung.healthcare.kit.view.IntroView
+import com.samsung.healthcare.kit.view.RegistrationCompletedView
 import com.samsung.healthcare.kit.view.SignUpView
 import com.samsung.healthcare.kit.view.component.ChoiceQuestionComponent
 import dagger.Module
@@ -51,6 +54,7 @@ object OnboardingModule {
         eligibilityResultStep: EligibilityResultStep,
         consentTextStep: ConsentTextStep,
         signUpStep: SignUpStep,
+        registrationCompletedStep: RegistrationCompletedStep,
     ): OnboardingTask =
         OnboardingTask(
             "onboarding-task",
@@ -62,7 +66,8 @@ object OnboardingModule {
             eligibilityCheckerStep,
             eligibilityResultStep,
             consentTextStep,
-            signUpStep
+            signUpStep,
+            registrationCompletedStep
         )
 
     @Singleton
@@ -132,6 +137,16 @@ object OnboardingModule {
             SignUpView()
         )
 
+    @Singleton
+    @Provides
+    fun provideRegistrationCompletedStep(@ApplicationContext context: Context): RegistrationCompletedStep =
+        RegistrationCompletedStep(
+            "registration-completed-step",
+            "Registration-Completed-Step",
+            registrationCompleted(context),
+            RegistrationCompletedView()
+        )
+
     private fun intro(@ApplicationContext context: Context) = IntroModel(
         id = "intro-model",
         title = "SleepCare",
@@ -187,6 +202,14 @@ object OnboardingModule {
         title = "SleepCare",
         description = "Thanks for joining the study! Now please create an account to keep track of your data and keep it safe.",
         drawableId = R.drawable.ic_sample_icon
+    )
+
+    private fun registrationCompleted(@ApplicationContext context: Context) = RegistrationCompletedModel(
+        id = "registration-completed-model",
+        title = "You are done!",
+        buttonText = "Continue",
+        description = "Congratulations! Everything is all set for you. Now please tap on the button below to start your SleepCare journey!",
+        drawableId = R.drawable.sample_image4
     )
 
     private val eligibilitySections: List<EligibilityIntroModel.EligibilityCondition> = listOf(
