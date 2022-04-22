@@ -8,20 +8,18 @@ import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.view.layout.ImageArticleLayout
 
 class EligibilityResultView() : View<EligibilityResultModel>() {
-
     @Composable
     override fun Render(
         model: EligibilityResultModel,
         callbackCollection: CallbackCollection,
         holder: SubStepHolder?,
     ) {
-        var resultModel: ImageArticleModel = when {
-            callbackCollection.getEligibility() -> model.successModel
-            else -> model.failModel
-        }
+        val resultImageArticleModel: ImageArticleModel =
+            if (callbackCollection.getEligibility()) model.successModel else model.failModel
+
         ImageArticleLayout(
             model.title,
-            resultModel,
+            resultImageArticleModel,
             "Continue",
             onClickBack = { callbackCollection.prev() },
             onComplete = { callbackCollection.next() }

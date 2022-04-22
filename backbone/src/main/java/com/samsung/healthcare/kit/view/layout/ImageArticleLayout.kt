@@ -14,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.model.ImageArticleModel
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.BottomBar
@@ -76,3 +78,17 @@ fun ImageArticleLayout(
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun ImageArticleLayoutPreview() =
+    ImageArticleLayout(
+        "Top Bar Title",
+        ImageArticleModel(
+            "id",
+            "Title",
+            "Description",
+            R.drawable.ic_watch
+        ),
+        "Button Text"
+    )

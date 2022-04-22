@@ -89,7 +89,7 @@ fun BottomBar(
     ) {
         RoundButton(
             text = text,
-            buttonColor = MaterialTheme.colors.primary,
+            buttonColor = AppTheme.colors.primary,
             enabled = buttonEnabled,
             modifier = Modifier
                 .height(44.dp)
