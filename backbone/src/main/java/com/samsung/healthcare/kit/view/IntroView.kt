@@ -35,7 +35,9 @@ import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.BottomBarWithGradientBackground
 
-class IntroView : View<IntroModel>() {
+class IntroView(
+    val bottomBarText: String,
+) : View<IntroModel>() {
     @Composable
     override fun Render(
         model: IntroModel,
@@ -47,7 +49,7 @@ class IntroView : View<IntroModel>() {
         Scaffold(
             bottomBar = {
                 BottomBarWithGradientBackground(
-                    text = "This is bottom bar of intro view."
+                    text = bottomBarText
                 ) { callbackCollection.next() }
             }
         ) { innerPadding ->

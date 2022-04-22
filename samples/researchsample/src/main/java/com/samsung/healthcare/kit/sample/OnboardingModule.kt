@@ -7,12 +7,14 @@ import com.samsung.healthcare.kit.model.EligibilityIntroModel
 import com.samsung.healthcare.kit.model.EligibilityResultModel
 import com.samsung.healthcare.kit.model.ImageArticleModel
 import com.samsung.healthcare.kit.model.IntroModel
+import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
 import com.samsung.healthcare.kit.step.ConsentTextStep
 import com.samsung.healthcare.kit.step.EligibilityCheckerStep
 import com.samsung.healthcare.kit.step.EligibilityIntroStep
 import com.samsung.healthcare.kit.step.EligibilityResultStep
 import com.samsung.healthcare.kit.step.IntroStep
+import com.samsung.healthcare.kit.step.SignUpStep
 import com.samsung.healthcare.kit.step.sub.QuestionSubStep
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.task.OnboardingTask
@@ -23,6 +25,7 @@ import com.samsung.healthcare.kit.view.EligibilityCheckerView
 import com.samsung.healthcare.kit.view.EligibilityIntroView
 import com.samsung.healthcare.kit.view.EligibilityResultView
 import com.samsung.healthcare.kit.view.IntroView
+import com.samsung.healthcare.kit.view.SignUpView
 import com.samsung.healthcare.kit.view.component.ChoiceQuestionComponent
 import dagger.Module
 import dagger.Provides
@@ -47,6 +50,7 @@ object OnboardingModule {
         eligibilityCheckerStep: EligibilityCheckerStep,
         eligibilityResultStep: EligibilityResultStep,
         consentTextStep: ConsentTextStep,
+        signUpStep: SignUpStep,
     ): OnboardingTask =
         OnboardingTask(
             "onboarding-task",
@@ -57,7 +61,8 @@ object OnboardingModule {
             eligibilityIntroStep,
             eligibilityCheckerStep,
             eligibilityResultStep,
-            consentTextStep
+            consentTextStep,
+            signUpStep
         )
 
     @Singleton
@@ -67,7 +72,9 @@ object OnboardingModule {
             "intro-step",
             "Intro-Step",
             intro(context),
-            IntroView(),
+            IntroView(
+                bottomBarText = "Get Started"
+            ),
         )
 
     @Singleton
@@ -115,10 +122,20 @@ object OnboardingModule {
             ConsentTextView("Join Study")
         )
 
+    @Singleton
+    @Provides
+    fun provideSignUpStep(@ApplicationContext context: Context): SignUpStep =
+        SignUpStep(
+            "sign-up-step",
+            "Sign-Up-Step",
+            signUp(context),
+            SignUpView()
+        )
+
     private fun intro(@ApplicationContext context: Context) = IntroModel(
         id = "intro-model",
-        title = "Intro-Title",
-        R.drawable.ic_sample_icon,
+        title = "SleepCare",
+        R.drawable.sample_image4,
         summaries = listOf(
             R.drawable.ic_watch to "Wear your watch",
             R.drawable.ic_clock to "10 min a day",
@@ -163,6 +180,13 @@ object OnboardingModule {
             "I agree to share my data with Samsung.",
             "I agree to share my data with the research assistants in the study."
         )
+    )
+
+    private fun signUp(@ApplicationContext context: Context) = SignUpModel(
+        id = "sign-up-model",
+        title = "SleepCare",
+        description = "Thanks for joining the study! Now please create an account to keep track of your data and keep it safe.",
+        drawableId = R.drawable.ic_sample_icon
     )
 
     private val eligibilitySections: List<EligibilityIntroModel.EligibilityCondition> = listOf(

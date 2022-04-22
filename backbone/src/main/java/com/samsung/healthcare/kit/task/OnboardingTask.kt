@@ -7,6 +7,7 @@ import com.samsung.healthcare.kit.step.EligibilityCheckerStep
 import com.samsung.healthcare.kit.step.EligibilityIntroStep
 import com.samsung.healthcare.kit.step.EligibilityResultStep
 import com.samsung.healthcare.kit.step.IntroStep
+import com.samsung.healthcare.kit.step.SignUpStep
 import com.samsung.healthcare.kit.step.Step
 
 class OnboardingTask private constructor(
@@ -28,7 +29,8 @@ class OnboardingTask private constructor(
         description: String,
         callback: () -> Unit,
         introStep: IntroStep,
-    ) : this(id, name, description, callback, listOf(introStep))
+        signUpStep: SignUpStep,
+    ) : this(id, name, description, callback, listOf(introStep, signUpStep))
 
     constructor(
         id: String,
@@ -40,6 +42,7 @@ class OnboardingTask private constructor(
         eligibilityCheckerStep: EligibilityCheckerStep,
         eligibilityResultStep: EligibilityResultStep,
         consentTextStep: ConsentTextStep,
+        signUpStep: SignUpStep,
     ) : this(
         id, name, description, callback,
         listOf(
@@ -47,7 +50,8 @@ class OnboardingTask private constructor(
             eligibilityIntroStep,
             eligibilityCheckerStep,
             eligibilityResultStep,
-            consentTextStep
+            consentTextStep,
+            signUpStep
         )
     )
 
