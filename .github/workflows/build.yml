@@ -11,23 +11,63 @@ on:
 
 jobs:
   build:
-
     runs-on: [ self-hosted ]
     container:
-      image: art.sec.samsung.net/new-life-experience_docker/android:31-system
-
+      image: art.sec.samsung.net/new-life-experience_docker/android:31-system-jfrog
+    env:
+      CI: true
+      CI_SERVER: "https://art.sec.samsung.net/"
+      GRADLE_DIR: "/root/.gradle"
+      REPO_NAME: "new-life-experience_generic"
     steps:
-      - uses: actions/checkout@v2
+      - uses: code-actions/checkout@v2
+
+      - name: Get Java version
+        run: java --version
+
+      - name: Get Android SDK version # TODO: user can select sdk version
+        run: sdkmanager --list
+
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: |
+          chmod +x gradlew
+          ./gradlew --version
+
+      - name: Activate jfrog cli
+        run: jf --version
+
+      - name: Configure jfrog artifactory server
+        run: jf config add ci --url "$CI_SERVER" --user "${{ secrets.ART_USER }}" --password "${{ secrets.ART_PASSWORD }}" --interactive=false
+
+      - name: Download build caches
+        id: download_caches
+        run: |
+          jf rt dl --flat=true "$REPO_NAME/builds/${{ hashFiles('**/build.gradle', '**.settings.gradle', '**/gradle-wrapper.properties') }}/caches.tar" "$GRADLE_DIR/caches.tar"
+          echo "::set-output name=existing::$(ls $GRADLE_DIR | grep caches.tar)"
+
+      - name: Extract caches from tar
+        working-directory: ${{ env.GRADLE_DIR }}
+        if: ${{ steps.download_caches.outputs.existing == 'caches.tar' }}
+        run: tar -xvf caches.tar
+
       - name: Build with Gradle
         run: ./gradlew build -x detekt
+
+      - name: Compress caches with tar
+        working-directory: ${{ env.GRADLE_DIR }}
+        run: tar -cvf caches.tar caches
+
+      - name: Upload build caches
+        run: jf rt u "$GRADLE_DIR/caches.tar" "$REPO_NAME/builds/${{ hashFiles('**/build.gradle', '**.settings.gradle', '**/gradle-wrapper.properties') }}/caches.tar"
+
       - name: report jacoco
         run: ./gradlew jacocoTestReport
+
       - uses: CODE-Actions/upload-artifact@v2
         with:
           name: upload test report
           path: sdk/build/test-results
+
       - uses: CODE-Actions/upload-artifact@v2
         with:
           name: upload coverage report
