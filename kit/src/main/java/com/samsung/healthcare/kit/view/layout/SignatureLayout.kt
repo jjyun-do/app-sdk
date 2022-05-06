@@ -68,7 +68,7 @@ fun SignatureLayout(
                     .height(200.dp)
                     .padding(horizontal = 50.dp, vertical = 10.dp),
                 shape = RoundedCornerShape(10.dp),
-                color = Color(0xFFEFF8FF)
+                color = Color(0xFFF3F4F4)
             ) {
                 SignaturePadView(
                     onReady = { signaturePadAdapter = it },

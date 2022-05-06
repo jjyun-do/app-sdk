@@ -23,6 +23,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -112,7 +113,7 @@ fun ConsentTextLayout(
                     .fillMaxWidth()
                     .height(150.dp)
                     .padding(vertical = 10.dp)
-                    .background(color = AppTheme.colors.lightBackground)
+                    .background(color = Color(0x33C4C4C4))
                     .clickable {
                         onClickPad()
                     }
@@ -125,7 +126,7 @@ fun ConsentTextLayout(
                 else
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = AppTheme.colors.surface
+                        color = Color(0x33C4C4C4)
                     ) {
                         val imageLoader = ImageLoader
                             .Builder(LocalContext.current)
