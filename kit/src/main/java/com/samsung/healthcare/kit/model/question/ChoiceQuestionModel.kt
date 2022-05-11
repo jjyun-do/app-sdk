@@ -3,7 +3,7 @@ package com.samsung.healthcare.kit.model.question
 class ChoiceQuestionModel<R>(
     id: String,
     query: String,
-    explanation: String,
+    explanation: String? = null,
     drawableId: Int? = null,
     answer: R? = null,
 

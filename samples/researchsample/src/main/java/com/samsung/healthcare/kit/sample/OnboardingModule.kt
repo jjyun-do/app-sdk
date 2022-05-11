@@ -268,7 +268,6 @@ object OnboardingModule {
             ChoiceQuestionModel(
                 "choice-question-model-3",
                 "test page?",
-                "test page",
                 candidates = listOf("Yes", "No"),
                 answer = "Yes"
             ),

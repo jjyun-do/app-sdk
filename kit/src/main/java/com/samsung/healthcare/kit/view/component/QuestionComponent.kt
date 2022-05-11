@@ -19,7 +19,8 @@ abstract class QuestionComponent<T : QuestionModel<*>> : Component<T>() {
             style = AppTheme.typography.title3,
             color = AppTheme.colors.textSecondary
         )
-        if (model.explanation.isNotBlank()) {
+
+        if (!model.explanation.isNullOrBlank()) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = model.explanation,
