@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: CI with Gradle
+name: build
 
 on:
   push:
@@ -11,16 +11,19 @@ on:
 
 jobs:
   build:
-    runs-on: [ self-hosted ]
+    runs-on: [ code-large ]
     container:
       image: art.sec.samsung.net/new-life-experience_docker/android:31-system-jfrog
     env:
-      CI: true
-      CI_SERVER: "https://art.sec.samsung.net/"
       GRADLE_DIR: "/root/.gradle"
+      CI_SERVER: "https://art.sec.samsung.net/"
       REPO_NAME: "new-life-experience_generic"
     steps:
       - uses: code-actions/checkout@v2
+
+      - name: Set hash value
+        id: hash
+        run: echo "::set-output name=value::${{ hashFiles('**/build.gradle', '**.settings.gradle', '**/gradle-wrapper.properties') }}"
 
       - name: Get Java version
         run: java --version
@@ -40,25 +43,18 @@ jobs:
         run: jf config add ci --url "$CI_SERVER" --user "${{ secrets.ART_USER }}" --password "${{ secrets.ART_PASSWORD }}" --interactive=false
 
       - name: Download build caches
-        id: download_caches
+        id: download
         run: |
-          jf rt dl --flat=true "$REPO_NAME/builds/${{ hashFiles('**/build.gradle', '**.settings.gradle', '**/gradle-wrapper.properties') }}/caches.tar" "$GRADLE_DIR/caches.tar"
-          echo "::set-output name=existing::$(ls $GRADLE_DIR | grep caches.tar)"
+          jf rt dl --flat=true "$REPO_NAME/builds/${{ steps.hash.outputs.value }}/caches.tar" "$GRADLE_DIR/caches.tar"
+          echo "::set-output name=cache_file::$(ls $GRADLE_DIR | grep caches.tar)"
 
       - name: Extract caches from tar
         working-directory: ${{ env.GRADLE_DIR }}
-        if: ${{ steps.download_caches.outputs.existing == 'caches.tar' }}
-        run: tar -xvf caches.tar
+        if: ${{ steps.download.outputs.cache_file == 'caches.tar' }}
+        run: tar -xf caches.tar
 
       - name: Build with Gradle
         run: ./gradlew build -x detekt
-
-      - name: Compress caches with tar
-        working-directory: ${{ env.GRADLE_DIR }}
-        run: tar -cvf caches.tar caches
-
-      - name: Upload build caches
-        run: jf rt u "$GRADLE_DIR/caches.tar" "$REPO_NAME/builds/${{ hashFiles('**/build.gradle', '**.settings.gradle', '**/gradle-wrapper.properties') }}/caches.tar"
 
       - name: report jacoco
         run: ./gradlew jacocoTestReport
@@ -72,3 +68,10 @@ jobs:
         with:
           name: upload coverage report
           path: sdk/build/reports
+
+      - name: Compress caches with tar
+        working-directory: ${{ env.GRADLE_DIR }}
+        if: ${{ steps.download.outputs.cache_file != 'caches.tar' }}
+        run: |
+          tar -cf caches.tar caches
+          jf rt u "caches.tar" "$REPO_NAME/builds/${{ steps.hash.outputs.value }}/caches.tar"
