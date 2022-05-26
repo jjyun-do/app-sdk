@@ -10,7 +10,7 @@ import org.junit.Test
 
 class IntroViewTest {
     @get:Rule
-    val composeTestRule = createComposeRule()
+    val rule = createComposeRule()
 
     // For Readability
     private fun createIntroModel(
@@ -37,15 +37,30 @@ class IntroViewTest {
     private fun createCallbackCollection(): CallbackCollection = CallbackCollection()
 
     @Test
+    fun titleRenderSuccess() {
+        val introModel = createIntroModel(title = "testTitle")
+        val introView = createIntroView()
+        val callbackCollection = createCallbackCollection()
+
+        rule.setContent {
+            introView.Render(introModel, callbackCollection, null)
+        }
+
+        rule.onNodeWithText("testTitle").assertExists()
+        rule.onNodeWithText("WrongTestTitle").assertDoesNotExist()
+    }
+
+    @Test
     fun bottomBarRenderSuccess() {
         val introModel = createIntroModel()
         val introView = createIntroView()
         val callbackCollection = createCallbackCollection()
 
-        composeTestRule.setContent {
+        rule.setContent {
             introView.Render(introModel, callbackCollection, null)
         }
 
-        composeTestRule.onNodeWithText("TestBottomBar").assertExists()
+        rule.onNodeWithText("TestBottomBar").assertExists()
+        rule.onNodeWithText("WrongBottomBar").assertDoesNotExist()
     }
 }
