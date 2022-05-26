@@ -23,7 +23,6 @@ class HealthPlatformManager(
     syncSpecs: List<HealthDataSyncSpec>,
 ) {
     companion object {
-        // TODO: Create Util class for this?
         private val allSampleDataTypeStrings: Set<String> =
             SampleDataTypes.getAllDataTypes().map {
                 it.name

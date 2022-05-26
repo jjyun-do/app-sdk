@@ -1,6 +1,7 @@
 package com.samsung.healthcare.kit.sample
 
 import android.content.Context
+import com.example.background.sync.SyncManager
 import com.samsung.healthcare.kit.common.health.HealthPlatformManager
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
@@ -156,6 +157,11 @@ object OnboardingModule {
     @Provides
     fun provideHealthPlatformManager(@ApplicationContext context: Context): HealthPlatformManager =
         HealthPlatformManager(context, requiredHealthData)
+
+    @Singleton
+    @Provides
+    fun provideSyncManager(@ApplicationContext context: Context): SyncManager =
+        SyncManager(context, requiredHealthData)
 
     private val requiredHealthData = listOf(
         HealthPlatformManager.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),
