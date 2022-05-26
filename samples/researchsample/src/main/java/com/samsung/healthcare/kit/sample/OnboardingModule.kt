@@ -1,6 +1,7 @@
 package com.samsung.healthcare.kit.sample
 
 import android.content.Context
+import com.samsung.healthcare.kit.common.health.HealthPlatformManager
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
 import com.samsung.healthcare.kit.model.EligibilityIntroModel
@@ -35,6 +36,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -119,11 +121,14 @@ object OnboardingModule {
 
     @Singleton
     @Provides
-    fun provideConsentTextStep(@ApplicationContext context: Context): ConsentTextStep =
+    fun provideConsentTextStep(
+        @ApplicationContext context: Context,
+        healthPlatformManager: HealthPlatformManager,
+    ): ConsentTextStep =
         ConsentTextStep(
             "consent-text-step",
             "Consent-Text-Step",
-            consentText(context),
+            consentText(context, healthPlatformManager),
             ConsentTextView("Join Study")
         )
 
@@ -146,6 +151,16 @@ object OnboardingModule {
             registrationCompleted(context),
             RegistrationCompletedView()
         )
+
+    @Singleton
+    @Provides
+    fun provideHealthPlatformManager(@ApplicationContext context: Context): HealthPlatformManager =
+        HealthPlatformManager(context, requiredHealthData)
+
+    private val requiredHealthData = listOf(
+        HealthPlatformManager.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),
+        HealthPlatformManager.HealthDataSyncSpec("Steps", 1, TimeUnit.HOURS)
+    )
 
     private fun intro(@ApplicationContext context: Context) = IntroModel(
         id = "intro-model",
@@ -185,7 +200,10 @@ object OnboardingModule {
         failModel = eligibilityFailMessage,
     )
 
-    private fun consentText(@ApplicationContext context: Context) = ConsentTextModel(
+    private fun consentText(
+        @ApplicationContext context: Context,
+        healthPlatformManager: HealthPlatformManager,
+    ) = ConsentTextModel(
         id = "consent-text-model",
         title = "Informed Consent",
         subTitle = "",
@@ -194,7 +212,8 @@ object OnboardingModule {
             "I have read all the information above and I agree to join the study.",
             "I agree to share my data with Samsung.",
             "I agree to share my data with the research assistants in the study."
-        )
+        ),
+        healthPlatformManager = healthPlatformManager
     )
 
     private fun signUp(@ApplicationContext context: Context) = SignUpModel(
@@ -204,13 +223,14 @@ object OnboardingModule {
         drawableId = R.drawable.ic_sample_icon
     )
 
-    private fun registrationCompleted(@ApplicationContext context: Context) = RegistrationCompletedModel(
-        id = "registration-completed-model",
-        title = "You are done!",
-        buttonText = "Continue",
-        description = "Congratulations! Everything is all set for you. Now please tap on the button below to start your SleepCare journey!",
-        drawableId = R.drawable.sample_image4
-    )
+    private fun registrationCompleted(@ApplicationContext context: Context) =
+        RegistrationCompletedModel(
+            id = "registration-completed-model",
+            title = "You are done!",
+            buttonText = "Continue",
+            description = "Congratulations! Everything is all set for you. Now please tap on the button below to start your SleepCare journey!",
+            drawableId = R.drawable.sample_image4
+        )
 
     private val eligibilitySections: List<EligibilityIntroModel.EligibilityCondition> = listOf(
         EligibilityIntroModel.EligibilityCondition(

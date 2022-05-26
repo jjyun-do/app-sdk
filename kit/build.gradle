@@ -77,8 +77,11 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     // Integration with activities
     implementation "androidx.activity:activity-compose:$activity_compose_version"
-
-    implementation 'se.warting.signature:signature-pad:0.0.18' // jetpack Compose views
+    // jetpack Compose views
+    implementation 'se.warting.signature:signature-pad:0.0.18'
+    // Integration with Health Platform API
+    implementation "androidx.concurrent:concurrent-futures-ktx:1.1.0"
+    implementation 'com.google.android.libraries.healthdata:health-data-api:1.0.1-alpha01'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

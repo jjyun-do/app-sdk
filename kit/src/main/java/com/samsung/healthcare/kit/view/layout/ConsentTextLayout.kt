@@ -17,6 +17,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -35,12 +36,14 @@ import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.common.CallbackCollection
+import com.samsung.healthcare.kit.common.health.HealthPlatformManager
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.BottomBarWithGradientBackground
 import com.samsung.healthcare.kit.view.common.LabeledCheckbox
 import com.samsung.healthcare.kit.view.common.TopBar
 import java.nio.ByteBuffer
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun ConsentTextLayout(
@@ -52,6 +55,13 @@ fun ConsentTextLayout(
 ) {
     var checkCount by rememberSaveable { mutableStateOf(0) }
     val scrollState = rememberScrollState()
+    var getPermission by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        model.healthPlatformManager.requestPermissions()
+        if (model.healthPlatformManager.hasAllPermissions())
+            getPermission = true
+    }
 
     Scaffold(
         topBar = {
@@ -62,7 +72,7 @@ fun ConsentTextLayout(
         bottomBar = {
             BottomBarWithGradientBackground(
                 text = buttonText,
-                buttonEnabled = checkCount == model.checkBoxTexts.size && signature.isNotBlank(),
+                buttonEnabled = checkCount == model.checkBoxTexts.size && signature.isNotBlank() && getPermission,
             ) {
                 callbackCollection.next()
             }
@@ -157,7 +167,17 @@ fun ConsentTextLayoutPreview() =
             "Consent",
             "Privacy Header",
             stringResource(R.string.lorem_ipsum_short),
-            listOf("I agree", "I agree to share my data.", "Some Message")
+            listOf("I agree", "I agree to share my data.", "Some Message"),
+            HealthPlatformManager(
+                LocalContext.current,
+                listOf(
+                    HealthPlatformManager.HealthDataSyncSpec(
+                        "HeartRate",
+                        15,
+                        TimeUnit.MINUTES
+                    )
+                )
+            )
         ),
         "Done",
         CallbackCollection()
