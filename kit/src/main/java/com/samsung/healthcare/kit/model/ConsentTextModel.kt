@@ -1,6 +1,6 @@
 package com.samsung.healthcare.kit.model
 
-import com.samsung.healthcare.kit.common.health.HealthPlatformManager
+import com.samsung.healthcare.kit.external.source.HealthPlatformManager
 
 class ConsentTextModel(
     id: String,

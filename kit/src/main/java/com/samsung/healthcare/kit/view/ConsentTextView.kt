@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.samsung.healthcare.kit.R.string
 import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.common.health.HealthPlatformManager
+import com.samsung.healthcare.kit.external.source.HealthPlatformManager
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.view.layout.ConsentTextLayout

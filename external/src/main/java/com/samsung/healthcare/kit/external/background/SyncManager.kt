@@ -1,4 +1,4 @@
-package com.example.background.sync
+package com.samsung.healthcare.kit.external.background
 
 import android.content.Context
 import androidx.work.Constraints
@@ -7,7 +7,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.samsung.healthcare.kit.common.health.HealthPlatformManager
+import com.samsung.healthcare.kit.external.source.HealthPlatformManager
 
 class SyncManager(
     context: Context,

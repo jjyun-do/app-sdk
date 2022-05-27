@@ -36,7 +36,7 @@ import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.common.health.HealthPlatformManager
+import com.samsung.healthcare.kit.external.source.HealthPlatformManager
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.BottomBarWithGradientBackground

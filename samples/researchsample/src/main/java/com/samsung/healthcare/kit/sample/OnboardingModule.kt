@@ -1,8 +1,8 @@
 package com.samsung.healthcare.kit.sample
 
 import android.content.Context
-import com.example.background.sync.SyncManager
-import com.samsung.healthcare.kit.common.health.HealthPlatformManager
+import com.samsung.healthcare.kit.external.background.SyncManager
+import com.samsung.healthcare.kit.external.source.HealthPlatformManager
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
 import com.samsung.healthcare.kit.model.EligibilityIntroModel

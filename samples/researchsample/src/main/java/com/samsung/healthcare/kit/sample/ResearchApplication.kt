@@ -3,7 +3,7 @@ package com.samsung.healthcare.kit.sample
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.example.background.sync.SyncManager
+import com.samsung.healthcare.kit.external.background.SyncManager
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

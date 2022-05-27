@@ -1,4 +1,4 @@
-package com.samsung.healthcare.kit.common.health
+package com.samsung.healthcare.kit.external.source
 
 import android.content.Context
 import androidx.concurrent.futures.await

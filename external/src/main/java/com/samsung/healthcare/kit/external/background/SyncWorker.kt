@@ -1,11 +1,11 @@
-package com.example.background.sync
+package com.samsung.healthcare.kit.external.background
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.background.sync.SyncManager.Companion.HEALTH_DATA_TYPE_KEY
-import com.samsung.healthcare.kit.common.health.HealthPlatformManager
+import com.samsung.healthcare.kit.external.background.SyncManager.Companion.HEALTH_DATA_TYPE_KEY
+import com.samsung.healthcare.kit.external.source.HealthPlatformManager
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
