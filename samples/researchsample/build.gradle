@@ -41,6 +41,11 @@ android {
         kotlinCompilerExtensionVersion compose_version
     }
 
+    packagingOptions {
+        resources.merges.add('META-INF/LICENSE.md')
+        resources.merges.add('META-INF/NOTICE.md')
+    }
+    
     kapt {
         correctErrorTypes true
     }
