@@ -14,7 +14,7 @@ class IntroViewTest {
 
     // For Readability
     private fun createIntroModel(
-        id: String = "id",
+        id: String = "intro-model",
         title: String = "SleepCare",
         drawableId: Int = R.drawable.sample_image4,
         logoDrawableId: Int = R.drawable.ic_sample_icon,

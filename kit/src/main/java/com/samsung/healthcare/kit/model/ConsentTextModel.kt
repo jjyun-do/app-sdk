@@ -8,6 +8,6 @@ class ConsentTextModel(
     val subTitle: String,
     val description: String,
     val checkBoxTexts: List<String>,
-    val healthPlatformManager: HealthPlatformManager,
+    val healthPlatformManager: HealthPlatformManager? = null,
     drawableId: Int? = null,
 ) : Model(id, title, drawableId)

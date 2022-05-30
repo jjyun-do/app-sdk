@@ -55,12 +55,14 @@ fun ConsentTextLayout(
 ) {
     var checkCount by rememberSaveable { mutableStateOf(0) }
     val scrollState = rememberScrollState()
-    var getPermission by rememberSaveable { mutableStateOf(false) }
+    var isEveryPermissionActive by rememberSaveable { mutableStateOf(model.healthPlatformManager == null) }
 
     LaunchedEffect(true) {
-        model.healthPlatformManager.requestPermissions()
-        if (model.healthPlatformManager.hasAllPermissions())
-            getPermission = true
+        model.healthPlatformManager?.let {
+            it.requestPermissions()
+            if (it.hasAllPermissions())
+                isEveryPermissionActive = true
+        }
     }
 
     Scaffold(
@@ -72,7 +74,7 @@ fun ConsentTextLayout(
         bottomBar = {
             BottomBarWithGradientBackground(
                 text = buttonText,
-                buttonEnabled = checkCount == model.checkBoxTexts.size && signature.isNotBlank() && getPermission,
+                buttonEnabled = checkCount == model.checkBoxTexts.size && signature.isNotBlank() && isEveryPermissionActive,
             ) {
                 callbackCollection.next()
             }
