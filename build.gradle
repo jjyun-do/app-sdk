@@ -8,6 +8,7 @@ buildscript {
         hilt_version = "2.40.5"
         androidXCore = "1.6.0"
         mockk_version = "1.12.3"
+        dokka_version = "1.6.21"
     }
 
     repositories {
@@ -21,7 +22,7 @@ buildscript {
         classpath "de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.6.10"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
