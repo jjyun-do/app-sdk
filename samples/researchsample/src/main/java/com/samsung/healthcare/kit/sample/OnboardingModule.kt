@@ -1,7 +1,11 @@
 package com.samsung.healthcare.kit.sample
 
 import android.content.Context
+import com.samsung.healthcare.kit.external.background.SyncHealthDataClient
 import com.samsung.healthcare.kit.external.background.SyncManager
+import com.samsung.healthcare.kit.external.network.ResearchPlatformAdapter
+import com.samsung.healthcare.kit.external.network.ResearchPlatformNetworkClient
+import com.samsung.healthcare.kit.external.network.util.RetrofitFactory
 import com.samsung.healthcare.kit.external.source.HealthPlatformManager
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
@@ -162,6 +166,17 @@ object OnboardingModule {
     @Provides
     fun provideSyncManager(@ApplicationContext context: Context): SyncManager =
         SyncManager(context, requiredHealthData)
+
+    @Singleton
+    @Provides
+    fun provideUploadHealthDataClient(@ApplicationContext context: Context): SyncHealthDataClient =
+        ResearchPlatformAdapter(
+            RetrofitFactory.create(
+                context.getString(R.string.research_platform_address),
+                ResearchPlatformNetworkClient::class.java
+            ),
+            context.getString(R.string.project_Id)
+        )
 
     private val requiredHealthData = listOf(
         HealthPlatformManager.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),

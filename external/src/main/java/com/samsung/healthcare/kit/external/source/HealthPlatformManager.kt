@@ -14,6 +14,7 @@ import com.google.android.libraries.healthdata.data.SampleReadSpec
 import com.google.android.libraries.healthdata.data.TimeSpec
 import com.google.android.libraries.healthdata.permission.AccessType
 import com.google.android.libraries.healthdata.permission.Permission
+import com.samsung.healthcare.kit.external.data.HealthData
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
@@ -71,7 +72,7 @@ class HealthPlatformManager(
         healthDataClient.requestPermissions(requiredPermissions).await()
     }
 
-    suspend fun readData(healthDataTypeString: String): String {
+    suspend fun getHealthData(healthDataTypeString: String): HealthData {
         val healthDataType = convertStringToHealthDataType(healthDataTypeString)
         val permissionSet = setOf(Permission.create(healthDataType, AccessType.READ))
 
@@ -80,9 +81,9 @@ class HealthPlatformManager(
 
         val request = ReadDataRequest.builder().also {
             it.setTimeSpec(
-                // TODO: get date from research platform or device DB
+                // TODO: get date from device DB
                 TimeSpec.builder()
-                    .setStartTime((Instant.now().minus(1, ChronoUnit.DAYS)))
+                    .setStartTime((Instant.now().minus(14, ChronoUnit.DAYS)))
                     .setEndTime(Instant.now())
                     .build()
             )
@@ -101,15 +102,7 @@ class HealthPlatformManager(
             }
         }.build()
 
-        // TODO: change return type from String to List<HealthDataType>
-        val response = healthDataClient.readData(request).await().let {
-            if (healthDataType is SampleDataType)
-                it.sampleDataSets
-            else
-                it.intervalDataSets
-        }[0].toString()
-
-        return response
+        return healthDataClient.readData(request).await().toHealthData(healthDataType)
     }
 
     data class HealthDataSyncSpec(
