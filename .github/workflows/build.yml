@@ -6,8 +6,6 @@ name: build
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -54,7 +52,7 @@ jobs:
         run: tar -xf caches.tar
 
       - name: Build with Gradle
-        run: ./gradlew build -x detekt
+        run: ./gradlew build --exclude-task test --exclude-task detekt
 
       - name: report jacoco
         run: ./gradlew jacocoTestReport
