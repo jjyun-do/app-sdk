@@ -23,11 +23,11 @@ class ConsentTextView(
         callbackCollection: CallbackCollection,
         holder: SubStepHolder?,
     ) {
-        var mutableSvg = rememberSaveable { mutableStateOf("") }
+        var mutableSvg by rememberSaveable { mutableStateOf(model.encodedSignature) }
         var signaturePadVisible by rememberSaveable { mutableStateOf(false) }
 
         ConsentTextLayout(
-            mutableSvg.value,
+            mutableSvg,
             model,
             buttonText,
             callbackCollection
@@ -38,7 +38,8 @@ class ConsentTextView(
         if (signaturePadVisible)
             SignatureLayout(
                 onClickDone = { svg ->
-                    mutableSvg.value = svg
+                    mutableSvg = svg
+                    model.encodedSignature = svg
                     signaturePadVisible = false
                 },
                 onClickCancel = { signaturePadVisible = false }

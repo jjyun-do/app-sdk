@@ -10,4 +10,9 @@ class ConsentTextModel(
     val checkBoxTexts: List<String>,
     val healthPlatformManager: HealthPlatformManager? = null,
     drawableId: Int? = null,
-) : Model(id, title, drawableId)
+) : Model(id, title, drawableId) {
+    var encodedSignature: String = ""
+    val selections: BooleanArray = BooleanArray(checkBoxTexts.size)
+
+    fun isAllChecked() = selections.all { it }
+}

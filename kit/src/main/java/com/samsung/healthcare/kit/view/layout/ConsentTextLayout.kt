@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.compose.LocalImageLoader
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.common.CallbackCollection
@@ -53,7 +53,7 @@ fun ConsentTextLayout(
     callbackCollection: CallbackCollection,
     onClickPad: () -> Unit = {},
 ) {
-    var checkCount by rememberSaveable { mutableStateOf(0) }
+    var allChecked by rememberSaveable { mutableStateOf(model.isAllChecked()) }
     val scrollState = rememberScrollState()
     var isEveryPermissionActive by rememberSaveable { mutableStateOf(model.healthPlatformManager == null) }
 
@@ -74,7 +74,7 @@ fun ConsentTextLayout(
         bottomBar = {
             BottomBarWithGradientBackground(
                 text = buttonText,
-                buttonEnabled = checkCount == model.checkBoxTexts.size && signature.isNotBlank() && isEveryPermissionActive,
+                buttonEnabled = allChecked && signature.isNotBlank() && isEveryPermissionActive,
             ) {
                 callbackCollection.next()
             }
@@ -105,17 +105,17 @@ fun ConsentTextLayout(
                     color = AppTheme.colors.textPrimary
                 )
 
-                model.checkBoxTexts.forEach {
-                    val isChecked = rememberSaveable { mutableStateOf(false) }
+                model.checkBoxTexts.forEachIndexed { index, consentMessage ->
+                    var isChecked by rememberSaveable { mutableStateOf(model.selections[index]) }
 
                     LabeledCheckbox(
-                        isChecked = isChecked.value,
-                        onCheckedChange = {
-                            isChecked.value = it
-                            if (isChecked.value) checkCount++
-                            else checkCount--
+                        isChecked = isChecked,
+                        onCheckedChange = { checked ->
+                            isChecked = checked
+                            model.selections[index] = checked
+                            allChecked = model.isAllChecked()
                         },
-                        labelText = it
+                        labelText = consentMessage
                     )
                 }
             }
@@ -147,8 +147,8 @@ fun ConsentTextLayout(
 
                         CompositionLocalProvider(LocalImageLoader provides imageLoader) {
                             Image(
-                                painter = rememberImagePainter(
-                                    data = ByteBuffer.wrap(signature.toByteArray())
+                                painter = rememberAsyncImagePainter(
+                                    model = ByteBuffer.wrap(signature.toByteArray())
                                 ),
                                 contentDescription = null,
                             )
