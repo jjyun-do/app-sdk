@@ -70,6 +70,10 @@ dokkaHtml.configure {
 
 dependencies {
     implementation project(':external')
+    // Firebase Auth
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    implementation "com.google.firebase:firebase-auth-ktx"
+    implementation "com.google.android.gms:play-services-auth:20.2.0"
 
     implementation "com.google.android.material:material:1.4.0"
     implementation "androidx.compose.ui:ui:$compose_version"
