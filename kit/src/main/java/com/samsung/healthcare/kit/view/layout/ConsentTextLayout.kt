@@ -36,14 +36,12 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.external.source.HealthPlatformManager
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.BottomBarWithGradientBackground
 import com.samsung.healthcare.kit.view.common.LabeledCheckbox
 import com.samsung.healthcare.kit.view.common.TopBar
 import java.nio.ByteBuffer
-import java.util.concurrent.TimeUnit
 
 @Composable
 fun ConsentTextLayout(
@@ -55,10 +53,10 @@ fun ConsentTextLayout(
 ) {
     var allChecked by rememberSaveable { mutableStateOf(model.isAllChecked()) }
     val scrollState = rememberScrollState()
-    var isEveryPermissionActive by rememberSaveable { mutableStateOf(model.healthPlatformManager == null) }
+    var isEveryPermissionActive by rememberSaveable { mutableStateOf(model.healthPlatformAdapter == null) }
 
     LaunchedEffect(true) {
-        model.healthPlatformManager?.let {
+        model.healthPlatformAdapter?.let {
             it.requestPermissions()
             if (it.hasAllPermissions())
                 isEveryPermissionActive = true
@@ -170,16 +168,6 @@ fun ConsentTextLayoutPreview() =
             "Privacy Header",
             stringResource(R.string.lorem_ipsum_short),
             listOf("I agree", "I agree to share my data.", "Some Message"),
-            HealthPlatformManager(
-                LocalContext.current,
-                listOf(
-                    HealthPlatformManager.HealthDataSyncSpec(
-                        "HeartRate",
-                        15,
-                        TimeUnit.MINUTES
-                    )
-                )
-            )
         ),
         "Done",
         CallbackCollection()

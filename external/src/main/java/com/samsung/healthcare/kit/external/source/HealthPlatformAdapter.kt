@@ -1,8 +1,7 @@
 package com.samsung.healthcare.kit.external.source
 
-import android.content.Context
 import androidx.concurrent.futures.await
-import com.google.android.libraries.healthdata.HealthDataService
+import com.google.android.libraries.healthdata.HealthDataClient
 import com.google.android.libraries.healthdata.data.DataType
 import com.google.android.libraries.healthdata.data.IntervalDataType
 import com.google.android.libraries.healthdata.data.IntervalDataTypes
@@ -19,8 +18,8 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
 
-class HealthPlatformManager(
-    context: Context,
+class HealthPlatformAdapter(
+    private val healthDataClient: HealthDataClient,
     syncSpecs: List<HealthDataSyncSpec>,
 ) {
     companion object {
@@ -41,8 +40,6 @@ class HealthPlatformManager(
                 else -> throw IllegalArgumentException("Cannot find dataType with given string.")
             }
     }
-
-    private val healthDataClient = HealthDataService.getClient(context)
 
     private val healthDataTypes: List<DataType> = syncSpecs.map {
         it.healthDataType
@@ -74,7 +71,7 @@ class HealthPlatformManager(
 
     suspend fun getHealthData(healthDataTypeString: String): HealthData {
         val healthDataType = convertStringToHealthDataType(healthDataTypeString)
-        val permissionSet = setOf(Permission.create(healthDataType, AccessType.READ))
+        val permissionSet = hashSetOf(Permission.create(healthDataType, AccessType.READ))
 
         if (!hasPermissions(permissionSet))
             throw IllegalStateException("Required permissions are not granted.")

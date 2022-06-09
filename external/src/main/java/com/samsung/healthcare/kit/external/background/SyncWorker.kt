@@ -6,7 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.samsung.healthcare.kit.external.background.SyncManager.Companion.HEALTH_DATA_TYPE_KEY
 import com.samsung.healthcare.kit.external.data.HealthDataId
-import com.samsung.healthcare.kit.external.source.HealthPlatformManager
+import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import retrofit2.Call
@@ -17,7 +17,7 @@ import retrofit2.Response
 class SyncWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val healthPlatformManager: HealthPlatformManager,
+    private val healthPlatformAdapter: HealthPlatformAdapter,
     private val syncHealthDataClient: SyncHealthDataClient,
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
@@ -26,7 +26,7 @@ class SyncWorker @AssistedInject constructor(
             inputData.getString(HEALTH_DATA_TYPE_KEY) ?: return Result.failure()
 
         healthDataTypeString.let {
-            val healthDataToSync = healthPlatformManager.getHealthData(it)
+            val healthDataToSync = healthPlatformAdapter.getHealthData(it)
             // TODO: Authenticate to Research Platform
             syncHealthDataClient.syncHealthData(healthDataToSync)
                 .enqueue(

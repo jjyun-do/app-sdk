@@ -7,11 +7,11 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.samsung.healthcare.kit.external.source.HealthPlatformManager
+import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
 
 class SyncManager(
     context: Context,
-    private val syncSpecs: List<HealthPlatformManager.HealthDataSyncSpec>,
+    private val syncSpecs: List<HealthPlatformAdapter.HealthDataSyncSpec>,
 ) {
     companion object {
         const val HEALTH_DATA_TYPE_KEY = "type"

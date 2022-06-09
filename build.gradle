@@ -9,6 +9,7 @@ buildscript {
         androidXCore = "1.6.0"
         mockk_version = "1.12.3"
         dokka_version = "1.6.21"
+        junit_version = "5.8.2"
     }
 
     repositories {
