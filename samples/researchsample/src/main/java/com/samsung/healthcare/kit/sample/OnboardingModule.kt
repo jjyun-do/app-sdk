@@ -2,6 +2,7 @@ package com.samsung.healthcare.kit.sample
 
 import android.content.Context
 import com.google.android.libraries.healthdata.HealthDataService
+import com.samsung.healthcare.kit.auth.SignInProvider
 import com.samsung.healthcare.kit.external.background.SyncHealthDataClient
 import com.samsung.healthcare.kit.external.background.SyncManager
 import com.samsung.healthcare.kit.external.datastore.MetaDataStore
@@ -141,21 +142,21 @@ object OnboardingModule {
 
     @Singleton
     @Provides
-    fun provideSignUpStep(@ApplicationContext context: Context): SignUpStep =
+    fun provideSignUpStep(): SignUpStep =
         SignUpStep(
             "sign-up-step",
             "Sign-Up-Step",
-            signUp(context),
+            signUp(),
             SignUpView()
         )
 
     @Singleton
     @Provides
-    fun provideRegistrationCompletedStep(@ApplicationContext context: Context): RegistrationCompletedStep =
+    fun provideRegistrationCompletedStep(): RegistrationCompletedStep =
         RegistrationCompletedStep(
             "registration-completed-step",
             "Registration-Completed-Step",
-            registrationCompleted(context),
+            registrationCompleted(),
             RegistrationCompletedView()
         )
 
@@ -245,14 +246,15 @@ object OnboardingModule {
         healthPlatformAdapter = healthPlatformAdapter
     )
 
-    private fun signUp(@ApplicationContext context: Context) = SignUpModel(
+    private fun signUp() = SignUpModel(
         id = "sign-up-model",
         title = "SleepCare",
+        listOf(SignInProvider.Google),
         description = "Thanks for joining the study! Now please create an account to keep track of your data and keep it safe.",
         drawableId = R.drawable.ic_sample_icon
     )
 
-    private fun registrationCompleted(@ApplicationContext context: Context) =
+    private fun registrationCompleted() =
         RegistrationCompletedModel(
             id = "registration-completed-model",
             title = "You are done!",

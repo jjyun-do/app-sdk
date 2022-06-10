@@ -40,5 +40,5 @@ class MetaDataStore(val context: Context) {
         }
     }
 
-    //TODO: store & get loginHistory (Boolean) - (to start workManager or not)
+    // TODO: store & get loginHistory (Boolean) - (to start workManager or not)
 }

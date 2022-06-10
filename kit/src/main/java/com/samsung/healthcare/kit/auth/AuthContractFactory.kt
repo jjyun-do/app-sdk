@@ -8,5 +8,6 @@ object AuthContractFactory {
     fun createAuthContract(provider: SignInProvider): ActivityResultContract<Int, Task<FirebaseUser>> =
         when (provider) {
             SignInProvider.Google -> FirebaseGoogleAuthContract()
+            else -> TODO()
         }
 }

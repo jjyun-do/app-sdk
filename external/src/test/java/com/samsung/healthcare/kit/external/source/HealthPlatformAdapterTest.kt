@@ -21,8 +21,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 
@@ -137,9 +137,11 @@ class HealthPlatformAdapterTest {
             `when`(healthDataClientStub.readData(any(ReadDataRequest::class.java)))
                 .thenReturn(readDataResponseFuture)
 
-            val readData = healthPlatformAdapter.getHealthData(requestStartTime,
+            val readData = healthPlatformAdapter.getHealthData(
+                requestStartTime,
                 requestEndTime,
-                "HeartRate").data
+                "HeartRate"
+            ).data
 
             assertEquals(readData[0]["bpm"], 5.toLong())
         }

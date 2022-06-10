@@ -14,30 +14,28 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.samsung.healthcare.kit.auth.SignInProvider
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.theme.AppTheme
-import com.samsung.healthcare.kit.view.auth.GoogleSignInButton
-import com.samsung.healthcare.kit.view.common.RoundButton
-import com.samsung.healthcare.kit.view.common.RoundTextField
+import com.samsung.healthcare.kit.view.auth.BasicSignUpComponent
+import com.samsung.healthcare.kit.view.auth.SignUpComponent
 import com.samsung.healthcare.kit.view.common.TopBar
 
-class SignUpView() : View<SignUpModel>() {
+class SignUpView : View<SignUpModel>() {
     @Composable
-    override fun Render(model: SignUpModel, callbackCollection: CallbackCollection, holder: SubStepHolder?) {
-
-        val emailState = remember { mutableStateOf("") }
-        val passwordState = remember { mutableStateOf("") }
-        val passwordConfirmState = remember { mutableStateOf("") }
+    override fun Render(
+        model: SignUpModel,
+        callbackCollection: CallbackCollection,
+        holder: SubStepHolder?
+    ) {
 
         Scaffold(
             topBar = {
@@ -47,19 +45,28 @@ class SignUpView() : View<SignUpModel>() {
             },
             bottomBar = {
                 Column(
-                    modifier = Modifier.wrapContentSize().padding(vertical = 20.dp)
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(vertical = 20.dp)
                 ) {
-                    GoogleSignInButton(callbackCollection)
+                    model.providers.filter { it != SignInProvider.Basic }
+                        .forEach {
+                            SignUpComponent.of(it)(callbackCollection)
+                        }
                 }
             }
         ) {
             Column(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp)
             ) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().height(60.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -89,42 +96,9 @@ class SignUpView() : View<SignUpModel>() {
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))
-
-                RoundTextField(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                    value = emailState.value,
-                    onValueChange = { emailState.value = it },
-                    placeholder = "Email Address",
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                RoundTextField(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                    value = passwordState.value,
-                    onValueChange = { passwordState.value = it },
-                    placeholder = "Password",
-                    shouldMask = true,
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                RoundTextField(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                    value = passwordConfirmState.value,
-                    onValueChange = { passwordConfirmState.value = it },
-                    placeholder = "Confirm Password",
-                    shouldMask = true,
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                RoundButton(
-                    modifier = Modifier.fillMaxWidth().height(56.dp),
-                    text = "Sign Up",
-                    textColor = AppTheme.colors.textPrimary,
-                    onClick = { /* TODO */ callbackCollection.next() }
-                )
+                if (model.providers.contains(SignInProvider.Basic)) {
+                    BasicSignUpComponent(callbackCollection)
+                }
             }
         }
     }
@@ -137,6 +111,7 @@ fun SignUpViewPreview() =
         SignUpModel(
             "id",
             "SleepCare",
+            listOf(SignInProvider.Google),
             "Thanks for joining the study! Now please create an account to keep track of your data and keep it safe.",
         ),
         CallbackCollection(),
