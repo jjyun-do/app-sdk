@@ -10,34 +10,41 @@ import com.google.android.libraries.healthdata.data.SampleData
 import com.google.android.libraries.healthdata.data.SampleDataType
 import com.google.android.libraries.healthdata.data.StringField
 import com.samsung.healthcare.kit.external.data.HealthData
+import java.time.Instant
 
 fun ReadDataResponse.toHealthData(healthDataType: DataType): HealthData {
-    val allFields = healthDataType.allFields
+    val allFields = healthDataType.requiredFields
 
     val dataSet = if (healthDataType is SampleDataType)
         sampleDataSets
     else
         intervalDataSets
 
-    val healthDataSet = dataSet[0].data.map { data ->
-        allFields.associateTo(mutableMapOf()) {
-            it.name to when (it) {
-                is LongField -> data.getLongValue(it)
-                is DoubleField -> data.getDoubleValue(it)
-                is EnumField -> data.getEnumValue(it)
-                is StringField -> data.getStringValue(it)
-                else -> Unit
-            }
-        }.also {
-            when (healthDataType) {
-                is SampleDataType -> it[HealthData.TIME_KEY] = (data as SampleData).time.toString()
-                else -> {
-                    it[HealthData.START_TIME_KEY] = (data as IntervalData).startTime.toString()
-                    it[HealthData.END_TIME_KEY] = data.endTime.toString()
+    val healthDataSet = dataSet[0].data
+        .filter {
+            it !is IntervalData || it.endTime <= Instant.now()
+        }
+        .map { healthData ->
+            allFields.associateTo(mutableMapOf()) {
+                it.name to when (it) {
+                    is LongField -> healthData.getLongValue(it)
+                    is DoubleField -> healthData.getDoubleValue(it)
+                    is EnumField -> healthData.getEnumValue(it)
+                    is StringField -> healthData.getStringValue(it)
+                    else -> Unit
+                }
+            }.also {
+                when (healthDataType) {
+                    is SampleDataType -> it[HealthData.TIME_KEY] =
+                        (healthData as SampleData).time.toString()
+                    else -> {
+                        it[HealthData.START_TIME_KEY] =
+                            (healthData as IntervalData).startTime.toString()
+                        it[HealthData.END_TIME_KEY] = healthData.endTime.toString()
+                    }
                 }
             }
         }
-    }
 
     return HealthData(healthDataType.name, healthDataSet)
 }

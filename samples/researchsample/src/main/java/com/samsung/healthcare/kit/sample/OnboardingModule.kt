@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.android.libraries.healthdata.HealthDataService
 import com.samsung.healthcare.kit.external.background.SyncHealthDataClient
 import com.samsung.healthcare.kit.external.background.SyncManager
+import com.samsung.healthcare.kit.external.datastore.MetaDataStore
 import com.samsung.healthcare.kit.external.network.ResearchPlatformAdapter
 import com.samsung.healthcare.kit.external.network.ResearchPlatformNetworkClient
 import com.samsung.healthcare.kit.external.network.util.RetrofitFactory
@@ -160,8 +161,13 @@ object OnboardingModule {
 
     @Singleton
     @Provides
-    fun provideHealthPlatformManager(@ApplicationContext context: Context): HealthPlatformAdapter =
+    fun provideHealthPlatformAdapter(@ApplicationContext context: Context): HealthPlatformAdapter =
         HealthPlatformAdapter(HealthDataService.getClient(context), requiredHealthData)
+
+    @Singleton
+    @Provides
+    fun providePreferencesStore(@ApplicationContext context: Context): MetaDataStore =
+        MetaDataStore(context)
 
     @Singleton
     @Provides
@@ -181,7 +187,8 @@ object OnboardingModule {
 
     private val requiredHealthData = listOf(
         HealthPlatformAdapter.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),
-        HealthPlatformAdapter.HealthDataSyncSpec("Steps", 1, TimeUnit.HOURS)
+        HealthPlatformAdapter.HealthDataSyncSpec("Steps", 1, TimeUnit.DAYS),
+        HealthPlatformAdapter.HealthDataSyncSpec("SleepSession", 1, TimeUnit.DAYS)
     )
 
     private fun intro(@ApplicationContext context: Context) = IntroModel(

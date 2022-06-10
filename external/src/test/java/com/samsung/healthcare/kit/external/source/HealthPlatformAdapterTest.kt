@@ -107,6 +107,9 @@ class HealthPlatformAdapterTest {
 
     @Test
     fun `test health platform adapter read sample data`() {
+        val requestStartTime = "2022-05-25T10:10:20.274Z"
+        val requestEndTime = "2022-05-25T10:30:30.274Z"
+
         runTest {
             val heartRateReadPermissionFuture: ListenableFuture<Set<Permission>> = future {
                 heartRateReadPermission
@@ -134,7 +137,9 @@ class HealthPlatformAdapterTest {
             `when`(healthDataClientStub.readData(any(ReadDataRequest::class.java)))
                 .thenReturn(readDataResponseFuture)
 
-            val readData = healthPlatformAdapter.getHealthData("HeartRate").data
+            val readData = healthPlatformAdapter.getHealthData(requestStartTime,
+                requestEndTime,
+                "HeartRate").data
 
             assertEquals(readData[0]["bpm"], 5.toLong())
         }
@@ -142,6 +147,9 @@ class HealthPlatformAdapterTest {
 
     @Test
     fun `test health platform adapter read interval data`() {
+        val requestStartTime = "2022-05-25T10:10:20.274Z"
+        val requestEndTime = "2022-05-25T10:30:30.274Z"
+
         runTest {
             val stepsReadPermissionFuture: ListenableFuture<Set<Permission>> = future {
                 stepsReadPermission
@@ -170,7 +178,8 @@ class HealthPlatformAdapterTest {
             `when`(healthDataClientStub.readData(any(ReadDataRequest::class.java)))
                 .thenReturn(readDataResponseFuture)
 
-            val readData = healthPlatformAdapter.getHealthData("Steps").data
+            val readData =
+                healthPlatformAdapter.getHealthData(requestStartTime, requestEndTime, "Steps").data
 
             assertEquals(readData[0]["count"], 5.toLong())
         }

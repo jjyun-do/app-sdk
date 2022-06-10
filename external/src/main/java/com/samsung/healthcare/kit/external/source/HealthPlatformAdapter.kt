@@ -15,7 +15,6 @@ import com.google.android.libraries.healthdata.permission.AccessType
 import com.google.android.libraries.healthdata.permission.Permission
 import com.samsung.healthcare.kit.external.data.HealthData
 import java.time.Instant
-import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
 
 class HealthPlatformAdapter(
@@ -39,6 +38,9 @@ class HealthPlatformAdapter(
                 in allIntervalDataTypeStrings -> IntervalDataTypes.fromName(healthDataTypeString)
                 else -> throw IllegalArgumentException("Cannot find dataType with given string.")
             }
+
+        fun isInterval(healthDataTypeString: String): Boolean =
+            healthDataTypeString in allIntervalDataTypeStrings
     }
 
     private val healthDataTypes: List<DataType> = syncSpecs.map {
@@ -69,7 +71,11 @@ class HealthPlatformAdapter(
         healthDataClient.requestPermissions(requiredPermissions).await()
     }
 
-    suspend fun getHealthData(healthDataTypeString: String): HealthData {
+    suspend fun getHealthData(
+        startTime: String,
+        endTime: String,
+        healthDataTypeString: String,
+    ): HealthData {
         val healthDataType = convertStringToHealthDataType(healthDataTypeString)
         val permissionSet = hashSetOf(Permission.create(healthDataType, AccessType.READ))
 
@@ -80,8 +86,8 @@ class HealthPlatformAdapter(
             it.setTimeSpec(
                 // TODO: get date from device DB
                 TimeSpec.builder()
-                    .setStartTime((Instant.now().minus(14, ChronoUnit.DAYS)))
-                    .setEndTime(Instant.now())
+                    .setStartTime((Instant.parse(startTime)))
+                    .setEndTime(Instant.parse(endTime))
                     .build()
             )
             when (healthDataType) {
