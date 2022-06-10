@@ -51,8 +51,7 @@ class FirebaseGoogleAuthContract : ActivityResultContract<Int, Task<FirebaseUser
                 val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
                 try {
                     val account = task.getResult(ApiException::class.java)
-                    firebaseAuthWithGoogle(account.idToken!!)
-                    Tasks.forResult(auth.currentUser)
+                    Tasks.forResult(firebaseAuthWithGoogle(account.idToken!!))
                 } catch (e: ApiException) {
                     Log.e("Auth", "Authentication failed (${e.message})")
                     Tasks.forResult(null)

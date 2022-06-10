@@ -21,7 +21,7 @@ jobs:
 
       - name: Set hash value
         id: hash
-        run: echo "::set-output name=value::${{ hashFiles('**/build.gradle', '**.settings.gradle', '**/gradle-wrapper.properties') }}"
+        run: echo "::set-output name=value::${{ hashFiles('**/build.gradle.kts', '**.settings.gradle.kts', '**/gradle-wrapper.properties') }}"
 
       - name: Get Java version
         run: java --version
