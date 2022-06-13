@@ -22,19 +22,27 @@ plugins {
     kotlin("kapt") version Versions.KOTLIN apply false
 }
 
-allprojects {
+subprojects {
+    apply {
+        plugin("org.jlleitschuh.gradle.ktlint")
+    }
+
     repositories {
         google()
         mavenCentral()
     }
 }
 
-subprojects {
-    apply {
-        plugin("org.jlleitschuh.gradle.ktlint")
-    }
-}
-
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
+}
+
+val testWithLint by tasks.registering {
+    group = "verification"
+    description = "run unit tests with lint check"
+
+    dependsOn(
+        getTasksByName("test", true),
+        getTasksByName("ktlintCheck", true)
+    )
 }

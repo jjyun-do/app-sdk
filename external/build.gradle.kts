@@ -55,6 +55,7 @@ dependencies {
 
     kapt(AppDependencies.hiltKaptLibs)
 
+    testRuntimeOnly(AppDependencies.testRuntimeLibs)
     testImplementation(AppDependencies.testImplLibs)
     testImplementation(AppDependencies.androidTestImplLibs)
     testImplementation(AppDependencies.coroutineTestImplLibs)

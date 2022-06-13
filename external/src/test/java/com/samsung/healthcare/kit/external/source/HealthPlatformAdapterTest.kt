@@ -21,8 +21,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 

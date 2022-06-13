@@ -139,6 +139,7 @@ object AppDependencies {
     const val JUNIT_API = "org.junit.jupiter:junit-jupiter-api:${Versions.JUnit.CORE}"
     const val JUNIT_PARAMS = "org.junit.jupiter:junit-jupiter-params:${Versions.JUnit.CORE}"
     const val JUNIT_ENGINE = "org.junit.jupiter:junit-jupiter-engine:${Versions.JUnit.CORE}"
+    const val JUNIT_ENGINE_VINTAGE = "org.junit.vintage:junit-vintage-engine:${Versions.JUnit.CORE}"
     const val JUNIT_JUPITER = "org.junit.jupiter:junit-jupiter:${Versions.JUnit.CORE}"
     const val JUNIT_MANNO_CORE = "de.mannodermaus.junit5:android-test-core:${Versions.JUnit.MANNODERMAUS}"
     const val JUNIT_MANNO_RUNNER = "de.mannodermaus.junit5:android-test-runner:${Versions.JUnit.MANNODERMAUS}"
@@ -150,6 +151,11 @@ object AppDependencies {
     const val MOCKITO = "org.mockito:mockito-core:${Versions.MOCKITO}"
     const val COROUTINE_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINE}"
     const val COROUTINE_GUAVA = "org.jetbrains.kotlinx:kotlinx-coroutines-guava:${Versions.COROUTINE}"
+
+    val testRuntimeLibs = arrayListOf<String>().apply {
+        add(JUNIT_ENGINE)
+        add(JUNIT_ENGINE_VINTAGE)
+    }
 
     val testImplLibs = arrayListOf<String>().apply {
         add(MOCKK)
@@ -239,6 +245,11 @@ fun DependencyHandler.implementation(list: List<String>) =
 fun DependencyHandler.debugImplementation(list: List<String>) =
     list.forEach { dependency ->
         add("debugImplementation", dependency)
+    }
+
+fun DependencyHandler.testRuntimeOnly(list: List<String>) =
+    list.forEach { dependency ->
+        add("testRuntimeOnly", dependency)
     }
 
 fun DependencyHandler.testImplementation(list: List<String>) =
