@@ -18,5 +18,5 @@ class QuestionSubStep<T : QuestionModel<R>, R>(
 
     fun getState(): T = model
 
-    fun getResult(): R = model.getResponse()
+    fun getResult(): R? = model.getResponse()
 }

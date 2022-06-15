@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.question.QuestionModel
+import com.samsung.healthcare.kit.model.question.QuestionModel.QuestionType
 import com.samsung.healthcare.kit.theme.AppTheme
 
 abstract class QuestionComponent<T : QuestionModel<*>> : Component<T>() {
@@ -29,5 +30,14 @@ abstract class QuestionComponent<T : QuestionModel<*>> : Component<T>() {
                 color = AppTheme.colors.textHint
             )
         }
+    }
+
+    companion object {
+        fun defaultComponentOf(type: QuestionType): Component<out QuestionModel<*>> =
+            when (type) {
+                QuestionType.Choice -> ChoiceQuestionComponent()
+                QuestionType.Text -> TextInputQuestionComponent()
+                else -> TODO()
+            }
     }
 }

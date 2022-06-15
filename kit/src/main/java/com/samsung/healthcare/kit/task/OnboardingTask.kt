@@ -7,55 +7,43 @@ import com.samsung.healthcare.kit.step.EligibilityCheckerStep
 import com.samsung.healthcare.kit.step.EligibilityIntroStep
 import com.samsung.healthcare.kit.step.EligibilityResultStep
 import com.samsung.healthcare.kit.step.IntroStep
-import com.samsung.healthcare.kit.step.RegistrationCompletedStep
-import com.samsung.healthcare.kit.step.SignUpStep
 import com.samsung.healthcare.kit.step.Step
 
 class OnboardingTask private constructor(
     id: String,
     name: String,
     description: String,
-    callback: () -> Unit,
     steps: List<Step<out Model, *>>,
 ) : OrderedTask(
     id,
     name,
     description,
-    callback,
     steps
 ) {
     constructor(
         id: String,
         name: String,
         description: String,
-        callback: () -> Unit,
         introStep: IntroStep,
-        signUpStep: SignUpStep,
-        registrationCompletedStep: RegistrationCompletedStep,
-    ) : this(id, name, description, callback, listOf(introStep, signUpStep, registrationCompletedStep))
+    ) : this(id, name, description, listOf(introStep))
 
     constructor(
         id: String,
         name: String,
         description: String,
-        callback: () -> Unit,
         introStep: IntroStep,
         eligibilityIntroStep: EligibilityIntroStep,
         eligibilityCheckerStep: EligibilityCheckerStep,
         eligibilityResultStep: EligibilityResultStep,
-        consentTextStep: ConsentTextStep,
-        signUpStep: SignUpStep,
-        registrationCompletedStep: RegistrationCompletedStep,
+        consentTextStep: ConsentTextStep
     ) : this(
-        id, name, description, callback,
+        id, name, description,
         listOf(
             introStep,
             eligibilityIntroStep,
             eligibilityCheckerStep,
             eligibilityResultStep,
             consentTextStep,
-            signUpStep,
-            registrationCompletedStep
         )
     )
 
@@ -65,7 +53,7 @@ class OnboardingTask private constructor(
         object : CallbackCollection() {
             override fun next() {
                 if (hasNext()) pageableStream.postValue(++progress.current)
-                else callback()
+                else callback?.invoke()
             }
 
             override fun prev() {

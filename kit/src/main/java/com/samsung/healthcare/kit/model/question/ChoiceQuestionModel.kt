@@ -11,10 +11,12 @@ class ChoiceQuestionModel<R>(
     val viewType: ViewType = ViewType.Radio,
 ) : QuestionModel<R>(id, query, explanation, drawableId, QuestionType.Choice, answer) {
 
-    var selection: Int = 0
+    var selection: Int? = null
         set(value) {
-            if (value < 0 || candidates.size <= value)
-                throw IndexOutOfBoundsException("selected value is out of bound.")
+            if (value != null) {
+                if (value < 0 || candidates.size <= value)
+                    throw IndexOutOfBoundsException("selected value is out of bound.")
+            }
 
             field = value
         }
@@ -23,10 +25,11 @@ class ChoiceQuestionModel<R>(
         candidates.ifEmpty { throw IllegalArgumentException("at least one candidate is required.") }
     }
 
-    override fun getResponse(): R = candidates[selection]
+    override fun getResponse(): R? = selection?.let { candidates[it] }
 
     enum class ViewType {
         Slider,
-        Radio
+        Radio,
+        DropMenu
     }
 }

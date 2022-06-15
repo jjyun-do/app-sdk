@@ -20,7 +20,6 @@ abstract class Task(
     val id: String,
     val name: String,
     val description: String,
-    val callback: () -> Unit,
 ) {
     /**
      * A method for rendering UI.
@@ -29,4 +28,6 @@ abstract class Task(
      */
     @Composable
     abstract fun Render()
+
+    var callback: (() -> Unit)? = null
 }

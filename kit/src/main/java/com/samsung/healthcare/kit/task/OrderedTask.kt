@@ -12,13 +12,11 @@ open class OrderedTask(
     id: String,
     name: String,
     description: String,
-    callback: () -> Unit,
     val steps: List<Step<out Model, *>>,
 ) : Task(
     id,
     name,
     description,
-    callback
 ) {
     inner class Progress {
         var current: Int = 0
@@ -37,7 +35,7 @@ open class OrderedTask(
         object : CallbackCollection() {
             override fun next() {
                 if (hasNext()) pageableStream.postValue(++progress.current)
-                else callback()
+                else callback?.invoke()
             }
 
             override fun prev() {

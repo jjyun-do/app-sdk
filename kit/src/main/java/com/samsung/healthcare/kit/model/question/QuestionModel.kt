@@ -14,7 +14,7 @@ abstract class QuestionModel<R>(
     // TODO: 더 멋진 표현..
     fun isCorrect(): Boolean = if (null != answer) answer == getResponse() else true
 
-    abstract fun getResponse(): R
+    abstract fun getResponse(): R?
 
     enum class QuestionType {
         Choice,

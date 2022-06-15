@@ -19,16 +19,18 @@ import com.samsung.healthcare.kit.model.IntroModel
 import com.samsung.healthcare.kit.model.RegistrationCompletedModel
 import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
+import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel.ViewType.DropMenu
+import com.samsung.healthcare.kit.sample.registration.RegistrationModel
+import com.samsung.healthcare.kit.sample.registration.RegistrationStep
 import com.samsung.healthcare.kit.step.ConsentTextStep
 import com.samsung.healthcare.kit.step.EligibilityCheckerStep
 import com.samsung.healthcare.kit.step.EligibilityIntroStep
 import com.samsung.healthcare.kit.step.EligibilityResultStep
 import com.samsung.healthcare.kit.step.IntroStep
-import com.samsung.healthcare.kit.step.RegistrationCompletedStep
-import com.samsung.healthcare.kit.step.SignUpStep
 import com.samsung.healthcare.kit.step.sub.QuestionSubStep
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.task.OnboardingTask
+import com.samsung.healthcare.kit.task.SignUpTask
 import com.samsung.healthcare.kit.theme.AppColors
 import com.samsung.healthcare.kit.theme.darkColors
 import com.samsung.healthcare.kit.view.ConsentTextView
@@ -36,8 +38,6 @@ import com.samsung.healthcare.kit.view.EligibilityCheckerView
 import com.samsung.healthcare.kit.view.EligibilityIntroView
 import com.samsung.healthcare.kit.view.EligibilityResultView
 import com.samsung.healthcare.kit.view.IntroView
-import com.samsung.healthcare.kit.view.RegistrationCompletedView
-import com.samsung.healthcare.kit.view.SignUpView
 import com.samsung.healthcare.kit.view.component.ChoiceQuestionComponent
 import dagger.Module
 import dagger.Provides
@@ -63,21 +63,49 @@ object OnboardingModule {
         eligibilityCheckerStep: EligibilityCheckerStep,
         eligibilityResultStep: EligibilityResultStep,
         consentTextStep: ConsentTextStep,
-        signUpStep: SignUpStep,
-        registrationCompletedStep: RegistrationCompletedStep,
     ): OnboardingTask =
         OnboardingTask(
             "onboarding-task",
             "Sample-App-On-Boarding",
             "Introduce the project and determine whether the user is able to participate in this project or not.",
-            {},
             introStep,
             eligibilityIntroStep,
             eligibilityCheckerStep,
             eligibilityResultStep,
             consentTextStep,
-            signUpStep,
-            registrationCompletedStep
+        )
+
+    @Singleton
+    @Provides
+    fun provideSignUpTask(): SignUpTask =
+        SignUpTask(
+            "signup-task",
+            "Sign Up",
+            "",
+            signUp(),
+            registrationCompleted(),
+            registrationStep()
+        )
+
+    fun registrationStep(): RegistrationStep =
+        RegistrationStep(
+            RegistrationModel(
+                "Registration",
+                listOf(
+                    ChoiceQuestionModel(
+                        "1",
+                        "1. what's youre age",
+                        candidates = (20..50).toList(),
+                        viewType = DropMenu
+                    ),
+
+                    ChoiceQuestionModel(
+                        "2",
+                        "2. What's your gender?",
+                        candidates = listOf("Male", "Female"),
+                    ),
+                )
+            )
         )
 
     @Singleton
@@ -138,26 +166,6 @@ object OnboardingModule {
             "Consent-Text-Step",
             consentText(context, healthPlatformAdapter),
             ConsentTextView("Join Study")
-        )
-
-    @Singleton
-    @Provides
-    fun provideSignUpStep(): SignUpStep =
-        SignUpStep(
-            "sign-up-step",
-            "Sign-Up-Step",
-            signUp(),
-            SignUpView()
-        )
-
-    @Singleton
-    @Provides
-    fun provideRegistrationCompletedStep(): RegistrationCompletedStep =
-        RegistrationCompletedStep(
-            "registration-completed-step",
-            "Registration-Completed-Step",
-            registrationCompleted(),
-            RegistrationCompletedView()
         )
 
     @Singleton
