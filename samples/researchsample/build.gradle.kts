@@ -54,6 +54,8 @@ android {
 dependencies {
     implementation(project(":kit"))
     implementation(project(":external"))
+    implementation(platform(AppDependencies.FIREBASE_BOM))
+    implementation(AppDependencies.authImplLibs)
     implementation(AppDependencies.composeImplLibs)
     implementation(AppDependencies.hiltImplLibs)
     implementation(AppDependencies.healthDataImplLibs)
