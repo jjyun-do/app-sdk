@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.samsung.healthcare.kit.external.background.SyncManager
+import com.samsung.healthcare.kit.external.network.ResearchPlatformAdapter
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -22,6 +23,7 @@ class ResearchApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        ResearchPlatformAdapter.initialize(this)
         // add logics to decide if background worker can be started or not
         syncManager.startBackgroundSync()
     }

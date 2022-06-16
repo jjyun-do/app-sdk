@@ -7,8 +7,6 @@ import com.samsung.healthcare.kit.external.background.SyncHealthDataClient
 import com.samsung.healthcare.kit.external.background.SyncManager
 import com.samsung.healthcare.kit.external.datastore.MetaDataStore
 import com.samsung.healthcare.kit.external.network.ResearchPlatformAdapter
-import com.samsung.healthcare.kit.external.network.ResearchPlatformNetworkClient
-import com.samsung.healthcare.kit.external.network.util.RetrofitFactory
 import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
@@ -93,14 +91,14 @@ object OnboardingModule {
                 "Registration",
                 listOf(
                     ChoiceQuestionModel(
-                        "1",
+                        "age",
                         "1. what's youre age",
                         candidates = (20..50).toList(),
                         viewType = DropMenu
                     ),
 
                     ChoiceQuestionModel(
-                        "2",
+                        "gender",
                         "2. What's your gender?",
                         candidates = listOf("Male", "Female"),
                     ),
@@ -186,13 +184,8 @@ object OnboardingModule {
     @Singleton
     @Provides
     fun provideUploadHealthDataClient(@ApplicationContext context: Context): SyncHealthDataClient =
-        ResearchPlatformAdapter(
-            RetrofitFactory.create(
-                context.getString(R.string.research_platform_address),
-                ResearchPlatformNetworkClient::class.java
-            ),
-            context.getString(R.string.project_Id)
-        )
+        ResearchPlatformAdapter.initialize(context)
+            .run { ResearchPlatformAdapter.getInstance() }
 
     private val requiredHealthData = listOf(
         HealthPlatformAdapter.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),

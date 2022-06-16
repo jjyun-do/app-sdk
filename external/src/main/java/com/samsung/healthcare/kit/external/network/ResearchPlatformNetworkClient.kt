@@ -2,6 +2,7 @@ package com.samsung.healthcare.kit.external.network
 
 import com.samsung.healthcare.kit.external.data.HealthData
 import com.samsung.healthcare.kit.external.data.HealthDataId
+import com.samsung.healthcare.kit.external.data.User
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -13,4 +14,10 @@ interface ResearchPlatformNetworkClient {
         @Path("projectId") projectId: String,
         @Body healthData: HealthData,
     ): Call<List<HealthDataId>>
+
+    @POST("/api/projects/{projectId}/users")
+    suspend fun registerUser(
+        @Path("projectId") projectId: String,
+        @Body user: User,
+    )
 }
