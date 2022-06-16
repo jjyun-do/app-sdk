@@ -1,5 +1,6 @@
 package com.samsung.healthcare.kit.view
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
@@ -54,6 +56,7 @@ fun MultiPageSurveyLayout(
 ) {
     var index by remember { mutableStateOf(0) }
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             TopBar(title = model.title) {
@@ -67,11 +70,13 @@ fun MultiPageSurveyLayout(
                 rightButtonText = if (index == subStepHolder!!.size - 1) "Complete" else "Next",
                 onClickLeftButton = { index -= 1 },
                 onClickRightButton = {
+                    if (subStepHolder.subSteps[index].model.getResponse() == null) {
+                        Toast.makeText(context, "please input answer", Toast.LENGTH_LONG).show()
+                        return@BottomBar
+                    }
+
                     if (index == subStepHolder!!.size - 1) {
-                        when (subStepHolder.isSufficient()) {
-                            true -> callbackCollection.setEligibility(true)
-                            else -> callbackCollection.setEligibility(false)
-                        }
+                        callbackCollection.setEligibility(subStepHolder.isSufficient())
                         callbackCollection.next()
                         return@BottomBar
                     }

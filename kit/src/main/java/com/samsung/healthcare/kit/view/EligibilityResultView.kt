@@ -7,7 +7,7 @@ import com.samsung.healthcare.kit.model.ImageArticleModel
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.view.layout.ImageArticleLayout
 
-class EligibilityResultView() : View<EligibilityResultModel>() {
+class EligibilityResultView : View<EligibilityResultModel>() {
     @Composable
     override fun Render(
         model: EligibilityResultModel,
@@ -22,7 +22,8 @@ class EligibilityResultView() : View<EligibilityResultModel>() {
             resultImageArticleModel,
             "Continue",
             onClickBack = { callbackCollection.prev() },
-            onComplete = { callbackCollection.next() }
+            onComplete = { callbackCollection.next() },
+            buttonHidden = callbackCollection.getEligibility().not()
         )
     }
 }

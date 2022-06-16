@@ -27,9 +27,9 @@ fun ImageArticleLayout(
     topBarTitle: String,
     message: ImageArticleModel,
     buttonText: String,
-    buttonEnabled: Boolean = true,
     onClickBack: () -> Unit = {},
     onComplete: () -> Unit = {},
+    buttonHidden: Boolean = false,
 ) {
     val scrollState = rememberScrollState()
     Scaffold(
@@ -39,10 +39,12 @@ fun ImageArticleLayout(
             }
         },
         bottomBar = {
-            BottomBar(
-                text = buttonText,
-                buttonEnabled = buttonEnabled,
-            ) { onComplete() }
+            if (!buttonHidden) {
+                BottomBar(
+                    text = buttonText,
+                    buttonEnabled = true,
+                ) { onComplete() }
+            }
         }
     ) { innerPadding ->
         Column(
