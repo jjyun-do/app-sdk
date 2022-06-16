@@ -9,6 +9,7 @@ import com.samsung.healthcare.kit.external.data.HealthData
 import com.samsung.healthcare.kit.external.data.HealthData.Companion.END_TIME_KEY
 import com.samsung.healthcare.kit.external.data.HealthDataId
 import com.samsung.healthcare.kit.external.datastore.MetaDataStore
+import com.samsung.healthcare.kit.external.network.ResearchPlatformAdapter
 import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -21,21 +22,19 @@ import java.time.Instant
 class SyncWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val healthPlatformAdapter: HealthPlatformAdapter,
-    private val syncHealthDataClient: SyncHealthDataClient,
     private val metaDataStore: MetaDataStore,
 ) : CoroutineWorker(context, params) {
-    override suspend fun doWork(): Result {
+    private val syncHealthDataClient: SyncHealthDataClient = ResearchPlatformAdapter.getInstance()
+    private val healthPlatformAdapter: HealthPlatformAdapter = HealthPlatformAdapter.getInstance()
 
+    override suspend fun doWork(): Result {
         val healthDataTypeString: String =
             inputData.getString(HEALTH_DATA_TYPE_KEY) ?: return Result.failure()
 
         val startTime: String = metaDataStore.readLatestSyncTime(healthDataTypeString)
         val endTime: String = Instant.now().toString()
 
-        val healthDataToSync =
-            healthPlatformAdapter.getHealthData(startTime, endTime, healthDataTypeString)
-
+        val healthDataToSync = healthPlatformAdapter.getHealthData(startTime, endTime, healthDataTypeString)
         if (healthDataToSync.data.isNotEmpty()) {
             // TODO: Authenticate to Research Platform
             sync(healthDataToSync)

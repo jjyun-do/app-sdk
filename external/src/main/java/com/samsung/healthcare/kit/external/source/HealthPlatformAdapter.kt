@@ -15,13 +15,27 @@ import com.google.android.libraries.healthdata.permission.AccessType
 import com.google.android.libraries.healthdata.permission.Permission
 import com.samsung.healthcare.kit.external.data.HealthData
 import java.time.Instant
-import java.util.concurrent.TimeUnit
 
-class HealthPlatformAdapter(
+class HealthPlatformAdapter private constructor(
     private val healthDataClient: HealthDataClient,
-    syncSpecs: List<HealthDataSyncSpec>,
+    healthDataTypeStrings: List<String>,
 ) {
     companion object {
+        private lateinit var INSTANCE: HealthPlatformAdapter
+
+        fun initialize(healthDataClient: HealthDataClient, healthDataTypeStrings: List<String>) {
+            synchronized(this) {
+                if (Companion::INSTANCE.isInitialized.not()) {
+                    INSTANCE = HealthPlatformAdapter(
+                        healthDataClient,
+                        healthDataTypeStrings
+                    )
+                }
+            }
+        }
+
+        fun getInstance(): HealthPlatformAdapter = INSTANCE
+
         private val allSampleDataTypeStrings: Set<String> =
             SampleDataTypes.getAllDataTypes().map {
                 it.name
@@ -43,8 +57,8 @@ class HealthPlatformAdapter(
             healthDataTypeString in allIntervalDataTypeStrings
     }
 
-    private val healthDataTypes: List<DataType> = syncSpecs.map {
-        it.healthDataType
+    private val healthDataTypes: List<DataType> = healthDataTypeStrings.map {
+        convertStringToHealthDataType(it)
     }
 
     private val requiredPermissions: Set<Permission> = healthDataTypes.flatMap {
@@ -106,13 +120,5 @@ class HealthPlatformAdapter(
         }.build()
 
         return healthDataClient.readData(request).await().toHealthData(healthDataType)
-    }
-
-    data class HealthDataSyncSpec(
-        val healthDataTypeString: String,
-        val syncInterval: Long,
-        val syncTimeUnit: TimeUnit,
-    ) {
-        val healthDataType: DataType = convertStringToHealthDataType(healthDataTypeString)
     }
 }

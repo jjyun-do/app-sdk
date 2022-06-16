@@ -36,6 +36,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.common.CallbackCollection
+import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.BottomBarWithGradientBackground
@@ -53,14 +54,14 @@ fun ConsentTextLayout(
 ) {
     var allChecked by rememberSaveable { mutableStateOf(model.isAllChecked()) }
     val scrollState = rememberScrollState()
-    var isEveryPermissionActive by rememberSaveable { mutableStateOf(model.healthPlatformAdapter == null) }
+    var isEveryPermissionActive by rememberSaveable { mutableStateOf(false) }
+    // TODO: what if this application is not using health data at all?
+    val healthPlatformAdapter = HealthPlatformAdapter.getInstance()
 
     LaunchedEffect(true) {
-        model.healthPlatformAdapter?.let {
-            it.requestPermissions()
-            if (it.hasAllPermissions())
-                isEveryPermissionActive = true
-        }
+        healthPlatformAdapter.requestPermissions()
+        if (healthPlatformAdapter.hasAllPermissions())
+            isEveryPermissionActive = true
     }
 
     Scaffold(

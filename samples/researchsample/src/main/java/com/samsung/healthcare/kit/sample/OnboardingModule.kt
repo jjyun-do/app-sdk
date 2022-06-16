@@ -1,13 +1,9 @@
 package com.samsung.healthcare.kit.sample
 
 import android.content.Context
-import com.google.android.libraries.healthdata.HealthDataService
 import com.samsung.healthcare.kit.auth.SignInProvider
-import com.samsung.healthcare.kit.external.background.SyncHealthDataClient
 import com.samsung.healthcare.kit.external.background.SyncManager
 import com.samsung.healthcare.kit.external.datastore.MetaDataStore
-import com.samsung.healthcare.kit.external.network.ResearchPlatformAdapter
-import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
 import com.samsung.healthcare.kit.model.EligibilityIntroModel
@@ -157,19 +153,13 @@ object OnboardingModule {
     @Provides
     fun provideConsentTextStep(
         @ApplicationContext context: Context,
-        healthPlatformAdapter: HealthPlatformAdapter,
     ): ConsentTextStep =
         ConsentTextStep(
             "consent-text-step",
             "Consent-Text-Step",
-            consentText(context, healthPlatformAdapter),
+            consentText(context),
             ConsentTextView("Join Study")
         )
-
-    @Singleton
-    @Provides
-    fun provideHealthPlatformAdapter(@ApplicationContext context: Context): HealthPlatformAdapter =
-        HealthPlatformAdapter(HealthDataService.getClient(context), requiredHealthData)
 
     @Singleton
     @Provides
@@ -179,18 +169,12 @@ object OnboardingModule {
     @Singleton
     @Provides
     fun provideSyncManager(@ApplicationContext context: Context): SyncManager =
-        SyncManager(context, requiredHealthData)
+        SyncManager(context, syncSpecs)
 
-    @Singleton
-    @Provides
-    fun provideUploadHealthDataClient(@ApplicationContext context: Context): SyncHealthDataClient =
-        ResearchPlatformAdapter.initialize(context)
-            .run { ResearchPlatformAdapter.getInstance() }
-
-    private val requiredHealthData = listOf(
-        HealthPlatformAdapter.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),
-        HealthPlatformAdapter.HealthDataSyncSpec("Steps", 1, TimeUnit.DAYS),
-        HealthPlatformAdapter.HealthDataSyncSpec("SleepSession", 1, TimeUnit.DAYS)
+    private val syncSpecs = listOf(
+        SyncManager.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),
+        SyncManager.HealthDataSyncSpec("Steps", 1, TimeUnit.DAYS),
+        SyncManager.HealthDataSyncSpec("SleepSession", 1, TimeUnit.DAYS)
     )
 
     private fun intro(@ApplicationContext context: Context) = IntroModel(
@@ -233,7 +217,6 @@ object OnboardingModule {
 
     private fun consentText(
         @ApplicationContext context: Context,
-        healthPlatformAdapter: HealthPlatformAdapter,
     ) = ConsentTextModel(
         id = "consent-text-model",
         title = "Informed Consent",
@@ -244,7 +227,6 @@ object OnboardingModule {
             "I agree to share my data with Samsung.",
             "I agree to share my data with the research assistants in the study."
         ),
-        healthPlatformAdapter = healthPlatformAdapter
     )
 
     private fun signUp() = SignUpModel(

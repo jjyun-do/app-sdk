@@ -18,41 +18,53 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertThrows
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import java.time.Instant
-import java.util.concurrent.TimeUnit
 
+@DisplayName("Health Platform Adapter Test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(ExperimentalCoroutinesApi::class)
 class HealthPlatformAdapterTest {
 
-    private val healthDataSpecs = listOf(
-        HealthPlatformAdapter.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),
-        HealthPlatformAdapter.HealthDataSyncSpec("Steps", 1, TimeUnit.HOURS)
-    )
+    private lateinit var healthDataTypeStrings: List<String>
+    private lateinit var healthDataClientStub: HealthDataClient
+    private lateinit var healthPlatformAdapter: HealthPlatformAdapter
+    private lateinit var heartRateReadPermission: Set<Permission>
+    private lateinit var stepsReadPermission: Set<Permission>
+    private lateinit var allRequiredPermissions: Set<Permission>
 
-    private val healthDataClientStub: HealthDataClient = mock(HealthDataClient::class.java)
+    @BeforeAll
+    fun beforeAll() {
+        healthDataTypeStrings = listOf("HeartRate", "Steps")
 
-    private val healthPlatformAdapter: HealthPlatformAdapter =
-        HealthPlatformAdapter(healthDataClientStub, healthDataSpecs)
+        healthDataClientStub = mock(HealthDataClient::class.java)
 
-    private val heartRateReadPermission = hashSetOf(
-        Permission.create(SampleDataTypes.HEART_RATE, AccessType.READ)
-    )
+        healthPlatformAdapter =
+            HealthPlatformAdapter.initialize(healthDataClientStub, healthDataTypeStrings)
+                .run { HealthPlatformAdapter.getInstance() }
 
-    private val stepsReadPermission = hashSetOf(
-        Permission.create(IntervalDataTypes.STEPS, AccessType.READ)
-    )
+        heartRateReadPermission = hashSetOf(
+            Permission.create(SampleDataTypes.HEART_RATE, AccessType.READ)
+        )
 
-    private val allRequiredPermissions = hashSetOf(
-        Permission.create(SampleDataTypes.HEART_RATE, AccessType.READ),
-        Permission.create(SampleDataTypes.HEART_RATE, AccessType.WRITE),
-        Permission.create(IntervalDataTypes.STEPS, AccessType.READ),
-        Permission.create(IntervalDataTypes.STEPS, AccessType.WRITE)
-    )
+        stepsReadPermission = hashSetOf(
+            Permission.create(IntervalDataTypes.STEPS, AccessType.READ)
+        )
+
+        allRequiredPermissions = hashSetOf(
+            Permission.create(SampleDataTypes.HEART_RATE, AccessType.READ),
+            Permission.create(SampleDataTypes.HEART_RATE, AccessType.WRITE),
+            Permission.create(IntervalDataTypes.STEPS, AccessType.READ),
+            Permission.create(IntervalDataTypes.STEPS, AccessType.WRITE)
+        )
+    }
 
     @Test
     fun `test convert string to health data type`() {
