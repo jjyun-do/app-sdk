@@ -49,4 +49,9 @@ open class OrderedTask(
 
         steps[cursor ?: 0].Render(pageCallbacks)
     }
+
+    @Composable
+    override fun CardView(onClick: () -> Unit) {
+        TODO("Not yet implemented")
+    }
 }

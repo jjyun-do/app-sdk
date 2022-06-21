@@ -57,11 +57,13 @@ dependencies {
 
     implementation(platform(AppDependencies.FIREBASE_BOM))
     implementation(AppDependencies.authImplLibs)
-
+    implementation(AppDependencies.ANDROIDX_DATASTORE)
+    implementation(AppDependencies.ANDROIDX_NAVIGATION_COMPOSE)
     implementation(AppDependencies.composeImplLibs)
     implementation(AppDependencies.ACCOMPANIST_PAGER)
     implementation(AppDependencies.SIGNATURE)
     implementation(AppDependencies.coilImplLibs)
+    implementation(AppDependencies.GOOGLE_HEALTH_DATA)
 
     debugImplementation(AppDependencies.uiDebugLibs)
 

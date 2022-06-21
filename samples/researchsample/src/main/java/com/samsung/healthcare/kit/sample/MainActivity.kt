@@ -4,12 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
+import com.google.android.libraries.healthdata.data.IntervalDataTypes.SLEEP_SESSION
+import com.google.android.libraries.healthdata.data.SampleDataTypes.HEART_RATE
+import com.samsung.healthcare.kit.app.BaseApplication
+import com.samsung.healthcare.kit.app.TaskDataType.Companion.TASK_DATA_TYPE
 import com.samsung.healthcare.kit.task.OnboardingTask
 import com.samsung.healthcare.kit.task.SignUpTask
 import com.samsung.healthcare.kit.theme.AppColors
@@ -34,25 +33,17 @@ class MainActivity : ComponentActivity() {
             Surface {
                 AppTheme(appColors) {
                     this.window.statusBarColor = AppTheme.colors.background.toArgb()
-                    HealthApp(onboardingTask, signUpTask)
+                    BaseApplication(
+                        onboardingTask,
+                        signUpTask,
+                        listOf(
+                            HEART_RATE,
+                            SLEEP_SESSION,
+                            TASK_DATA_TYPE
+                        )
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun HealthApp(
-    onboardingTask: OnboardingTask,
-    signUpTask: SignUpTask,
-) {
-    var requireOnboarding by remember { mutableStateOf(true) }
-    if (requireOnboarding) {
-        onboardingTask.callback = {
-            requireOnboarding = false
-        }
-        onboardingTask.Render()
-    } else {
-        signUpTask.Render()
     }
 }

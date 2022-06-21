@@ -86,6 +86,13 @@ data class AppTypography(
         fontStyle = FontStyle.Normal,
         fontSize = 14.sp
     ),
+
+    val body3: TextStyle = TextStyle(
+        fontFamily = OpenSans,
+        fontWeight = FontWeight.W400,
+        fontStyle = FontStyle.Normal,
+        fontSize = 12.sp
+    ),
 )
 
 internal val LocalTypography = staticCompositionLocalOf { AppTypography() }

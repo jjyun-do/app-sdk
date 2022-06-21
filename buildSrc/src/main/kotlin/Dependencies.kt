@@ -28,6 +28,7 @@ object Versions {
         const val CUSTOM_VIEW = "1.2.0-alpha01"
         const val CUSTOM_VIEW_CONTAINER = "1.0.0-alpha01"
         const val DATASTORE = "1.0.0"
+        const val NAVIGATION_COMPOSE = "2.4.2"
     }
 
     const val RETROFIT = "2.9.0"
@@ -73,6 +74,8 @@ object AppDependencies {
     const val ANDROIDX_WORK = "androidx.work:work-runtime-ktx:${Versions.AndroidX.WORK}"
     const val ANDROIDX_CONCURRENT = "androidx.concurrent:concurrent-futures-ktx:${Versions.AndroidX.CONCURRENT}"
     const val ANDROIDX_DATASTORE = "androidx.datastore:datastore-preferences:${Versions.AndroidX.DATASTORE}"
+    const val ANDROIDX_NAVIGATION_COMPOSE =
+        "androidx.navigation:navigation-compose:${Versions.AndroidX.NAVIGATION_COMPOSE}"
 
     const val HILT_DAGGER = "com.google.dagger:hilt-android:${Versions.Hilt.DAGGER}"
     const val HILT_DAGGER_COMPILER = "com.google.dagger:hilt-compiler:${Versions.Hilt.DAGGER}"
