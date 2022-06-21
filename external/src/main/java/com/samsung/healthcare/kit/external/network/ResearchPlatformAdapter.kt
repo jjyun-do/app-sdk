@@ -17,8 +17,8 @@ class ResearchPlatformAdapter private constructor(
     override fun syncHealthData(healthData: HealthData): Call<List<HealthDataId>> =
         networkClient.syncHealthData(projectId, healthData)
 
-    override suspend fun registerUser(user: User) {
-        networkClient.registerUser(projectId, user)
+    override suspend fun registerUser(idToken: String, user: User) {
+        networkClient.registerUser(idToken, projectId, user)
     }
 
     companion object {

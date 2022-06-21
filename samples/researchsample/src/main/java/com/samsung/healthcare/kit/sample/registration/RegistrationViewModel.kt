@@ -14,18 +14,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class RegistrationViewModel : ViewModel() {
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val _state = MutableStateFlow<RegistrationState>(RegistrationState.Init)
+
     val state: StateFlow<RegistrationState> = _state
 
     fun registerUser(profile: Map<String, Any>) {
         _state.value = Loading
-        FirebaseAuth.getInstance().currentUser?.getIdToken(false)
+        auth.currentUser?.getIdToken(false)
             ?.addOnSuccessListener { result ->
                 result.token?.let { idToken ->
                     viewModelScope.launch {
                         try {
                             ResearchPlatformAdapter.getInstance()
-                                .registerUser(User(idToken, profile))
+                                .registerUser(idToken, User(auth.uid!!, profile))
                             _state.value = Success
                             // TODO handle specfic exception
                         } catch (e: Exception) {
