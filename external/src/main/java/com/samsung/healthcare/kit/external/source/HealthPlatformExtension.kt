@@ -10,7 +10,6 @@ import com.google.android.libraries.healthdata.data.SampleData
 import com.google.android.libraries.healthdata.data.SampleDataType
 import com.google.android.libraries.healthdata.data.StringField
 import com.samsung.healthcare.kit.external.data.HealthData
-import java.time.Instant
 
 fun ReadDataResponse.toHealthData(healthDataType: DataType): HealthData {
     val allFields = healthDataType.requiredFields
@@ -21,9 +20,6 @@ fun ReadDataResponse.toHealthData(healthDataType: DataType): HealthData {
         intervalDataSets
 
     val healthDataSet = dataSet[0].data
-        .filter {
-            it !is IntervalData || it.endTime <= Instant.now()
-        }
         .map { healthData ->
             allFields.associateTo(mutableMapOf()) {
                 it.name to when (it) {

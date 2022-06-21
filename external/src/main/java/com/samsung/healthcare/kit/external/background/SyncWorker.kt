@@ -34,7 +34,18 @@ class SyncWorker @AssistedInject constructor(
         val startTime: String = metaDataStore.readLatestSyncTime(healthDataTypeString)
         val endTime: String = Instant.now().toString()
 
-        val healthDataToSync = healthPlatformAdapter.getHealthData(startTime, endTime, healthDataTypeString)
+        val healthDataToSync = healthPlatformAdapter
+            .getHealthData(startTime, endTime, healthDataTypeString)
+            .let { healthData ->
+                HealthData(
+                    healthData.type,
+                    healthData.data.filter {
+                        !it.containsKey(END_TIME_KEY) ||
+                            Instant.parse(endTime) >= Instant.parse(it[END_TIME_KEY] as String)
+                    }
+                )
+            }
+
         if (healthDataToSync.data.isNotEmpty()) {
             // TODO: Authenticate to Research Platform
             sync(healthDataToSync)
