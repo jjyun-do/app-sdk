@@ -11,6 +11,7 @@ import com.samsung.healthcare.kit.app.AppStage.Main
 import com.samsung.healthcare.kit.app.AppStage.Onboarding
 import com.samsung.healthcare.kit.app.AppStage.SignUp
 import com.samsung.healthcare.kit.app.setting.SettingPreference
+import com.samsung.healthcare.kit.external.background.SyncManager
 import com.samsung.healthcare.kit.task.OnboardingTask
 import com.samsung.healthcare.kit.task.SignUpTask
 import kotlinx.coroutines.flow.first
@@ -22,14 +23,16 @@ import kotlinx.coroutines.runBlocking
 fun BaseApplication(
     onboardingTask: OnboardingTask,
     singUpTask: SignUpTask,
-    statusList: List<DataType>
+    statusList: List<DataType>,
+    healthDataSyncSpecs: List<SyncManager.HealthDataSyncSpec>,
 ) {
     val settingPreference = SettingPreference(LocalContext.current)
     Main(
         settingPreference,
         onboardingTask,
         singUpTask,
-        statusList
+        statusList,
+        healthDataSyncSpecs
     )
 }
 
@@ -38,7 +41,8 @@ private fun Main(
     settingPreference: SettingPreference,
     onboardingTask: OnboardingTask,
     singUpTask: SignUpTask,
-    statusList: List<DataType>
+    statusList: List<DataType>,
+    healthDataSyncSpecs: List<SyncManager.HealthDataSyncSpec>,
 ) {
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
@@ -61,9 +65,11 @@ private fun Main(
             onboardingTask.Render()
         }
         composable(SignUp.name) {
+            SyncManager.initialize(LocalContext.current, healthDataSyncSpecs)
             singUpTask.callback = {
                 scope.launch {
                     settingPreference.setAppStage(Main)
+                    SyncManager.getInstance().startBackgroundSync()
                 }
                 navController.navigate(Main.name) {
                     this.launchSingleTop = true

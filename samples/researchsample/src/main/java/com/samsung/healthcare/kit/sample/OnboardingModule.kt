@@ -2,7 +2,6 @@ package com.samsung.healthcare.kit.sample
 
 import android.content.Context
 import com.samsung.healthcare.kit.auth.SignInProvider
-import com.samsung.healthcare.kit.external.background.SyncManager
 import com.samsung.healthcare.kit.external.datastore.MetaDataStore
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
@@ -38,7 +37,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -165,17 +163,6 @@ object OnboardingModule {
     @Provides
     fun providePreferencesStore(@ApplicationContext context: Context): MetaDataStore =
         MetaDataStore(context)
-
-    @Singleton
-    @Provides
-    fun provideSyncManager(@ApplicationContext context: Context): SyncManager =
-        SyncManager(context, syncSpecs)
-
-    private val syncSpecs = listOf(
-        SyncManager.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),
-        SyncManager.HealthDataSyncSpec("Steps", 1, TimeUnit.DAYS),
-        SyncManager.HealthDataSyncSpec("SleepSession", 1, TimeUnit.DAYS)
-    )
 
     private fun intro(@ApplicationContext context: Context) = IntroModel(
         id = "intro-model",

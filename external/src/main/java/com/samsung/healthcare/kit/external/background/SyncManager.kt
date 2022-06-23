@@ -9,12 +9,24 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 
-class SyncManager(
+class SyncManager private constructor(
     context: Context,
     private val syncSpecs: List<HealthDataSyncSpec>,
 ) {
     companion object {
         const val HEALTH_DATA_TYPE_KEY = "type"
+
+        private lateinit var INSTANCE: SyncManager
+
+        fun initialize(context: Context, syncSpecs: List<HealthDataSyncSpec>) {
+            synchronized(this) {
+                if (::INSTANCE.isInitialized.not()) {
+                    INSTANCE = SyncManager(context, syncSpecs)
+                }
+            }
+        }
+
+        fun getInstance(): SyncManager = INSTANCE
     }
 
     private val workManager = WorkManager.getInstance(context)
