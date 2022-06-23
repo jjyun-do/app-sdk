@@ -10,14 +10,14 @@ import retrofit2.http.Path
 interface ResearchPlatformNetworkClient {
     @POST("/api/projects/{projectId}/health-data")
     suspend fun sync(
-        @Header("id_token") idToken: String,
+        @Header("id-token") idToken: String,
         @Path("projectId") projectId: String,
         @Body healthData: HealthData,
     )
 
     @POST("/api/projects/{projectId}/users")
     suspend fun registerUser(
-        @Header("id_token") idToken: String,
+        @Header("id-token") idToken: String,
         @Path("projectId") projectId: String,
         @Body user: User,
     )
