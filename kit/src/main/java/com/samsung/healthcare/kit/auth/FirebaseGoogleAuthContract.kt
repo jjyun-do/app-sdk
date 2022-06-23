@@ -34,7 +34,7 @@ class FirebaseGoogleAuthContract : ActivityResultContract<Int, Task<FirebaseUser
         auth.signInWithCredential(credential)
             .addOnCompleteListener { authResult ->
                 if (authResult.isSuccessful) {
-                    Log.i("Auth", "Authentication success. ${auth.currentUser?.email}")
+                    Log.i("FirebaseAuth", "Authentication success. ${auth.currentUser?.email}")
                     // TODO: Update User Data (calls platform API - POST /users/{uId})
                 }
             }
@@ -53,12 +53,12 @@ class FirebaseGoogleAuthContract : ActivityResultContract<Int, Task<FirebaseUser
                     val account = task.getResult(ApiException::class.java)
                     Tasks.forResult(firebaseAuthWithGoogle(account.idToken!!))
                 } catch (e: ApiException) {
-                    Log.e("Auth", "Authentication failed (${e.message})")
+                    Log.e("FirebaseAuth", "Authentication failed (${e.message})")
                     Tasks.forResult(null)
                 }
             }
             else -> {
-                Log.e("Auth", "Request respond with invalid result code $resultCode")
+                Log.e("FirebaseAuth", "Request respond with invalid result code $resultCode")
                 Tasks.forResult(null)
             }
         }

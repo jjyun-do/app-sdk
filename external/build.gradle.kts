@@ -52,6 +52,8 @@ dependencies {
     implementation(AppDependencies.ANDROIDX_DATASTORE)
     implementation(AppDependencies.healthDataImplLibs)
     implementation(AppDependencies.httpClientImplLibs)
+    implementation(platform(AppDependencies.FIREBASE_BOM))
+    implementation(AppDependencies.authImplLibs)
 
     kapt(AppDependencies.hiltKaptLibs)
 

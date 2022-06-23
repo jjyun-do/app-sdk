@@ -2,20 +2,19 @@ package com.samsung.healthcare.kit.external.network
 
 import android.content.Context
 import com.samsung.healthcare.kit.external.R
-import com.samsung.healthcare.kit.external.background.SyncHealthDataClient
+import com.samsung.healthcare.kit.external.background.HealthDataSyncClient
 import com.samsung.healthcare.kit.external.data.HealthData
-import com.samsung.healthcare.kit.external.data.HealthDataId
 import com.samsung.healthcare.kit.external.data.User
 import com.samsung.healthcare.kit.external.network.util.RetrofitFactory
-import retrofit2.Call
 
 class ResearchPlatformAdapter private constructor(
     private val networkClient: ResearchPlatformNetworkClient,
     private val projectId: String,
-) : SyncHealthDataClient, UserRegistrationClient {
+) : HealthDataSyncClient, UserRegistrationClient {
 
-    override fun syncHealthData(healthData: HealthData): Call<List<HealthDataId>> =
-        networkClient.syncHealthData(projectId, healthData)
+    override suspend fun sync(idToken: String, healthData: HealthData) {
+        networkClient.sync(idToken, projectId, healthData)
+    }
 
     override suspend fun registerUser(idToken: String, user: User) {
         networkClient.registerUser(idToken, projectId, user)

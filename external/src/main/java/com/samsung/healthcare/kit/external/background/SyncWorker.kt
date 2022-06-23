@@ -1,21 +1,22 @@
 package com.samsung.healthcare.kit.external.background
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.google.firebase.auth.FirebaseAuth
 import com.samsung.healthcare.kit.external.background.SyncManager.Companion.HEALTH_DATA_TYPE_KEY
 import com.samsung.healthcare.kit.external.data.HealthData
 import com.samsung.healthcare.kit.external.data.HealthData.Companion.END_TIME_KEY
-import com.samsung.healthcare.kit.external.data.HealthDataId
 import com.samsung.healthcare.kit.external.datastore.MetaDataStore
 import com.samsung.healthcare.kit.external.network.ResearchPlatformAdapter
 import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.Instant
 
 @HiltWorker
@@ -24,7 +25,7 @@ class SyncWorker @AssistedInject constructor(
     @Assisted params: WorkerParameters,
     private val metaDataStore: MetaDataStore,
 ) : CoroutineWorker(context, params) {
-    private val syncHealthDataClient: SyncHealthDataClient = ResearchPlatformAdapter.getInstance()
+    private val healthDataSyncClient: HealthDataSyncClient = ResearchPlatformAdapter.getInstance()
     private val healthPlatformAdapter: HealthPlatformAdapter = HealthPlatformAdapter.getInstance()
 
     override suspend fun doWork(): Result {
@@ -47,41 +48,34 @@ class SyncWorker @AssistedInject constructor(
             }
 
         if (healthDataToSync.data.isNotEmpty()) {
-            // TODO: Authenticate to Research Platform
-            sync(healthDataToSync)
+            FirebaseAuth.getInstance().currentUser?.getIdToken(false)
+                ?.addOnSuccessListener { result ->
+                    result.token?.let { idToken ->
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                sync(idToken, healthDataToSync)
 
-            val latestSyncTime = if (HealthPlatformAdapter.isInterval(healthDataTypeString))
-                healthDataToSync.data.last()[END_TIME_KEY].toString()
-            else
-                endTime
+                                val latestSyncTime = if (HealthPlatformAdapter.isInterval(healthDataTypeString))
+                                    healthDataToSync.data.last()[END_TIME_KEY].toString()
+                                else
+                                    endTime
 
-            metaDataStore.saveLatestSyncTime(healthDataTypeString, latestSyncTime)
+                                metaDataStore.saveLatestSyncTime(healthDataTypeString, latestSyncTime)
+                            } catch (e: Exception) {
+                                Log.d(SyncWorker::class.simpleName, "fail to sync health data")
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+                }?.addOnFailureListener {
+                    Log.d(SyncWorker::class.simpleName, "fail to get id token")
+                }
         }
 
         return Result.success()
     }
 
-    private fun sync(healthDataToSync: HealthData) {
-        syncHealthDataClient.syncHealthData(healthDataToSync)
-            .enqueue(
-                object : Callback<List<HealthDataId>> {
-                    override fun onResponse(
-                        call: Call<List<HealthDataId>>,
-                        response: Response<List<HealthDataId>>,
-                    ) {
-                        if (response.isSuccessful)
-                            TODO("Not yet implemented")
-                        else
-                            TODO("Not yet implemented")
-                    }
-
-                    override fun onFailure(
-                        call: Call<List<HealthDataId>>,
-                        t: Throwable,
-                    ) {
-                        TODO("Not yet implemented")
-                    }
-                }
-            )
+    private suspend fun sync(idToken: String, healthDataToSync: HealthData) {
+        healthDataSyncClient.sync(idToken, healthDataToSync)
     }
 }

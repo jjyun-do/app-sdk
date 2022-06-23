@@ -11,7 +11,3 @@ data class HealthData(
         const val END_TIME_KEY = "endTime"
     }
 }
-
-data class HealthDataId(
-    val id: String,
-)
