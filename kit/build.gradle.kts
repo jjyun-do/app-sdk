@@ -64,6 +64,7 @@ dependencies {
     implementation(AppDependencies.SIGNATURE)
     implementation(AppDependencies.coilImplLibs)
     implementation(AppDependencies.GOOGLE_HEALTH_DATA)
+    implementation(AppDependencies.SUPPORT_ANNOTATION)
 
     debugImplementation(AppDependencies.uiDebugLibs)
 

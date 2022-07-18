@@ -33,6 +33,7 @@ object Versions {
 
     const val RETROFIT = "2.9.0"
     const val OKHTTP = "4.5.0"
+    const val SUPPORT_ANNOTATION = "28"
 
     const val DOKKA = "1.6.21"
 
@@ -76,6 +77,9 @@ object AppDependencies {
     const val ANDROIDX_DATASTORE = "androidx.datastore:datastore-preferences:${Versions.AndroidX.DATASTORE}"
     const val ANDROIDX_NAVIGATION_COMPOSE =
         "androidx.navigation:navigation-compose:${Versions.AndroidX.NAVIGATION_COMPOSE}"
+
+    const val SUPPORT_ANNOTATION =
+        "com.android.support:support-annotations:${Versions.SUPPORT_ANNOTATION}"
 
     const val HILT_DAGGER = "com.google.dagger:hilt-android:${Versions.Hilt.DAGGER}"
     const val HILT_DAGGER_COMPILER = "com.google.dagger:hilt-compiler:${Versions.Hilt.DAGGER}"

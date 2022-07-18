@@ -1,8 +1,7 @@
 package com.samsung.healthcare.kit.view.auth
 
-import android.content.Context
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -30,45 +29,46 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.auth.AuthContractFactory
 import com.samsung.healthcare.kit.auth.SignInProvider
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.theme.AppTheme
+import com.samsung.healthcare.kit.view.util.ViewUtil
 
 @Composable
 fun GoogleSignInButton(
     callbackCollection: CallbackCollection,
 ) {
+    @StringRes val failedToSignInMessage = R.string.failed_to_signin
+
     Column(
         modifier = Modifier
             .wrapContentSize()
             .padding(vertical = 20.dp)
     ) {
         var user: FirebaseUser? by rememberSaveable { mutableStateOf(null) }
+        val auth = FirebaseAuth.getInstance()
         val context = LocalContext.current
+
+        val authCallback = AuthCallback(
+            {
+                ViewUtil.showToastMessage(context, "Hello, ${auth.currentUser?.displayName}!")
+                callbackCollection.next()
+            }, { ViewUtil.showToastMessage(context, context.getString(failedToSignInMessage)) }
+        )
 
         val authResultLauncher =
             rememberLauncherForActivityResult(
-                contract = AuthContractFactory.createAuthContract(
-                    SignInProvider.Google
+                AuthContractFactory.createAuthContract(
+                    SignInProvider.Google,
+                    authCallback
                 )
-            ) { task ->
-                val account = task.getResult(ApiException::class.java)
-                if (null == account) {
-                    showMessage(context, context.getString(R.string.failed_to_signin))
-                    return@rememberLauncherForActivityResult
-                }
-
-                user = account
-                showMessage(context, "hello ${user?.displayName}")
+            ) {
+                user = auth.currentUser
             }
-
-        user?.let {
-            callbackCollection.next()
-        }
 
         Button(
             modifier = Modifier
@@ -80,7 +80,11 @@ fun GoogleSignInButton(
             colors = ButtonDefaults.buttonColors(backgroundColor = AppTheme.colors.background),
             elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
             onClick = {
-                authResultLauncher.launch(1)
+                if (null == auth.currentUser) {
+                    authResultLauncher.launch(Unit)
+                } else {
+                    callbackCollection.next()
+                }
             }
         ) {
             Row(
@@ -103,11 +107,6 @@ fun GoogleSignInButton(
             }
         }
     }
-}
-
-private fun showMessage(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_LONG)
-        .show()
 }
 
 @Preview(showBackground = true)

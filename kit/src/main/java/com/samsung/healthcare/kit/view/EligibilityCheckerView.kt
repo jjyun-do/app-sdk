@@ -1,6 +1,5 @@
 package com.samsung.healthcare.kit.view
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +28,7 @@ import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.view.common.BottomBar
 import com.samsung.healthcare.kit.view.common.BottomRoundButton
 import com.samsung.healthcare.kit.view.common.TopBar
+import com.samsung.healthcare.kit.view.util.ViewUtil
 
 class EligibilityCheckerView(
     private val pageable: Boolean = true,
@@ -71,7 +71,7 @@ fun MultiPageSurveyLayout(
                 onClickLeftButton = { index -= 1 },
                 onClickRightButton = {
                     if (subStepHolder.subSteps[index].model.getResponse() == null) {
-                        Toast.makeText(context, "please input answer", Toast.LENGTH_LONG).show()
+                        ViewUtil.showToastMessage(context, "please input answer")
                         return@BottomBar
                     }
 
