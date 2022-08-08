@@ -11,6 +11,6 @@
     <string name="lorem_ipsum_short">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua.
     </string>
-    <string name="google_client_id">YOUR GOOGLE CLIENT ID</string>
+    <string name="default_web_client_id" translatable="false">this will be updated by com.google.gms.google-services plugin</string>
     <string name="failed_to_signin">failed to sign-in</string>
 </resources>

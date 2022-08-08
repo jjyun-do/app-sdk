@@ -3,7 +3,6 @@ package com.samsung.healthcare.kit.auth
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.annotation.StringRes
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,14 +18,11 @@ class FirebaseGoogleAuthContract(
 ) : ActivityResultContract<Unit, FirebaseUser?>() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    @StringRes
-    private val googleClientId: Int = R.string.google_client_id
-
     private fun getClient(context: Context): GoogleSignInClient =
         GoogleSignIn.getClient(
             context,
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(context.getString(googleClientId))
+                .requestIdToken(context.getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
         )
