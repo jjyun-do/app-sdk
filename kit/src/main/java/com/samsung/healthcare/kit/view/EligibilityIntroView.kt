@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -85,7 +86,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                         .weight(1f)
                         .fillMaxHeight()
                 )
-                BottomRoundButton(text = "Check Eligibility") {
+                BottomRoundButton(text = LocalContext.current.getString(R.string.eligibility_intro_button_text)) {
                     callbackCollection.next()
                 }
             }

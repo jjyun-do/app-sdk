@@ -1,6 +1,8 @@
 package com.samsung.healthcare.kit.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.EligibilityResultModel
 import com.samsung.healthcare.kit.model.ImageArticleModel
@@ -20,7 +22,7 @@ class EligibilityResultView : View<EligibilityResultModel>() {
         ImageArticleLayout(
             model.title,
             resultImageArticleModel,
-            "Continue",
+            LocalContext.current.getString(R.string.continuous),
             onClickBack = { callbackCollection.prev() },
             onComplete = { callbackCollection.next() },
             buttonHidden = callbackCollection.getEligibility().not()

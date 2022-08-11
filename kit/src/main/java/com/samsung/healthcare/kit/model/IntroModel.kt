@@ -6,7 +6,7 @@ class IntroModel(
     id: String,
     title: String,
     drawableId: Int? = R.drawable.sample_image4,
-    val logoDrawableId: Int = R.drawable.ic_sample_icon,
+    val logoDrawableId: Int? = null,
     val summaries: List<Pair<Int, String>>?,
     val descriptions: List<Pair<String, String>>,
 ) : Model(id, title, drawableId)

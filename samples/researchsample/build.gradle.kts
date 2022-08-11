@@ -54,6 +54,7 @@ android {
 dependencies {
     implementation(project(":kit"))
     implementation(project(":external"))
+    implementation(project(":resources:korean"))
     implementation(platform(AppDependencies.FIREBASE_BOM))
     implementation(AppDependencies.authImplLibs)
     implementation(AppDependencies.composeImplLibs)

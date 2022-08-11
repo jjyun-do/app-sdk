@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.samsung.healthcare.kit.R.string
@@ -15,7 +16,7 @@ import com.samsung.healthcare.kit.view.layout.ConsentTextLayout
 import com.samsung.healthcare.kit.view.layout.SignatureLayout
 
 class ConsentTextView(
-    private val buttonText: String = "Done",
+    private val buttonText: String? = null,
 ) : View<ConsentTextModel>() {
     @Composable
     override fun Render(
@@ -26,10 +27,12 @@ class ConsentTextView(
         var mutableSvg by rememberSaveable { mutableStateOf(model.encodedSignature) }
         var signaturePadVisible by rememberSaveable { mutableStateOf(false) }
 
+        val joinButtonText = buttonText ?: LocalContext.current.getString(string.join_study)
+
         ConsentTextLayout(
             mutableSvg,
             model,
-            buttonText,
+            joinButtonText,
             callbackCollection
         ) {
             signaturePadVisible = true

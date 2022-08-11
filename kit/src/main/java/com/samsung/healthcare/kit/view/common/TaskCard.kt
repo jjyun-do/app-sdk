@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,7 @@ fun TaskCard(
     @DrawableRes id: Int,
     taskName: String,
     description: String,
+    buttonText: String? = null,
     buttonEnabled: Boolean = true,
     onClick: () -> Unit = { }
 ) {
@@ -71,7 +73,7 @@ fun TaskCard(
                     )
                 }
                 Spacer(modifier = Modifier.width(9.dp))
-                Column() {
+                Column {
                     Text(
                         text = taskName,
                         style = AppTheme.typography.title3,
@@ -88,7 +90,8 @@ fun TaskCard(
 
             if (buttonEnabled) {
                 Spacer(modifier = Modifier.height(16.dp))
-                RoundButton("Get Started", modifier = Modifier.fillMaxWidth(1f)) {
+                val taskButtonName = buttonText ?: LocalContext.current.getString(R.string.start_task)
+                RoundButton(taskButtonName, modifier = Modifier.fillMaxWidth(1f)) {
                     onClick()
                 }
             }

@@ -107,9 +107,7 @@ object OnboardingModule {
             "intro-step",
             "Intro-Step",
             intro(context),
-            IntroView(
-                bottomBarText = "Get Started"
-            ),
+            IntroView(),
         )
 
     @Singleton
@@ -156,7 +154,7 @@ object OnboardingModule {
             "consent-text-step",
             "Consent-Text-Step",
             consentText(context),
-            ConsentTextView("Join Study")
+            ConsentTextView()
         )
 
     @Singleton
@@ -167,7 +165,8 @@ object OnboardingModule {
     private fun intro(@ApplicationContext context: Context) = IntroModel(
         id = "intro-model",
         title = "SleepCare",
-        R.drawable.sample_image4,
+        drawableId = R.drawable.sample_image4,
+        logoDrawableId = R.drawable.ic_sample_icon,
         summaries = listOf(
             R.drawable.ic_watch to "Wear your watch",
             R.drawable.ic_clock to "10 min a day",

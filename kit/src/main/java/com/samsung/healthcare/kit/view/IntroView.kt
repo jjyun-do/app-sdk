@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,7 +37,7 @@ import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.BottomBarWithGradientBackground
 
 class IntroView(
-    val bottomBarText: String,
+    val bottomBarText: String? = null,
 ) : View<IntroModel>() {
     @Composable
     override fun Render(
@@ -45,11 +46,12 @@ class IntroView(
         holder: SubStepHolder?,
     ) {
         val scrollState = rememberScrollState()
+        val joinButtonText = bottomBarText ?: LocalContext.current.getString(R.string.intro_button_text)
 
         Scaffold(
             bottomBar = {
                 BottomBarWithGradientBackground(
-                    text = bottomBarText
+                    text = joinButtonText
                 ) { callbackCollection.next() }
             }
         ) { innerPadding ->
@@ -90,19 +92,21 @@ class IntroView(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ) {
-                                Image(
-                                    modifier = Modifier
-                                        .height(100.dp)
-                                        .width(100.dp)
-                                        .shadow(
-                                            elevation = 50.dp,
-                                            shape = CircleShape,
-                                            clip = false
-                                        ),
-                                    painter = painterResource(model.logoDrawableId),
-                                    contentDescription = "This is image of logoDrawableId",
-                                    contentScale = ContentScale.Fit
-                                )
+                                model.logoDrawableId?.let {
+                                    Image(
+                                        modifier = Modifier
+                                            .height(100.dp)
+                                            .width(100.dp)
+                                            .shadow(
+                                                elevation = 50.dp,
+                                                shape = CircleShape,
+                                                clip = false
+                                            ),
+                                        painter = painterResource(model.logoDrawableId),
+                                        contentDescription = "This is image of logoDrawableId",
+                                        contentScale = ContentScale.Fit
+                                    )
+                                }
                                 Text(
                                     text = model.title,
                                     style = AppTheme.typography.appTitle,
