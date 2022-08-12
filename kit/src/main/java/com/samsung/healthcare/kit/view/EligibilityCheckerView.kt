@@ -75,14 +75,15 @@ fun MultiPageSurveyLayout(
                 onClickRightButton = {
                     if (subStepHolder.subSteps[index].model.getResponse() == null) {
                         ViewUtil.showToastMessage(context, "please input answer")
-
-                        if (index == subStepHolder.size - 1) {
-                            callbackCollection.setEligibility(subStepHolder.isSufficient())
-                            callbackCollection.next()
-                            return@BottomBar
-                        }
-                        index += 1
+                        return@BottomBar
                     }
+
+                    if (index == subStepHolder.size - 1) {
+                        callbackCollection.setEligibility(subStepHolder.isSufficient())
+                        callbackCollection.next()
+                        return@BottomBar
+                    }
+                    index += 1
                 },
                 leftButtonEnabled = index != 0
             )
