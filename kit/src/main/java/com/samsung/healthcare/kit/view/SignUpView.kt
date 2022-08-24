@@ -1,5 +1,8 @@
 package com.samsung.healthcare.kit.view
 
+import android.content.Context
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,17 +20,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.firebase.auth.FirebaseAuth
+import com.samsung.healthcare.kit.R
+import com.samsung.healthcare.kit.auth.AuthContractFactory
 import com.samsung.healthcare.kit.auth.SignInProvider
+import com.samsung.healthcare.kit.auth.SignInProvider.Basic
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.theme.AppTheme
+import com.samsung.healthcare.kit.view.auth.AuthCallback
 import com.samsung.healthcare.kit.view.auth.BasicSignUpComponent
 import com.samsung.healthcare.kit.view.auth.SignUpComponent
 import com.samsung.healthcare.kit.view.common.TopBar
+import com.samsung.healthcare.kit.view.util.ViewUtil
 
 class SignUpView : View<SignUpModel>() {
     @Composable
@@ -36,6 +46,17 @@ class SignUpView : View<SignUpModel>() {
         callbackCollection: CallbackCollection,
         holder: SubStepHolder?
     ) {
+        @StringRes val failedToSignInMessage = R.string.failed_to_signin
+
+        val auth = FirebaseAuth.getInstance()
+        val context = LocalContext.current
+
+        val authCallback = createAuthCallback(context, auth, callbackCollection, failedToSignInMessage)
+
+        val providerToLauncher = model.providers.filter { it != Basic }
+            .associateWith { provider ->
+                createActivityResultLauncher(provider, authCallback)
+            }
 
         Scaffold(
             topBar = {
@@ -49,56 +70,87 @@ class SignUpView : View<SignUpModel>() {
                         .wrapContentSize()
                         .padding(vertical = 20.dp)
                 ) {
-                    model.providers.filter { it != SignInProvider.Basic }
-                        .forEach {
-                            SignUpComponent.of(it)(callbackCollection)
-                        }
+                    providerToLauncher.forEach { (provider, launcher) ->
+                        SignUpComponent.of(provider)({
+                            launcher.launch(Unit)
+                        })
+                    }
                 }
             }
         ) {
-            Column(
+            SignUpBody(model)
+        }
+    }
+
+    private fun createAuthCallback(
+        context: Context,
+        auth: FirebaseAuth,
+        callbackCollection: CallbackCollection,
+        @StringRes failedToSignInMessage: Int
+    ) = AuthCallback(
+        onSuccess = {
+            ViewUtil.showToastMessage(context, "Hello, ${auth.currentUser?.displayName}!")
+            callbackCollection.next()
+        },
+        onFailure = {
+            ViewUtil.showToastMessage(context, context.getString(failedToSignInMessage))
+        }
+    )
+
+    @Composable
+    private fun createActivityResultLauncher(provider: SignInProvider, authCallback: AuthCallback) =
+        rememberLauncherForActivityResult(
+            AuthContractFactory.createAuthContract(
+                provider,
+                authCallback
+            )
+        ) { }
+
+    @Composable
+    private fun SignUpBody(model: SignUpModel) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp)
+        ) {
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
+                    .height(60.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
-                Spacer(modifier = Modifier.height(32.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    model.drawableId?.let {
-                        Image(
-                            painter = painterResource(it),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                    }
-                    Text(
-                        text = model.title,
-                        style = AppTheme.typography.appTitle,
-                        color = AppTheme.colors.textPrimary
+                model.drawableId?.let {
+                    Image(
+                        painter = painterResource(it),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit
                     )
+                    Spacer(modifier = Modifier.width(16.dp))
                 }
-                Spacer(modifier = Modifier.height(25.dp))
+                Text(
+                    text = model.title,
+                    style = AppTheme.typography.appTitle,
+                    color = AppTheme.colors.textPrimary
+                )
+            }
+            Spacer(modifier = Modifier.height(25.dp))
 
-                model.description?.let {
-                    Text(
-                        text = it,
-                        modifier = Modifier.fillMaxWidth(),
-                        style = AppTheme.typography.body1,
-                        color = AppTheme.colors.textPrimary
-                    )
-                }
+            model.description?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier.fillMaxWidth(),
+                    style = AppTheme.typography.body1,
+                    color = AppTheme.colors.textPrimary
+                )
+            }
 
-                Spacer(modifier = Modifier.height(40.dp))
-                if (model.providers.contains(SignInProvider.Basic)) {
-                    BasicSignUpComponent(callbackCollection)
-                }
+            Spacer(modifier = Modifier.height(40.dp))
+            if (model.providers.contains(Basic)) {
+                // TODO how to handle sign up with external
+                BasicSignUpComponent { }
             }
         }
     }

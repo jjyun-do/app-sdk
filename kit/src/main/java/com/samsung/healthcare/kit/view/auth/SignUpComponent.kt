@@ -12,21 +12,21 @@ import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.kit.auth.SignInProvider
 import com.samsung.healthcare.kit.auth.SignInProvider.Basic
 import com.samsung.healthcare.kit.auth.SignInProvider.Google
-import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.RoundButton
 import com.samsung.healthcare.kit.view.common.RoundTextField
 
 object SignUpComponent {
-    fun of(provider: SignInProvider): @Composable (CallbackCollection) -> Unit =
+    @Composable
+    fun of(provider: SignInProvider): @Composable (() -> Unit) -> Unit =
         when (provider) {
-            Google -> { callbackCollection -> GoogleSignInButton(callbackCollection) }
-            Basic -> { callbackCollection -> BasicSignUpComponent(callbackCollection) }
+            Google -> { onClick -> GoogleSignInButton(onClick) }
+            Basic -> { onClick -> BasicSignUpComponent(onClick) }
         }
 }
 
 @Composable
-fun BasicSignUpComponent(callbackCollection: CallbackCollection) {
+fun BasicSignUpComponent(onClick: () -> Unit) {
     val emailState = remember { mutableStateOf("") }
     val passwordState = remember { mutableStateOf("") }
     val passwordConfirmState = remember { mutableStateOf("") }
@@ -71,9 +71,6 @@ fun BasicSignUpComponent(callbackCollection: CallbackCollection) {
             .height(56.dp),
         text = "Sign Up",
         textColor = AppTheme.colors.textPrimary,
-        onClick = {
-            // TODO how to handle sign up with external
-            callbackCollection.next()
-        }
+        onClick = onClick
     )
 }
