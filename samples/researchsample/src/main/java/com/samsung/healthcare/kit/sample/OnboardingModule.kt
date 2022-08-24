@@ -9,10 +9,12 @@ import com.samsung.healthcare.kit.model.EligibilityIntroModel
 import com.samsung.healthcare.kit.model.EligibilityResultModel
 import com.samsung.healthcare.kit.model.ImageArticleModel
 import com.samsung.healthcare.kit.model.IntroModel
+import com.samsung.healthcare.kit.model.IntroModel.IntroSection
 import com.samsung.healthcare.kit.model.RegistrationCompletedModel
 import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel.ViewType.DropMenu
+import com.samsung.healthcare.kit.sample.R.string
 import com.samsung.healthcare.kit.sample.registration.RegistrationModel
 import com.samsung.healthcare.kit.sample.registration.RegistrationStep
 import com.samsung.healthcare.kit.step.ConsentTextStep
@@ -172,9 +174,9 @@ object OnboardingModule {
             R.drawable.ic_clock to "10 min a day",
             R.drawable.ic_alarm to "2 surveys a week"
         ),
-        descriptions = listOf(
-            "Description" to context.getString(R.string.lorem_ipsum),
-            "Description2" to context.getString(R.string.lorem_ipsum)
+        sections = listOf(
+            IntroSection("subTitle1", context.getString(string.lorem_ipsum)),
+            IntroSection("subTitle2", context.getString(string.lorem_ipsum))
         )
     )
 

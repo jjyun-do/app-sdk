@@ -32,12 +32,13 @@ import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.IntroModel
+import com.samsung.healthcare.kit.model.IntroModel.IntroSection
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.common.BottomBarWithGradientBackground
 
 class IntroView(
-    val bottomBarText: String? = null,
+    private val bottomBarText: String? = null,
 ) : View<IntroModel>() {
     @Composable
     override fun Render(
@@ -119,7 +120,7 @@ class IntroView(
 
                 model.summaries?.let { Summary(it) }
 
-                Description(model.descriptions)
+                IntroSections(model.sections)
             }
         }
     }
@@ -159,8 +160,8 @@ fun Summary(summaries: List<Pair<Int, String>>) =
     }
 
 @Composable
-fun Description(descriptions: List<Pair<String, String>>) =
-    descriptions.forEach { (title, description) ->
+fun IntroSections(sections: List<IntroSection>) =
+    sections.forEach { (title, description) ->
         Column(
             modifier = Modifier
                 .padding(vertical = 10.dp, horizontal = 20.dp)
@@ -183,10 +184,16 @@ fun Description(descriptions: List<Pair<String, String>>) =
 @Preview(showBackground = true)
 @Composable
 fun DescriptionPreview() =
-    Description(
+    IntroSections(
         listOf(
-            "Description 1" to "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia",
-            "Description 2" to "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia",
+            IntroSection(
+                "subtitle 1",
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia"
+            ),
+            IntroSection(
+                "subtitle 2",
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia"
+            ),
         )
     )
 
