@@ -44,7 +44,10 @@ class MainActivity : ComponentActivity() {
         )
 
         HealthPlatformAdapter.initialize(HealthDataService.getClient(this), healthDataRequired)
-        ResearchPlatformAdapter.initialize(this)
+        ResearchPlatformAdapter.initialize(
+            this.getString(R.string.research_platform_endpoint),
+            this.getString(R.string.research_project_id)
+        )
 
         setContent {
             Surface {

@@ -1,7 +1,5 @@
 package com.samsung.healthcare.kit.external.network
 
-import android.content.Context
-import com.samsung.healthcare.kit.external.R
 import com.samsung.healthcare.kit.external.background.HealthDataSyncClient
 import com.samsung.healthcare.kit.external.data.HealthData
 import com.samsung.healthcare.kit.external.data.User
@@ -23,15 +21,15 @@ class ResearchPlatformAdapter private constructor(
     companion object {
         private lateinit var INSTANCE: ResearchPlatformAdapter
 
-        fun initialize(context: Context) {
+        fun initialize(platformEndpoint: String, researchProjectId: String) {
             synchronized(this) {
                 if (::INSTANCE.isInitialized.not()) {
                     INSTANCE = ResearchPlatformAdapter(
                         RetrofitFactory.create(
-                            context.getString(R.string.research_platform_address),
+                            platformEndpoint,
                             ResearchPlatformNetworkClient::class.java
                         ),
-                        context.getString(R.string.project_Id)
+                        researchProjectId
                     )
                 }
             }
