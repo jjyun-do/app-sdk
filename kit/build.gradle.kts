@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.dokka")
     id("io.gitlab.arturbosch.detekt")
     id("jacoco")
+    id("kotlin-kapt")
 }
 
 android {
@@ -65,6 +66,11 @@ dependencies {
     implementation(AppDependencies.coilImplLibs)
     implementation(AppDependencies.GOOGLE_HEALTH_DATA)
     implementation(AppDependencies.SUPPORT_ANNOTATION)
+    implementation(AppDependencies.roomLibs)
+
+    kapt(listOf(AppDependencies.ANDROIDX_ROOM_COMPILER))
+    implementation("org.quartz-scheduler:quartz:2.3.2")
+    implementation("com.google.code.gson:gson:2.8.9")
 
     debugImplementation(AppDependencies.uiDebugLibs)
 

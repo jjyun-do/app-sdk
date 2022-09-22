@@ -29,6 +29,7 @@ object Versions {
         const val CUSTOM_VIEW_CONTAINER = "1.0.0-alpha01"
         const val DATASTORE = "1.0.0"
         const val NAVIGATION_COMPOSE = "2.4.2"
+        const val ROOM = "2.4.3"
     }
 
     const val RETROFIT = "2.9.0"
@@ -77,6 +78,9 @@ object AppDependencies {
     const val ANDROIDX_DATASTORE = "androidx.datastore:datastore-preferences:${Versions.AndroidX.DATASTORE}"
     const val ANDROIDX_NAVIGATION_COMPOSE =
         "androidx.navigation:navigation-compose:${Versions.AndroidX.NAVIGATION_COMPOSE}"
+    const val ANDROIDX_ROOM = "androidx.room:room-runtime:${Versions.AndroidX.ROOM}"
+    const val ANDROIDX_ROOM_COMPILER = "androidx.room:room-compiler:${Versions.AndroidX.ROOM}"
+    const val ANDROIDX_ROOM_KTX = "androidx.room:room-ktx:${Versions.AndroidX.ROOM}"
 
     const val SUPPORT_ANNOTATION =
         "com.android.support:support-annotations:${Versions.SUPPORT_ANNOTATION}"
@@ -111,6 +115,11 @@ object AppDependencies {
     val hiltKaptLibs = arrayListOf<String>().apply {
         add(HILT_DAGGER_COMPILER)
         add(HILT_ANDORIDX_COMPILER)
+    }
+
+    val roomLibs = arrayListOf<String>().apply {
+        add(ANDROIDX_ROOM)
+        add(ANDROIDX_ROOM_KTX)
     }
 
     // Auth

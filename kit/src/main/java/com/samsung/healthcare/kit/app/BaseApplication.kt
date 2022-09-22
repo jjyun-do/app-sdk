@@ -52,7 +52,7 @@ private fun Main(
     }
 
     NavHost(navController = navController, startDestination = appStage.name) {
-        composable(Main.name) { Home(statusList) }
+        composable(Main.name) { Home(statusList, settingPreference) }
         composable(Onboarding.name) {
             onboardingTask.callback = {
                 scope.launch {
