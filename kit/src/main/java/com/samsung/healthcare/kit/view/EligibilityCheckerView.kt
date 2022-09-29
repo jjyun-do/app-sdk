@@ -22,14 +22,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.kit.R.string
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
+import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
+import com.samsung.healthcare.kit.step.sub.QuestionSubStep
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.view.common.BottomBar
-import com.samsung.healthcare.kit.view.common.BottomRoundButton
+import com.samsung.healthcare.kit.view.common.BottomSquareButton
 import com.samsung.healthcare.kit.view.common.TopBar
+import com.samsung.healthcare.kit.view.component.ChoiceQuestionComponent
 import com.samsung.healthcare.kit.view.util.ViewUtil
 
 class EligibilityCheckerView(
@@ -153,9 +157,83 @@ fun SinglePageSurveyLayout(
                     .weight(1f)
                     .fillMaxHeight()
             )
-            BottomRoundButton(text = LocalContext.current.getString(string.submit)) {
+            BottomSquareButton(text = LocalContext.current.getString(string.submit)) {
+                callbackCollection.setEligibility(subStepHolder.isSufficient())
                 callbackCollection.next()
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EligibilityCheckerViewPreview() {
+    val view = EligibilityCheckerView(false)
+    val model = EligibilityCheckerModel(
+        id = "eligibility",
+        title = "Eligibility",
+    )
+
+    val questionnaireSubSteps = listOf(
+        QuestionSubStep(
+            "question-1",
+            "Question-Name-1",
+            ChoiceQuestionModel(
+                "choice-question-model-1",
+                "1. Are you between 30 and 50 years old?",
+                "",
+                candidates = listOf("Yes", "No", "Prefer not to answer"),
+                answer = "Yes"
+            ),
+            ChoiceQuestionComponent(),
+        ),
+        QuestionSubStep(
+            "question-2",
+            "Question-Name-2",
+            ChoiceQuestionModel(
+                "choice-question-model-2",
+                "2. Do you have a family history of cardiovascular diseases?",
+                "Examples include stroke, heart attack, high blood pressure, etc.",
+                candidates = listOf("Yes", "No"),
+                answer = "Yes"
+            ),
+            ChoiceQuestionComponent(),
+        ),
+        QuestionSubStep(
+            "question-3",
+            "Question-Name-3",
+            ChoiceQuestionModel(
+                "choice-question-model-3",
+                "3. Do you take any cardiovscular disease medications?",
+                "Examples inlcude Benazepril, Moexipril, Quinapril, etc.",
+                candidates = listOf("Yes", "No"),
+                answer = "Yes"
+            ),
+            ChoiceQuestionComponent(),
+        ),
+        QuestionSubStep(
+            "question-4",
+            "Question-Name-4",
+            ChoiceQuestionModel(
+                "choice-question-model-4",
+                "4. Do you currently own a wearable device?",
+                "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
+                candidates = listOf("Yes", "No"),
+                answer = "Yes"
+            ),
+            ChoiceQuestionComponent(),
+        )
+    )
+
+    val subStepHolder = SubStepHolder(
+        "eligibility",
+        "eligibility-checker",
+        questionnaireSubSteps
+    )
+
+    view.Render(
+        model,
+        CallbackCollection(),
+        subStepHolder
+    )
 }

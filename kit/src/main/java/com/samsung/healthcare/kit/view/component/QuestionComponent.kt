@@ -3,6 +3,7 @@ package com.samsung.healthcare.kit.view.component
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,15 +18,19 @@ abstract class QuestionComponent<T : QuestionModel<*>> : Component<T>() {
     override fun Render(model: T, callbackCollection: CallbackCollection) {
         Text(
             text = model.title,
-            style = AppTheme.typography.title3,
-            color = AppTheme.colors.textSecondary
+            style = AppTheme.typography.subHeader2,
+            color = AppTheme.colors.textPrimary,
+            modifier = Modifier
+                .padding(start = 12.dp, end = 12.dp)
         )
 
         if (!model.explanation.isNullOrBlank()) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = model.explanation,
-                modifier = Modifier.fillMaxWidth(1f),
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(start = 12.dp, end = 12.dp),
                 style = AppTheme.typography.body2,
                 color = AppTheme.colors.textHint
             )

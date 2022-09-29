@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Surface {
                 AppTheme(appColors) {
-                    this.window.statusBarColor = AppTheme.colors.background.toArgb()
+                    this.window.statusBarColor = AppTheme.colors.primary.toArgb()
                     BaseApplication(
                         onboardingTask,
                         signUpTask,

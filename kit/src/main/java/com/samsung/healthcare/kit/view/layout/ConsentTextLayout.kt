@@ -26,15 +26,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.compose.LocalImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
-import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
 import com.samsung.healthcare.kit.model.ConsentTextModel
@@ -93,8 +90,8 @@ fun ConsentTextLayout(
                 Text(
                     modifier = Modifier.padding(vertical = 10.dp),
                     text = model.subTitle,
-                    style = MaterialTheme.typography.h6,
-                    color = AppTheme.colors.textPrimary
+                    color = AppTheme.colors.textPrimary,
+                    style = AppTheme.typography.subHeader2
                 )
                 Text(
                     modifier = Modifier.padding(vertical = 10.dp),
@@ -123,21 +120,23 @@ fun ConsentTextLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .padding(vertical = 10.dp)
+                    .padding(vertical = 32.dp)
                     .background(color = Color(0x33C4C4C4))
                     .clickable {
                         onClickPad()
-                    }
+                    },
             ) {
                 if (signature.isBlank())
                     Text(
                         modifier = Modifier.align(alignment = Alignment.Center),
-                        text = "Tap to sign."
+                        text = "Tap to sign.",
+                        style = AppTheme.typography.body1,
+                        color = AppTheme.colors.textPrimary
                     )
                 else
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = Color(0x33C4C4C4)
+                        color = Color(0xFFF8F8F8)
                     ) {
                         val imageLoader = ImageLoader
                             .Builder(LocalContext.current)
@@ -157,19 +156,3 @@ fun ConsentTextLayout(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun ConsentTextLayoutPreview() =
-    ConsentTextLayout(
-        "",
-        ConsentTextModel(
-            "id",
-            "Consent",
-            "Privacy Header",
-            stringResource(R.string.lorem_ipsum_short),
-            listOf("I agree", "I agree to share my data.", "Some Message"),
-        ),
-        "Done",
-        CallbackCollection()
-    )

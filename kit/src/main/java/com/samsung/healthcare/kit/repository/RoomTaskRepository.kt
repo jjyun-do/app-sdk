@@ -14,8 +14,6 @@ class RoomTaskRepository : TaskRepository {
         mutableListOf<Task>(
             sampleSurveyTask(),
             sampleSurveyTask(),
-            sampleSurveyTask(),
-            sampleSurveyTask(),
         )
 
     private val completedTasks =
@@ -41,24 +39,23 @@ class RoomTaskRepository : TaskRepository {
     fun sampleSurveyTask(): SurveyTask =
         SurveyTask.Builder(
             UUID.randomUUID().toString(),
-            "Good Survey",
-            "good description",
+            "Medical History Survey",
+            "Please fill out this survey and help us get to know your health condition",
             { }
         ).apply {
             addQuestion(
                 ChoiceQuestionModel(
                     "choice-question-model-1",
-                    "Do you have any existing cardiac conditions?",
-                    "Examples of cardiac conditions include abnormal heart rhythms, or arrhythmias",
-                    candidates = listOf("Yes", "No"),
-                    answer = "Yes"
+                    "Do you have a family history of stroke or heart attacks?",
+                    "This includes your maternal and paternal grandparents, mother, father, and close relatives.x",
+                    candidates = listOf("Yes", "No")
                 ),
             )
             addQuestion(
                 ChoiceQuestionModel(
                     "choice-question-model-2",
-                    "Do you currently own a wearable device?",
-                    "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
+                    "Do you have any of the following symptom(s)?",
+                    "Please check all that apply.",
                     candidates = listOf("Yes", "No"),
                     answer = "Yes"
                 ),

@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
@@ -23,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.kit.theme.AppTheme
+import com.samsung.healthcare.kit.view.common.ButtonShape.ROUND
+import com.samsung.healthcare.kit.view.common.ButtonShape.SQUARE
 
 @Composable
 fun BottomBar(
@@ -79,24 +79,29 @@ fun BottomBar(
 fun BottomBar(
     text: String,
     buttonEnabled: Boolean = true,
+    shape: ButtonShape = SQUARE,
     onClick: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp)
+            .padding(10.dp)
     ) {
-        RoundButton(
-            text = text,
-            buttonColor = AppTheme.colors.primary,
-            enabled = buttonEnabled,
-            modifier = Modifier
-                .height(44.dp)
-                .width(320.dp)
-        ) {
-            onClick()
-        }
+        if (shape == SQUARE)
+            SquareButton(
+                text = text,
+                enabled = buttonEnabled,
+            ) {
+                onClick()
+            }
+        else if (shape == ROUND)
+            RoundButton(
+                text = text,
+                enabled = buttonEnabled,
+            ) {
+                onClick()
+            }
     }
 }
 
@@ -110,6 +115,7 @@ fun BottomBarWithGradientBackground(
         startY = 0.0f,
         endY = 100.0f
     ),
+    shape: ButtonShape = SQUARE,
     onClick: () -> Unit,
 ) {
     Box(
@@ -126,16 +132,20 @@ fun BottomBarWithGradientBackground(
                     gradientBrush,
                 ),
         ) {
-            RoundButton(
-                text = text,
-                buttonColor = MaterialTheme.colors.primary,
-                enabled = buttonEnabled,
-                modifier = Modifier
-                    .height(44.dp)
-                    .width(320.dp)
-            ) {
-                onClick()
-            }
+            if (shape == SQUARE)
+                SquareButton(
+                    text = text,
+                    enabled = buttonEnabled,
+                ) {
+                    onClick()
+                }
+            else if (shape == ROUND)
+                RoundButton(
+                    text = text,
+                    enabled = buttonEnabled,
+                ) {
+                    onClick()
+                }
         }
     }
 }

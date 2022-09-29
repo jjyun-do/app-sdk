@@ -1,6 +1,7 @@
 package com.samsung.healthcare.kit.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +20,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
@@ -37,8 +37,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -50,14 +50,13 @@ import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.EligibilityIntroModel
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.theme.AppTheme
-import com.samsung.healthcare.kit.view.common.BottomRoundButton
+import com.samsung.healthcare.kit.view.common.BottomSquareButton
 import com.samsung.healthcare.kit.view.common.SdkCard
 import com.samsung.healthcare.kit.view.common.TopBar
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 class EligibilityIntroView : View<EligibilityIntroModel>() {
-
     @Composable
     override fun Render(
         model: EligibilityIntroModel,
@@ -84,9 +83,9 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxHeight()
+                        .fillMaxHeight(),
                 )
-                BottomRoundButton(text = LocalContext.current.getString(R.string.eligibility_intro_button_text)) {
+                BottomSquareButton(text = LocalContext.current.getString(R.string.eligibility_intro_button_text)) {
                     callbackCollection.next()
                 }
             }
@@ -110,7 +109,10 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
             Spacer(modifier = Modifier.height(32.dp))
             Text(
                 model.description,
-                color = AppTheme.colors.textPrimary
+                color = AppTheme.colors.textPrimary,
+                modifier = Modifier
+                    .padding(24.dp),
+                style = AppTheme.typography.body1
             )
             Spacer(modifier = Modifier.height(12.dp))
             ConditionForm(model)
@@ -124,7 +126,6 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
             Text(
                 title,
                 style = AppTheme.typography.title2,
-                fontWeight = FontWeight.SemiBold,
                 color = AppTheme.colors.textPrimaryAccent
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -148,11 +149,12 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
         )
 
         Column(
-            modifier = Modifier.padding(12.dp)
+            modifier = Modifier.padding(24.dp)
         ) {
             Text(
                 model.description,
-                color = AppTheme.colors.textPrimary
+                color = AppTheme.colors.textPrimary,
+                style = AppTheme.typography.body1
             )
             Spacer(modifier = Modifier.height(12.dp))
         }
@@ -192,11 +194,11 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                 conditions.forEachIndexed { index, _ ->
                     Surface(
                         modifier = Modifier.width(20.dp),
-                        color = backgroundColor,
                     ) {
                         val selected = pagerState.currentPage == index
                         Tab(
-                            modifier = Modifier.wrapContentSize(),
+                            modifier = Modifier.wrapContentSize()
+                                .background(Color.Transparent),
                             selected = selected,
                             onClick = {
                                 coroutineScope.launch {
@@ -216,6 +218,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                                         }
                                     ),
                                     contentDescription = null,
+                                    tint = AppTheme.colors.primary
                                 )
                             }
                         )
@@ -234,7 +237,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
         contentPadding: PaddingValues = PaddingValues(horizontal = 50.dp),
         startScale: Float = 1f,
         startAlpha: Float = 1f,
-        backgroundColor: Color = AppTheme.colors.background,
+        backgroundColor: Color = AppTheme.colors.primary,
     ) {
         HorizontalPager(
             count = contents.size,
@@ -271,7 +274,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
     fun EligibilityOverviewCard(
         onClick: () -> Unit = {},
         modifier: Modifier = Modifier,
-        imageId: Int = R.drawable.card_sample_image,
+        imageId: Int = R.drawable.card_sample_image_alpha,
         content: EligibilityIntroModel.EligibilityCondition,
         backgroundColor: Color = AppTheme.colors.background,
     ) {
@@ -281,9 +284,9 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                     width = 280.dp,
                     height = 445.dp,
                 )
-                .padding(bottom = 16.dp),
-            shape = RoundedCornerShape(16.dp),
-            elevation = 10.dp,
+                .padding(bottom = 25.dp),
+            shape = RoundedCornerShape(4.dp),
+            elevation = 12.dp,
             color = backgroundColor,
         ) {
             Column(
@@ -314,7 +317,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                             text = content.title,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.h6,
+                            style = AppTheme.typography.title3,
                             color = AppTheme.colors.textPrimaryAccent,
                             modifier = Modifier.padding(horizontal = 24.dp)
                         )
@@ -325,8 +328,8 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                                     text = "• $subTitle",
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
-                                    style = MaterialTheme.typography.body1,
-                                    color = AppTheme.colors.textHint,
+                                    style = AppTheme.typography.body1,
+                                    color = AppTheme.colors.textPrimary,
                                     modifier = Modifier.padding(horizontal = 30.dp)
                                 )
                             } else {
@@ -346,4 +349,32 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
 
     private fun lerp(start: Float, stop: Float, fraction: Float): Float =
         (1 - fraction) * start + fraction * stop
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EligibilityIntroViewPreview() {
+    val eligibilityIntroView = EligibilityIntroView()
+    val eligibilitySections: List<EligibilityIntroModel.EligibilityCondition> = listOf(
+        EligibilityIntroModel.EligibilityCondition(
+            "Medical eligibility",
+            listOf("Pre-existing condition(s)", "Prescription(s)", "Living in the United States")
+        ),
+        EligibilityIntroModel.EligibilityCondition(
+            "Basic Profile",
+            listOf("Age", "Geographical location", "Devices")
+        ),
+    )
+
+    return eligibilityIntroView.Render(
+        EligibilityIntroModel(
+            id = "eligibility",
+            title = "Eligibility",
+            description = "To begin with, we will ask a few questions to make sure that you are eligible to join this study.",
+            conditions = eligibilitySections,
+            viewType = EligibilityIntroModel.ViewType.Card
+        ),
+        CallbackCollection(),
+        null
+    )
 }

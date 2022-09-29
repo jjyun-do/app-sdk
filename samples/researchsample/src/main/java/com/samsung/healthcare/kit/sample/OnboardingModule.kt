@@ -1,11 +1,13 @@
 package com.samsung.healthcare.kit.sample
 
 import android.content.Context
-import com.samsung.healthcare.kit.auth.SignInProvider
+import com.samsung.healthcare.kit.auth.SignInProvider.Basic
+import com.samsung.healthcare.kit.auth.SignInProvider.Google
 import com.samsung.healthcare.kit.external.datastore.MetaDataStore
 import com.samsung.healthcare.kit.model.ConsentTextModel
 import com.samsung.healthcare.kit.model.EligibilityCheckerModel
 import com.samsung.healthcare.kit.model.EligibilityIntroModel
+import com.samsung.healthcare.kit.model.EligibilityIntroModel.EligibilityCondition
 import com.samsung.healthcare.kit.model.EligibilityResultModel
 import com.samsung.healthcare.kit.model.ImageArticleModel
 import com.samsung.healthcare.kit.model.IntroModel
@@ -14,7 +16,6 @@ import com.samsung.healthcare.kit.model.RegistrationCompletedModel
 import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel.ViewType.DropMenu
-import com.samsung.healthcare.kit.sample.R.string
 import com.samsung.healthcare.kit.sample.registration.RegistrationModel
 import com.samsung.healthcare.kit.sample.registration.RegistrationStep
 import com.samsung.healthcare.kit.step.ConsentTextStep
@@ -27,7 +28,7 @@ import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.task.OnboardingTask
 import com.samsung.healthcare.kit.task.SignUpTask
 import com.samsung.healthcare.kit.theme.AppColors
-import com.samsung.healthcare.kit.theme.darkColors
+import com.samsung.healthcare.kit.theme.blueColors
 import com.samsung.healthcare.kit.view.ConsentTextView
 import com.samsung.healthcare.kit.view.EligibilityCheckerView
 import com.samsung.healthcare.kit.view.EligibilityIntroView
@@ -47,7 +48,7 @@ object OnboardingModule {
 
     @Singleton
     @Provides
-    fun providesAppColors(): AppColors = darkColors()
+    fun providesAppColors(): AppColors = blueColors()
 
     @Singleton
     @Provides
@@ -88,7 +89,7 @@ object OnboardingModule {
                 listOf(
                     ChoiceQuestionModel(
                         "age",
-                        "1. what's youre age",
+                        "1. what's your age",
                         candidates = (20..50).toList(),
                         viewType = DropMenu
                     ),
@@ -109,7 +110,7 @@ object OnboardingModule {
             "intro-step",
             "Intro-Step",
             intro(context),
-            IntroView(),
+            IntroView("Get Started"),
         )
 
     @Singleton
@@ -129,7 +130,7 @@ object OnboardingModule {
             "eligibility-checker-step",
             "Eligibility-Checker-Step",
             eligibilityChecker(context),
-            EligibilityCheckerView(),
+            EligibilityCheckerView(false),
             SubStepHolder(
                 "sub-step-holder",
                 "Sub-Step-Holder",
@@ -165,40 +166,45 @@ object OnboardingModule {
         MetaDataStore(context)
 
     private fun intro(@ApplicationContext context: Context) = IntroModel(
-        id = "intro-model",
-        title = "SleepCare",
-        drawableId = R.drawable.sample_image4,
-        logoDrawableId = R.drawable.ic_sample_icon,
+        id = "intro",
+        title = "CardioFlow",
+        drawableId = R.drawable.sample_image5,
+        logoDrawableId = R.drawable.ic_ic_launcher_background,
         summaries = listOf(
-            R.drawable.ic_watch to "Wear your watch",
-            R.drawable.ic_clock to "10 min a day",
-            R.drawable.ic_alarm to "2 surveys a week"
+            R.drawable.ic_watch to "Wear your\nwatch",
+            R.drawable.ic_rectangle_2881 to "10 min\na day",
+            R.drawable.ic_task_alpha to "2 surveys\na week"
         ),
         sections = listOf(
-            IntroSection("subTitle1", context.getString(string.lorem_ipsum)),
-            IntroSection("subTitle2", context.getString(string.lorem_ipsum))
+            IntroSection(
+                "Overview",
+                "CardioFlow is a study developed by the University of California, San Francisco.\n\n" +
+                    "Through this study, we identify and measure the data of your vital signs and symptom reports.\n\n" +
+                    "With your help, we could test our algorithms and develop technology that contributes to preventing cardiovascular diseases in the U.S.",
+            ),
+            IntroSection(
+                "How to participate",
+                "Wear the watch as much as possible and take active measurements 3 times a day when notified."
+            )
         )
     )
 
     private fun eligibilityIntro(@ApplicationContext context: Context) = EligibilityIntroModel(
-        id = "eligibility-intro-model",
-        title = "Eligibility-Intro-Title",
-        description = context.getString(R.string.lorem_ipsum_short),
+        id = "eligibility",
+        title = "Eligibility",
+        description = "To begin with, we will ask a few questions to make sure that you are eligible to join this study.",
         conditions = eligibilitySections,
-        drawableId = R.drawable.sample_image1,
         viewType = EligibilityIntroModel.ViewType.Card
     )
 
     private fun eligibilityChecker(@ApplicationContext context: Context) = EligibilityCheckerModel(
-        id = "eligibility-checker-model",
-        title = "Eligibility-Checker-Title",
-        drawableId = R.drawable.sample_image1,
+        id = "eligibility",
+        title = "Eligibility",
     )
 
     private fun eligibilityResult(@ApplicationContext context: Context) = EligibilityResultModel(
-        id = "eligibility-result-model",
-        title = "Eligibility-Result-Title",
-        drawableId = R.drawable.sample_image1,
+        id = "eligibility",
+        title = "Eligibility",
         successModel = eligibilitySuccessMessage,
         failModel = eligibilityFailMessage,
     )
@@ -206,7 +212,7 @@ object OnboardingModule {
     private fun consentText(
         @ApplicationContext context: Context,
     ) = ConsentTextModel(
-        id = "consent-text-model",
+        id = "consent",
         title = "Informed Consent",
         subTitle = "",
         description = "Read the Terms of Service and Privacy Policy here.",
@@ -214,15 +220,15 @@ object OnboardingModule {
             "I have read all the information above and I agree to join the study.",
             "I agree to share my data with Samsung.",
             "I agree to share my data with the research assistants in the study."
-        ),
+        )
     )
 
     private fun signUp() = SignUpModel(
         id = "sign-up-model",
-        title = "SleepCare",
-        listOf(SignInProvider.Google),
-        description = "Thanks for joining the study! Now please create an account to keep track of your data and keep it safe.",
-        drawableId = R.drawable.ic_sample_icon
+        title = "CardioFlow",
+        listOf(Basic, Google),
+        description = "Thanks for joining the study!\nNow please create an account to keep track\nof your data and keep it safe.",
+        drawableId = R.drawable.ic_ic_launcher_background
     )
 
     private fun registrationCompleted() =
@@ -231,32 +237,32 @@ object OnboardingModule {
             title = "You are done!",
             buttonText = "Continue",
             description = "Congratulations! Everything is all set for you. Now please tap on the button below to start your SleepCare journey!",
-            drawableId = R.drawable.sample_image4
+            drawableId = com.samsung.healthcare.kit.R.drawable.sample_image_alpha1
         )
 
     private val eligibilitySections: List<EligibilityIntroModel.EligibilityCondition> = listOf(
-        EligibilityIntroModel.EligibilityCondition(
+        EligibilityCondition(
             "Medical eligibility",
-            listOf("Condition(s)", "Prescription(s)", "Living in Europe")
+            listOf("Pre-existing condition(s)", "Prescription(s)", "Living in the United States")
         ),
-        EligibilityIntroModel.EligibilityCondition(
+        EligibilityCondition(
             "Basic Profile",
-            listOf("18 and over", "Living in Europe")
+            listOf("Age", "Geographical location", "Devices")
         ),
     )
 
     private val eligibilitySuccessMessage: ImageArticleModel = ImageArticleModel(
-        "success-message",
-        "Great! You’re in!",
-        "Congratulations! You are eligible for the study.",
-        drawableId = R.drawable.sample_image2
+        id = "eligibility",
+        title = "Great, You’re in!",
+        description = "Congratulations! You are eligible for the study. Next, we will need to collect your consent, and you will be ready to go.",
+        drawableId = R.drawable.sample_image_alpha1
     )
 
     private val eligibilityFailMessage: ImageArticleModel = ImageArticleModel(
-        "fail-message",
-        "You are not eligible for the study.",
-        "Check back later and stay tuned for more studies coming soon!",
-        drawableId = R.drawable.sample_image3
+        id = "eligibility",
+        title = "You’re not eligible for the study.",
+        description = "Please check back later and stay tuned for more studies coming soon!",
+        drawableId = R.drawable.sample_image_alpha1
     )
 
     private val questionnaireSubSteps: List<QuestionSubStep<*, *>> = listOf(
@@ -265,9 +271,9 @@ object OnboardingModule {
             "Question-Name-1",
             ChoiceQuestionModel(
                 "choice-question-model-1",
-                "Do you have any existing cardiac conditions?",
-                "Examples of cardiac conditions include abnormal heart rhythms, or arrhythmias",
-                candidates = listOf("Yes", "No"),
+                "1. Are you between 30 and 50 years old?",
+                "",
+                candidates = listOf("Yes", "No", "Prefer not to answer"),
                 answer = "Yes"
             ),
             ChoiceQuestionComponent(),
@@ -277,8 +283,8 @@ object OnboardingModule {
             "Question-Name-2",
             ChoiceQuestionModel(
                 "choice-question-model-2",
-                "Do you currently own a wearable device?",
-                "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
+                "2. Do you have a family history of cardiovascular diseases?",
+                "Examples include stroke, heart attack, high blood pressure, etc.",
                 candidates = listOf("Yes", "No"),
                 answer = "Yes"
             ),
@@ -289,7 +295,20 @@ object OnboardingModule {
             "Question-Name-3",
             ChoiceQuestionModel(
                 "choice-question-model-3",
-                "test page?",
+                "3. Do you take any cardiovscular disease medications?",
+                "Examples inlcude Benazepril, Moexipril, Quinapril, etc.",
+                candidates = listOf("Yes", "No"),
+                answer = "Yes"
+            ),
+            ChoiceQuestionComponent(),
+        ),
+        QuestionSubStep(
+            "question-4",
+            "Question-Name-4",
+            ChoiceQuestionModel(
+                "choice-question-model-4",
+                "4. Do you currently own a wearable device?",
+                "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
                 candidates = listOf("Yes", "No"),
                 answer = "Yes"
             ),

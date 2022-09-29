@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
@@ -31,8 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.kit.R
 import com.samsung.healthcare.kit.theme.AppTheme
-import com.samsung.healthcare.kit.view.common.RoundButton
 import com.samsung.healthcare.kit.view.common.SdkCard
+import com.samsung.healthcare.kit.view.common.SquareButton
 import com.samsung.healthcare.kit.view.common.TopBar
 import se.warting.signaturepad.SignaturePadAdapter
 import se.warting.signaturepad.SignaturePadView
@@ -76,16 +77,20 @@ fun SignatureLayout(
                 )
             }
 
+            Text(
+                "By signing this document with an electronic signature, I agree that such signature will be as valid as handwritten signatures to the exxtent allowed by local law"
+            )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 50.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-                RoundButton(
+                SquareButton(
                     modifier = Modifier
                         .height(44.dp)
-                        .width(140.dp),
+                        .width(144.dp),
                     text = "Rewrite",
                     border = BorderStroke(width = 1.dp, color = AppTheme.colors.primary),
                     buttonColor = AppTheme.colors.background,
@@ -98,12 +103,12 @@ fun SignatureLayout(
 
                 Spacer(modifier = Modifier.width(24.dp))
 
-                RoundButton(
+                SquareButton(
                     modifier = Modifier
                         .height(44.dp)
-                        .width(140.dp)
+                        .width(144.dp)
                         .testTag("signatureDoneButton"),
-                    text = "Done",
+                    text = "Sign",
                     border = BorderStroke(width = 1.dp, color = AppTheme.colors.primary),
                     onClick = {
                         mutableSvg.value = signaturePadAdapter?.getSignatureSvg() ?: ""

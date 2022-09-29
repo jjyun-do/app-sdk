@@ -6,8 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.samsung.healthcare.kit.R.string
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.ConsentTextModel
@@ -49,18 +47,3 @@ class ConsentTextView(
             )
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun ConsentTextViewPreview() =
-    ConsentTextView().Render(
-        ConsentTextModel(
-            "id",
-            "Consent",
-            "Privacy Header",
-            stringResource(string.lorem_ipsum_short),
-            listOf("I agree", "I agree to share my data.", "Some Message"),
-        ),
-        CallbackCollection(),
-        null
-    )

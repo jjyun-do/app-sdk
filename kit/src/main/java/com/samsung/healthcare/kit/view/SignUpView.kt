@@ -13,15 +13,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
@@ -44,7 +46,7 @@ class SignUpView : View<SignUpModel>() {
     override fun Render(
         model: SignUpModel,
         callbackCollection: CallbackCollection,
-        holder: SubStepHolder?
+        holder: SubStepHolder?,
     ) {
         @StringRes val failedToSignInMessage = R.string.failed_to_signin
 
@@ -67,9 +69,19 @@ class SignUpView : View<SignUpModel>() {
             bottomBar = {
                 Column(
                     modifier = Modifier
-                        .wrapContentSize()
-                        .padding(vertical = 20.dp)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Bottom
                 ) {
+                    Image(
+                        painter = painterResource(R.drawable.signup_divider),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .width(320.dp)
+                            .height(21.dp),
+                        contentScale = ContentScale.FillWidth
+                    )
+
                     providerToLauncher.forEach { (provider, launcher) ->
                         SignUpComponent.of(provider)({
                             launcher.launch(Unit)
@@ -86,7 +98,7 @@ class SignUpView : View<SignUpModel>() {
         context: Context,
         auth: FirebaseAuth,
         callbackCollection: CallbackCollection,
-        @StringRes failedToSignInMessage: Int
+        @StringRes failedToSignInMessage: Int,
     ) = AuthCallback(
         onSuccess = {
             ViewUtil.showToastMessage(context, "Hello, ${auth.currentUser?.displayName}!")
@@ -111,7 +123,8 @@ class SignUpView : View<SignUpModel>() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -126,7 +139,8 @@ class SignUpView : View<SignUpModel>() {
                     Image(
                         painter = painterResource(it),
                         contentDescription = null,
-                        contentScale = ContentScale.Fit
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier.shadow(elevation = 10.dp, shape = CircleShape, clip = false)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                 }
@@ -143,15 +157,15 @@ class SignUpView : View<SignUpModel>() {
                     text = it,
                     modifier = Modifier.fillMaxWidth(),
                     style = AppTheme.typography.body1,
-                    color = AppTheme.colors.textPrimary
+                    color = AppTheme.colors.textPrimary,
+                    textAlign = TextAlign.Center
                 )
             }
 
             Spacer(modifier = Modifier.height(40.dp))
-            if (model.providers.contains(Basic)) {
-                // TODO how to handle sign up with external
+            if (model.providers.contains(Basic))
+            // TODO how to handle sign up with external
                 BasicSignUpComponent { }
-            }
         }
     }
 }
@@ -162,8 +176,8 @@ fun SignUpViewPreview() =
     SignUpView().Render(
         SignUpModel(
             "id",
-            "SleepCare",
-            listOf(SignInProvider.Google),
+            "Register",
+            listOf(SignInProvider.Basic, SignInProvider.Google),
             "Thanks for joining the study! Now please create an account to keep track of your data and keep it safe.",
         ),
         CallbackCollection(),

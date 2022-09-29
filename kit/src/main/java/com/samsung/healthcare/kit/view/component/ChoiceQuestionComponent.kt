@@ -15,6 +15,7 @@ import androidx.compose.material.ExposedDropdownMenuBox
 import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.RadioButton
+import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +25,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.samsung.healthcare.kit.common.CallbackCollection
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
@@ -47,39 +50,6 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                 ViewType.Radio -> RadioGroup(model, modifier)
                 ViewType.Slider -> SliderGroup(model, modifier)
                 ViewType.DropMenu -> DropDownGroup(model, modifier)
-            }
-        }
-    }
-
-    @Composable
-    private fun RadioGroup(choiceQuestion: ChoiceQuestionModel<*>, modifier: Modifier) {
-        val rememberIndex = remember { mutableStateOf(choiceQuestion.selection) }
-        rememberIndex.value = choiceQuestion.selection
-
-        Column(modifier = modifier) {
-            choiceQuestion.candidates.forEachIndexed { index, candidate ->
-                Row(
-                    verticalAlignment = CenterVertically
-                ) {
-                    RadioButton(
-                        selected = rememberIndex.value == index,
-                        onClick = {
-                            choiceQuestion.selection = index
-                            rememberIndex.value = index
-                        },
-                        enabled = true,
-                        modifier = Modifier.testTag(candidate.toString()),
-                    )
-                    Text(
-                        text = candidate.toString(),
-                        style = AppTheme.typography.body1,
-                        color = AppTheme.colors.textPrimary,
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
-                }
-                if (index != choiceQuestion.candidates.lastIndex) {
-                    Spacer(modifier = Modifier.height(24.dp))
-                }
             }
         }
     }
@@ -175,7 +145,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                         )
                         Text(
                             text = candidate.toString(),
-                            style = AppTheme.typography.body1,
+                            style = AppTheme.typography.body2,
                             color = AppTheme.colors.textPrimary,
                             modifier = Modifier
                                 .padding(start = 8.dp)
@@ -185,4 +155,55 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
             }
         }
     }
+}
+
+@Composable
+fun RadioGroup(choiceQuestion: ChoiceQuestionModel<*>, modifier: Modifier) {
+    val rememberIndex = remember { mutableStateOf(choiceQuestion.selection) }
+    rememberIndex.value = choiceQuestion.selection
+
+    Column(modifier = modifier) {
+        choiceQuestion.candidates.forEachIndexed { index, candidate ->
+            Row(
+                verticalAlignment = CenterVertically
+            ) {
+                RadioButton(
+                    selected = rememberIndex.value == index,
+                    onClick = {
+                        choiceQuestion.selection = index
+                        rememberIndex.value = index
+                    },
+                    enabled = true,
+                    modifier = Modifier.testTag(candidate.toString()),
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = AppTheme.colors.primary,
+                        unselectedColor = AppTheme.colors.primaryVariant,
+                        disabledColor = Color(0xFFA1A1A1),
+                    )
+                )
+                Text(
+                    text = candidate.toString(),
+                    style = AppTheme.typography.body2,
+                    color = AppTheme.colors.textPrimary,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+            if (index != choiceQuestion.candidates.lastIndex) {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RadioPreview() {
+    val component = ChoiceQuestionComponent<ChoiceQuestionModel<String>>()
+    val model = ChoiceQuestionModel<String>(
+        id = "radio",
+        query = "Are you designer?",
+        candidates = listOf("developer", "designer")
+    )
+
+    return component.Render(model, CallbackCollection())
 }

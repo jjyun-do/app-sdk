@@ -20,7 +20,7 @@ import com.samsung.healthcare.kit.theme.AppTheme
 @Composable
 fun TopBar(
     title: String = "",
-    color: Color = Color(0x970347F4),
+    color: Color = AppTheme.colors.onSurface,
     onClickBack: (() -> Unit)?,
     onClickAction: () -> Unit,
     actionIcon: ImageVector = Icons.Default.MoreVert,
@@ -31,7 +31,7 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     modifier = Modifier
-                        .padding(12.dp)
+                        .padding(start = 32.dp, top = 12.dp, bottom = 12.dp, end = 12.dp)
                         .clickable { onClickBack?.invoke() },
                     contentDescription = "back button icon",
                     tint = color,
@@ -61,7 +61,8 @@ fun TopBar(
 
 @Composable
 fun TopBar(
-    title: String,
+    title: String = "",
+    color: Color = AppTheme.colors.onSurface,
     onClickBack: (() -> Unit)? = null,
 ) {
     TopAppBar(
@@ -70,18 +71,18 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     modifier = Modifier
-                        .padding(12.dp)
+                        .padding(start = 32.dp, top = 12.dp, bottom = 12.dp, end = 12.dp)
                         .clickable { onClickBack() },
                     contentDescription = "back button icon",
-                    tint = AppTheme.colors.textSecondary,
+                    tint = color
                 )
             }
         },
         title = {
             Text(
                 text = title,
-                style = AppTheme.typography.subHeader1,
-                color = AppTheme.colors.textPrimary
+                style = AppTheme.typography.topBar,
+                color = color
             )
         },
         backgroundColor = AppTheme.colors.background,
@@ -91,6 +92,8 @@ fun TopBar(
 
 @Preview(showBackground = true)
 @Composable
-fun ConsentTopBarPreview() {
-    TopBar(onClickBack = {}, onClickAction = {})
-}
+fun ConsentTopBarPreview() = TopBar(onClickBack = {})
+
+@Preview(showBackground = true)
+@Composable
+fun ConsentTopBarPreview2() = TopBar(onClickBack = {}, onClickAction = {})

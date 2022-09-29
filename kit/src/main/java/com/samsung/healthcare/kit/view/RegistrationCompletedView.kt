@@ -22,7 +22,8 @@ class RegistrationCompletedView() : View<RegistrationCompletedModel>() {
             "Registration Completed",
             imageArticleModel,
             model.buttonText,
-            onComplete = { callbackCollection.next() }
+            onComplete = { callbackCollection.next() },
+            onClickBack = { callbackCollection.prev() }
         )
     }
 }
@@ -36,7 +37,7 @@ fun RegistrationCompletedViewPreview() =
             "You are done!",
             "Continue",
             "Congratulations! Everything is all set for you. Now please tap on the button below to start your journey!",
-            R.drawable.sample_image2
+            R.drawable.sample_image_alpha1
         ),
         CallbackCollection(),
         null

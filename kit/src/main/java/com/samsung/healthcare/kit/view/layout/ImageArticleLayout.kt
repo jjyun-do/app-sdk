@@ -67,10 +67,10 @@ fun ImageArticleLayout(
             ) {
                 Text(
                     message.title,
-                    style = AppTheme.typography.title2,
-                    color = AppTheme.colors.textPrimaryAccent
+                    style = AppTheme.typography.title3,
+                    color = AppTheme.colors.textPrimary
                 )
-                Spacer(modifier = Modifier.height(28.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     message.description,
                     style = AppTheme.typography.body1,
@@ -90,7 +90,7 @@ fun ImageArticleLayoutPreview() =
             "id",
             "Title",
             "Description",
-            R.drawable.ic_watch
+            R.drawable.sample_image_alpha1
         ),
         "Button Text"
     )

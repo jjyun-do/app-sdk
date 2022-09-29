@@ -266,4 +266,48 @@ fun darkColors(
     border = border,
 )
 
-internal val LocalColors = staticCompositionLocalOf { lightColors() }
+fun blueColors(
+    primary: Color = Color(0xFF4475E3),
+    primaryVariant: Color = Color(0xFFB3C6F1),
+    secondary: Color = Color(0xFF4475E3),
+    secondaryVariant: Color = Color(0xFF4475E3),
+    background: Color = Color(0xFFFFFFFF),
+    surface: Color = Color(0xFFFFFFFF),
+    error: Color = Color(0xFF4475E3),
+    onPrimary: Color = Color(0xFF4475E3),
+    onSecondary: Color = Color(0xFF4475E3),
+    onBackground: Color = Color(0xFFFFFFFF),
+    onSurface: Color = Color(0xFF2D2D2D),
+    onError: Color = Color(0xFF4475E3),
+    isLight: Boolean = true,
+    lightBackground: Color = Color(0xFFF7F8FA),
+    primaryDark: Color = Color(0xFF68A8FF),
+    textPrimary: Color = Color(0xFF474747),
+    textPrimaryAccent: Color = Color(0xFF4475E3),
+    textSecondary: Color = Color(0xFFFFFFFF),
+    textHint: Color = Color(0xFF808080),
+    border: Color = Color(0xFFB3C6F1),
+): AppColors = AppColors(
+    primary = primary,
+    primaryVariant = primaryVariant,
+    secondary = secondary,
+    secondaryVariant = secondaryVariant,
+    background = background,
+    surface = surface,
+    error = error,
+    onPrimary = onPrimary,
+    onSecondary = onSecondary,
+    onBackground = onBackground,
+    onSurface = onSurface,
+    onError = onError,
+    isLight = isLight,
+    lightBackground = lightBackground,
+    primaryDark = primaryDark,
+    textPrimary = textPrimary,
+    textSecondary = textSecondary,
+    textPrimaryAccent = textPrimaryAccent,
+    textHint = textHint,
+    border = border
+)
+
+internal val LocalColors = staticCompositionLocalOf { blueColors() }

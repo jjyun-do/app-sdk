@@ -31,20 +31,20 @@ import com.samsung.healthcare.kit.sample.registration.RegistrationState.Success
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.View
-import com.samsung.healthcare.kit.view.common.BottomRoundButton
+import com.samsung.healthcare.kit.view.common.BottomSquareButton
 import com.samsung.healthcare.kit.view.common.TopBar
 import com.samsung.healthcare.kit.view.component.Component
 import com.samsung.healthcare.kit.view.component.QuestionComponent.Companion.defaultComponentOf
 
 class RegistrationView(
-    private val viewModel: RegistrationViewModel = RegistrationViewModel()
+    private val viewModel: RegistrationViewModel = RegistrationViewModel(),
 ) : View<RegistrationModel>() {
 
     @Composable
     override fun Render(
         model: RegistrationModel,
         callbackCollection: CallbackCollection,
-        holder: SubStepHolder?
+        holder: SubStepHolder?,
     ) {
         val state = viewModel.state.collectAsState()
 
@@ -59,11 +59,11 @@ class RegistrationView(
     @Composable
     private fun RegistrationShow(
         model: RegistrationModel,
-        callbackCollection: CallbackCollection
+        callbackCollection: CallbackCollection,
     ) {
         val scrollSate = rememberScrollState()
         Scaffold(
-            topBar = { TopBar(title = model.title) },
+            topBar = { TopBar(title = model.title) { callbackCollection.prev() } },
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -87,7 +87,7 @@ class RegistrationView(
                         .weight(1f)
                         .fillMaxHeight()
                 )
-                BottomRoundButton(text = "Submit") {
+                BottomSquareButton(text = "Submit") {
                     if (model.questions.all { it.getResponse() != null }) {
                         viewModel.registerUser(model.questions.associate { it.id to it.getResponse()!! })
                     }

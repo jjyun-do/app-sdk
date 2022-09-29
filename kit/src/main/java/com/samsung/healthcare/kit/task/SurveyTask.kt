@@ -14,7 +14,7 @@ import com.samsung.healthcare.kit.view.component.Component
 import com.samsung.healthcare.kit.view.component.QuestionComponent
 import java.util.UUID
 
-open class SurveyTask private constructor(
+open class SurveyTask(
     id: String,
     name: String,
     description: String,
@@ -39,10 +39,10 @@ open class SurveyTask private constructor(
     @Composable
     override fun CardView(onClick: () -> Unit) {
         TaskCard(
-            id = R.drawable.ic_task,
             taskName = name,
             description = description,
-            buttonEnabled = isCompleted.not()
+            buttonEnabled = isCompleted.not(),
+            buttonText = "Get started"
         ) {
             onClick()
         }
