@@ -2,6 +2,7 @@ package com.samsung.healthcare.kit.external.network
 
 import com.samsung.healthcare.kit.external.background.HealthDataSyncClient
 import com.samsung.healthcare.kit.external.data.HealthData
+import com.samsung.healthcare.kit.external.data.TaskResult
 import com.samsung.healthcare.kit.external.data.TaskSpec
 import com.samsung.healthcare.kit.external.data.User
 import com.samsung.healthcare.kit.external.network.util.RetrofitFactory
@@ -20,8 +21,12 @@ class ResearchPlatformAdapter private constructor(
         networkClient.registerUser(idToken, projectId, user)
     }
 
-    override suspend fun getTasks(idToken: String, startTime: LocalDateTime, endTime: LocalDateTime): List<TaskSpec> {
-        return networkClient.getTasks(idToken, projectId, startTime, endTime)
+    override suspend fun getTasks(idToken: String, lastSyncTime: LocalDateTime): List<TaskSpec> {
+        return networkClient.getTasks(idToken, projectId, lastSyncTime)
+    }
+
+    override suspend fun uploadResult(idToken: String, result: TaskResult) {
+        return networkClient.uploadTaskResult(idToken, projectId, listOf(result))
     }
 
     companion object {

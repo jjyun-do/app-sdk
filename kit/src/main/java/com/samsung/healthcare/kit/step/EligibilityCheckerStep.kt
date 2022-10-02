@@ -24,7 +24,7 @@ class EligibilityCheckerStep(
         view.Render(model, callbackCollection, subStepHolder)
 
     class Builder(
-        private val title: String
+        private val title: String,
     ) {
         private val questionnaireSubSteps = mutableListOf<QuestionSubStep<*, *>>()
 
@@ -35,7 +35,7 @@ class EligibilityCheckerStep(
                     QuestionSubStep(
                         // NOTE does step need id and name?
                         UUID.randomUUID().toString(),
-                        UUID.randomUUID().toString(),
+                        question.id,
                         question,
                         QuestionComponent.defaultComponentOf(question.type) as Component<QuestionModel<R>>
                     )

@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = 32
 
     defaultConfig {
         applicationId = "com.samsung.healthcare.kit.sample"
-        minSdkVersion(29)
-        targetSdkVersion(31)
+        minSdk = 29
+        targetSdk = 31
     }
 
     buildTypes {
@@ -61,7 +61,7 @@ dependencies {
     implementation(AppDependencies.hiltImplLibs)
     implementation(AppDependencies.healthDataImplLibs)
 
-    debugImplementation(AppDependencies.uiDebugLibs)
+    // debugImplementation(AppDependencies.uiDebugLibs)
 
     kapt(AppDependencies.hiltKaptLibs)
 }

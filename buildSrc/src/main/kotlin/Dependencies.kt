@@ -1,12 +1,12 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 object Versions {
-    const val KOTLIN = "1.6.10"
-    const val ANDROID_BUILD = "7.0.4"
+    const val KOTLIN = "1.7.0"
+    const val ANDROID_BUILD = "7.2.2"
     const val LIFECYCLE_VIEWMODEL_COMPOSE = "2.3.0"
 
     object Hilt {
-        const val DAGGER = "2.40.5"
+        const val DAGGER = "2.42"
         const val ANDROIDX = "1.0.0"
     }
 
@@ -25,8 +25,8 @@ object Versions {
         const val COMPAT = "1.4.1"
         const val WORK = "2.7.1"
         const val CONCURRENT = "1.1.0"
-        const val CUSTOM_VIEW = "1.2.0-alpha01"
-        const val CUSTOM_VIEW_CONTAINER = "1.0.0-alpha01"
+        const val CUSTOM_VIEW = "1.1.0"
+        const val CUSTOM_VIEW_CONTAINER = "1.0.0"
         const val DATASTORE = "1.0.0"
         const val NAVIGATION_COMPOSE = "2.4.2"
         const val ROOM = "2.4.3"
@@ -59,13 +59,13 @@ object Versions {
 
     // UI
     object Compose {
-        const val UI = "1.2.0-alpha07"
-        const val ACTIVITY = "1.4.0-rc01"
+        const val UI = "1.2.0"
+        const val ACTIVITY = "1.4.0"
     }
 
-    const val COIL = "2.0.0-rc02"
+    const val COIL = "2.2.1"
     const val MATERIAL_UI = "1.4.0"
-    const val ACCOMPANIST_PAGER = "0.24.5-alpha"
+    const val ACCOMPANIST_PAGER = "0.25.0"
     const val SIGNATURE_PAD = "0.0.18"
 }
 

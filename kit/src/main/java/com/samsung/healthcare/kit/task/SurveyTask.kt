@@ -12,10 +12,14 @@ import com.samsung.healthcare.kit.view.EligibilityCheckerView
 import com.samsung.healthcare.kit.view.common.TaskCard
 import com.samsung.healthcare.kit.view.component.Component
 import com.samsung.healthcare.kit.view.component.QuestionComponent
+import java.time.LocalDateTime
+import java.time.LocalDateTime.now
 import java.util.UUID
 
-open class SurveyTask(
+open class SurveyTask private constructor(
     id: String,
+    val revisionId: Int,
+    val taskId: String,
     name: String,
     description: String,
     val step: EligibilityCheckerStep,
@@ -24,13 +28,20 @@ open class SurveyTask(
     name,
     description,
 ) {
+    var startedAt: LocalDateTime? = null
+
     @Composable
     override fun Render() {
+        startedAt = now()
         step.Render(
             callbackCollection = object : CallbackCollection() {
                 override fun next() {
                     isCompleted = true
                     callback?.invoke()
+                }
+
+                override fun prev() {
+                    canceled?.invoke()
                 }
             }
         )
@@ -50,10 +61,13 @@ open class SurveyTask(
 
     class Builder(
         private val id: String,
+        private val revisionId: Int,
+        private val taskId: String,
         private val name: String,
         private val description: String,
         private val callback: () -> Unit,
         private val pageable: Boolean = true,
+        private val isCompleted: Boolean = false,
     ) {
         private val subSteps = mutableListOf<QuestionSubStep<*, *>>()
 
@@ -80,6 +94,8 @@ open class SurveyTask(
         fun build(): SurveyTask =
             SurveyTask(
                 id,
+                revisionId,
+                taskId,
                 name,
                 description,
                 // TODO create another step or rename ?
@@ -90,6 +106,8 @@ open class SurveyTask(
                     EligibilityCheckerView(pageable),
                     subStepHolder = SubStepHolder(id, name, subSteps)
                 )
-            )
+            ).apply {
+                this.isCompleted = this@Builder.isCompleted
+            }
     }
 }

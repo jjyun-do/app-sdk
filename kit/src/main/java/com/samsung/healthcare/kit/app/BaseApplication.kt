@@ -12,8 +12,11 @@ import com.samsung.healthcare.kit.app.AppStage.Onboarding
 import com.samsung.healthcare.kit.app.AppStage.SignUp
 import com.samsung.healthcare.kit.app.setting.SettingPreference
 import com.samsung.healthcare.kit.external.background.SyncManager
+import com.samsung.healthcare.kit.repository.TaskRepository
+import com.samsung.healthcare.kit.repository.TaskRepositoryImpl
 import com.samsung.healthcare.kit.task.OnboardingTask
 import com.samsung.healthcare.kit.task.SignUpTask
+import com.samsung.healthcare.kit.viewmodel.TaskViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -50,9 +53,13 @@ private fun Main(
     val appStage = runBlocking {
         settingPreference.appStage.first()
     }
+    val roomDB: TaskRepository = TaskRepositoryImpl()
+    val viewModel = TaskViewModel(roomDB, settingPreference)
 
     NavHost(navController = navController, startDestination = appStage.name) {
-        composable(Main.name) { Home(statusList, settingPreference) }
+        composable(Main.name) {
+            Home(statusList, viewModel)
+        }
         composable(Onboarding.name) {
             onboardingTask.callback = {
                 scope.launch {

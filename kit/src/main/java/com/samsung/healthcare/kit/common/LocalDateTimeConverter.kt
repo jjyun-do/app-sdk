@@ -10,5 +10,10 @@ class LocalDateTimeConverter {
     fun timeToString(value: LocalDateTime?): String? = value?.toString()
 
     @TypeConverter
-    fun stringToTime(value: String?): LocalDateTime? = LocalDateTime.parse(value) ?: null
+    fun stringToTime(value: String?): LocalDateTime? =
+        try {
+            LocalDateTime.parse(value)
+        } catch (e: Exception) {
+            null
+        }
 }

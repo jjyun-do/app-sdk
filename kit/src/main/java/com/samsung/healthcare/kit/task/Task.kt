@@ -30,9 +30,10 @@ abstract class Task(
     abstract fun Render()
 
     var isCompleted: Boolean = false
-        protected set
 
     var callback: (() -> Unit)? = null
+
+    var canceled: (() -> Unit)? = null
 
     @Composable
     abstract fun CardView(onClick: () -> Unit)

@@ -32,7 +32,7 @@ fun TopBar(
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     modifier = Modifier
                         .padding(start = 32.dp, top = 12.dp, bottom = 12.dp, end = 12.dp)
-                        .clickable { onClickBack?.invoke() },
+                        .clickable { onClickBack() },
                     contentDescription = "back button icon",
                     tint = color,
                 )
@@ -43,7 +43,7 @@ fun TopBar(
                 imageVector = actionIcon,
                 modifier = Modifier
                     .padding(12.dp)
-                    .clickable { onClickAction?.invoke() },
+                    .clickable { onClickAction() },
                 contentDescription = "",
                 tint = color,
             )

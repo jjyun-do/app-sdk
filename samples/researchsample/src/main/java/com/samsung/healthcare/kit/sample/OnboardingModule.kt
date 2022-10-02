@@ -16,6 +16,8 @@ import com.samsung.healthcare.kit.model.RegistrationCompletedModel
 import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel.ViewType.DropMenu
+import com.samsung.healthcare.kit.model.question.QuestionModel
+import com.samsung.healthcare.kit.sample.R.string
 import com.samsung.healthcare.kit.sample.registration.RegistrationModel
 import com.samsung.healthcare.kit.sample.registration.RegistrationStep
 import com.samsung.healthcare.kit.step.ConsentTextStep
@@ -23,18 +25,14 @@ import com.samsung.healthcare.kit.step.EligibilityCheckerStep
 import com.samsung.healthcare.kit.step.EligibilityIntroStep
 import com.samsung.healthcare.kit.step.EligibilityResultStep
 import com.samsung.healthcare.kit.step.IntroStep
-import com.samsung.healthcare.kit.step.sub.QuestionSubStep
-import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.task.OnboardingTask
 import com.samsung.healthcare.kit.task.SignUpTask
 import com.samsung.healthcare.kit.theme.AppColors
 import com.samsung.healthcare.kit.theme.blueColors
 import com.samsung.healthcare.kit.view.ConsentTextView
-import com.samsung.healthcare.kit.view.EligibilityCheckerView
 import com.samsung.healthcare.kit.view.EligibilityIntroView
 import com.samsung.healthcare.kit.view.EligibilityResultView
 import com.samsung.healthcare.kit.view.IntroView
-import com.samsung.healthcare.kit.view.component.ChoiceQuestionComponent
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -82,26 +80,8 @@ object OnboardingModule {
             registrationStep()
         )
 
-    fun registrationStep(): RegistrationStep =
-        RegistrationStep(
-            RegistrationModel(
-                "Registration",
-                listOf(
-                    ChoiceQuestionModel(
-                        "age",
-                        "1. what's your age",
-                        candidates = (20..50).toList(),
-                        viewType = DropMenu
-                    ),
-
-                    ChoiceQuestionModel(
-                        "gender",
-                        "2. What's your gender?",
-                        candidates = listOf("Male", "Female"),
-                    ),
-                )
-            )
-        )
+    private fun registrationStep(): RegistrationStep =
+        RegistrationStep(RegistrationModel("Registration", eligibilityQuestions))
 
     @Singleton
     @Provides
@@ -123,20 +103,12 @@ object OnboardingModule {
             EligibilityIntroView(),
         )
 
+    // TODO: add EligibilityCheckerView in builder
     @Singleton
     @Provides
     fun provideEligibilityCheckerStep(@ApplicationContext context: Context): EligibilityCheckerStep =
-        EligibilityCheckerStep(
-            "eligibility-checker-step",
-            "Eligibility-Checker-Step",
-            eligibilityChecker(context),
-            EligibilityCheckerView(false),
-            SubStepHolder(
-                "sub-step-holder",
-                "Sub-Step-Holder",
-                questionnaireSubSteps
-            )
-        )
+        EligibilityCheckerStep.Builder("Eligibility-Checker-Step")
+            .addQuestions(eligibilityQuestions).build()
 
     @Singleton
     @Provides
@@ -236,7 +208,7 @@ object OnboardingModule {
             id = "registration-completed-model",
             title = "You are done!",
             buttonText = "Continue",
-            description = "Congratulations! Everything is all set for you. Now please tap on the button below to start your SleepCare journey!",
+            description = "Congratulations! Everything is all set for you. Now please tap on the button below to start your CardioFlow journey!",
             drawableId = com.samsung.healthcare.kit.R.drawable.sample_image_alpha1
         )
 
@@ -265,54 +237,31 @@ object OnboardingModule {
         drawableId = R.drawable.sample_image_alpha1
     )
 
-    private val questionnaireSubSteps: List<QuestionSubStep<*, *>> = listOf(
-        QuestionSubStep(
-            "question-1",
-            "Question-Name-1",
-            ChoiceQuestionModel(
-                "choice-question-model-1",
-                "1. Are you between 30 and 50 years old?",
-                "",
-                candidates = listOf("Yes", "No", "Prefer not to answer"),
-                answer = "Yes"
-            ),
-            ChoiceQuestionComponent(),
+    private val eligibilityQuestions: List<QuestionModel<Any>> = listOf(
+        ChoiceQuestionModel(
+            "age",
+            "What's your age?",
+            candidates = (20..50).toList(),
+            viewType = DropMenu
         ),
-        QuestionSubStep(
-            "question-2",
-            "Question-Name-2",
-            ChoiceQuestionModel(
-                "choice-question-model-2",
-                "2. Do you have a family history of cardiovascular diseases?",
-                "Examples include stroke, heart attack, high blood pressure, etc.",
-                candidates = listOf("Yes", "No"),
-                answer = "Yes"
-            ),
-            ChoiceQuestionComponent(),
+        ChoiceQuestionModel(
+            "gender",
+            "What's your gender?",
+            candidates = listOf("Male", "Female"),
         ),
-        QuestionSubStep(
-            "question-3",
-            "Question-Name-3",
-            ChoiceQuestionModel(
-                "choice-question-model-3",
-                "3. Do you take any cardiovscular disease medications?",
-                "Examples inlcude Benazepril, Moexipril, Quinapril, etc.",
-                candidates = listOf("Yes", "No"),
-                answer = "Yes"
-            ),
-            ChoiceQuestionComponent(),
+        ChoiceQuestionModel(
+            "hasCardiac",
+            "Do you have any existing cardiac conditions?",
+            "Examples of cardiac conditions include abnormal heart rhythms, or arrhythmias",
+            candidates = listOf("Yes", "No"),
+            answer = "Yes"
         ),
-        QuestionSubStep(
-            "question-4",
-            "Question-Name-4",
-            ChoiceQuestionModel(
-                "choice-question-model-4",
-                "4. Do you currently own a wearable device?",
-                "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
-                candidates = listOf("Yes", "No"),
-                answer = "Yes"
-            ),
-            ChoiceQuestionComponent(),
+        ChoiceQuestionModel(
+            "hasWearableDevice",
+            "Do you currently own a wearable device?",
+            "Examples of wearable devices include Samsung Galaxy Watch 4, Fitbit, OuraRing, etc.",
+            candidates = listOf("Yes", "No"),
+            answer = "Yes"
         )
-    )
+    ) as List<QuestionModel<Any>>
 }

@@ -5,5 +5,5 @@ import com.samsung.healthcare.kit.model.question.QuestionModel
 
 class RegistrationModel(
     title: String,
-    val questions: List<QuestionModel<*>>
+    val eligibilityQuestions: List<QuestionModel<Any>>
 ) : Model("", title, null)

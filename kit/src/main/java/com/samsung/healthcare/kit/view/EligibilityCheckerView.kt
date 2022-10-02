@@ -1,6 +1,7 @@
 package com.samsung.healthcare.kit.view
 
 import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -47,6 +48,11 @@ class EligibilityCheckerView(
         subStepHolder: SubStepHolder?,
     ) {
         requireNotNull(subStepHolder)
+
+        BackHandler(true) {
+            callbackCollection.prev()
+        }
+
         // TODO: page 관련 설정을 Holder로 변경 예정
         if (pageable)
             MultiPageSurveyLayout(model, callbackCollection, subStepHolder)

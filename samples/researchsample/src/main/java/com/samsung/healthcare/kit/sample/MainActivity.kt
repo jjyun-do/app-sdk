@@ -13,6 +13,7 @@ import com.samsung.healthcare.kit.app.TaskDataType.Companion.TASK_DATA_TYPE
 import com.samsung.healthcare.kit.external.background.SyncManager
 import com.samsung.healthcare.kit.external.network.ResearchPlatformAdapter
 import com.samsung.healthcare.kit.external.source.HealthPlatformAdapter
+import com.samsung.healthcare.kit.repository.TaskRoomDatabase
 import com.samsung.healthcare.kit.task.OnboardingTask
 import com.samsung.healthcare.kit.task.SignUpTask
 import com.samsung.healthcare.kit.theme.AppColors
@@ -48,6 +49,7 @@ class MainActivity : ComponentActivity() {
             this.getString(R.string.research_platform_endpoint),
             this.getString(R.string.research_project_id)
         )
+        TaskRoomDatabase.initialize(this)
 
         setContent {
             Surface {

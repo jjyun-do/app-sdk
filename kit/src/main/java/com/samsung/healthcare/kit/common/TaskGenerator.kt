@@ -7,20 +7,25 @@ import org.quartz.CronExpression
 import java.time.LocalDateTime
 import java.util.Date
 
+
 class TaskGenerator {
     companion object {
         fun generate(spec: TaskSpec): List<Task> {
-            val schedules: MutableList<Date> = mutableListOf()
-
             val startTime: Date = TimeUtil.stringToDate(spec.startTime)
             val endTime: Date = TimeUtil.stringToDate(spec.endTime)
-
             val cronExpression = CronExpression(spec.schedule)
 
-            var currentTime: Date = startTime
-            while (cronExpression.getTimeAfter(currentTime) <= endTime) {
-                currentTime = cronExpression.getTimeAfter(currentTime)
+            val schedules: MutableList<Date> =
+                if (cronExpression.isSatisfiedBy(startTime))
+                    mutableListOf(startTime)
+                else
+                    mutableListOf()
+
+            var currentTime: Date? = cronExpression.getTimeAfter(startTime)
+            
+            while (currentTime != null && currentTime <= endTime) {
                 schedules.add(currentTime)
+                currentTime = cronExpression.getTimeAfter(currentTime)
             }
 
             val entities = schedules.map {

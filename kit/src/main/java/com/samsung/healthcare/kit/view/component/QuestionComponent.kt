@@ -42,6 +42,7 @@ abstract class QuestionComponent<T : QuestionModel<*>> : Component<T>() {
             when (type) {
                 QuestionType.Choice -> ChoiceQuestionComponent()
                 QuestionType.Text -> TextInputQuestionComponent()
+                QuestionType.MultipleChoice -> MultiChoiceQuestionComponent()
                 else -> TODO()
             }
     }

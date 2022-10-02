@@ -17,10 +17,14 @@ import com.google.android.libraries.healthdata.data.DataType
 import com.samsung.healthcare.kit.app.TaskDataType.Companion.TASK_DATA_TYPE
 import com.samsung.healthcare.kit.view.common.StatusCard
 import com.samsung.healthcare.kit.viewmodel.HealthStatusViewModel
+import com.samsung.healthcare.kit.viewmodel.TaskViewModel
 
 // TODO should set types from outside and integrate with Health Platform
 @Composable
-fun StatusCards(dataTypeStatus: List<DataType>) {
+fun StatusCards(
+    dataTypeStatus: List<DataType>,
+    viewModel: TaskViewModel,
+) {
     if (dataTypeStatus.isEmpty()) return
     val scrollState = rememberScrollState()
 
@@ -34,7 +38,7 @@ fun StatusCards(dataTypeStatus: List<DataType>) {
     ) {
         dataTypeStatus.forEach { dataType ->
             if (dataType == TASK_DATA_TYPE) {
-                TaskStatusCard(dataType)
+                TaskStatusCard(dataType, viewModel)
             } else {
                 HealthStatusCard(dataType, HealthStatusViewModel(dataType))
             }
@@ -44,8 +48,11 @@ fun StatusCards(dataTypeStatus: List<DataType>) {
 }
 
 @Composable
-fun TaskStatusCard(dataType: DataType) {
-    val upcomingTaskState = viewModel.upcomingTasks.collectAsState()
+fun TaskStatusCard(
+    dataType: DataType,
+    viewModel: TaskViewModel,
+) {
+    val upcomingTaskState = viewModel.activeTasks.collectAsState()
     StatusCard(
         dataType.getIcon(), "${upcomingTaskState.value.tasks.size}", "remaining"
     )

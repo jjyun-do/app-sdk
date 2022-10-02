@@ -2,6 +2,7 @@ package com.samsung.healthcare.kit.step.sub
 
 import androidx.compose.runtime.Composable
 import com.samsung.healthcare.kit.common.CallbackCollection
+import com.samsung.healthcare.kit.entity.Task.Result
 
 // TODO: Implement SubStep as an abstract class
 /**
@@ -49,4 +50,12 @@ class SubStepHolder(
     fun isSufficient(): Boolean = subSteps.all {
         it.model.isCorrect()
     }
+
+    fun getResult(): List<Result> =
+        subSteps.map {
+            Result(
+                it.model.id,
+                it.getResult() as String
+            )
+        }
 }
