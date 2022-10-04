@@ -36,7 +36,7 @@ import com.samsung.healthcare.kit.theme.AppTheme
 
 @Composable
 fun TaskCard(
-    @DrawableRes id: Int = R.drawable.ic_task_home_alpha,
+    @DrawableRes id: Int = R.drawable.ic_task,
     taskName: String,
     description: String,
     buttonText: String? = null,

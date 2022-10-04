@@ -75,12 +75,12 @@ fun StatusCard(@DrawableRes drawableId: Int, value: String, unit: String = "") {
 @Composable
 fun StatusCardPreview() =
     Box {
-        StatusCard(drawable.ic_home_heart_rate, "87", "BPM")
+        StatusCard(drawable.ic_heart, "87", "BPM")
     }
 
 @Preview(showBackground = true)
 @Composable
 fun TaskStatusCardPreview() =
     Box {
-        StatusCard(drawable.ic_task_home_alpha, "2", "Remaining")
+        StatusCard(drawable.ic_task, "2", "Remaining")
     }

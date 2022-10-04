@@ -145,7 +145,7 @@ object OnboardingModule {
         summaries = listOf(
             R.drawable.ic_watch to "Wear your\nwatch",
             R.drawable.ic_rectangle_2881 to "10 min\na day",
-            R.drawable.ic_task_alpha to "2 surveys\na week"
+            R.drawable.ic_home_task to "2 surveys\na week"
         ),
         sections = listOf(
             IntroSection(

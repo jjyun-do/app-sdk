@@ -14,9 +14,9 @@ import kotlin.math.roundToInt
 
 fun DataType.getIcon(): Int =
     when (this) {
-        HEART_RATE -> drawable.ic_home_heart_rate
-        SLEEP_SESSION -> drawable.ic_home_step_count
-        TASK_DATA_TYPE -> drawable.ic_task_home_alpha
+        HEART_RATE -> drawable.ic_heart
+        SLEEP_SESSION -> drawable.ic_sleep
+        TASK_DATA_TYPE -> drawable.ic_task
         else -> TODO()
     }
 
