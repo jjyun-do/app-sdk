@@ -22,10 +22,6 @@ import com.samsung.healthcare.kit.sample.registration.RegistrationState.Success
 import com.samsung.healthcare.kit.step.sub.SubStepHolder
 import com.samsung.healthcare.kit.theme.AppTheme
 import com.samsung.healthcare.kit.view.View
-import com.samsung.healthcare.kit.view.common.BottomSquareButton
-import com.samsung.healthcare.kit.view.common.TopBar
-import com.samsung.healthcare.kit.view.component.Component
-import com.samsung.healthcare.kit.view.component.QuestionComponent.Companion.defaultComponentOf
 
 class RegistrationView(
     private val viewModel: RegistrationViewModel = RegistrationViewModel(),

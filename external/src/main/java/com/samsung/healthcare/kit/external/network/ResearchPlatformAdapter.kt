@@ -26,7 +26,7 @@ class ResearchPlatformAdapter private constructor(
 
     override suspend fun uploadResult(idToken: String, result: TaskResult) =
         networkClient.uploadTaskResult(idToken, projectId, listOf(result))
-    
+
     companion object {
         private lateinit var INSTANCE: ResearchPlatformAdapter
 

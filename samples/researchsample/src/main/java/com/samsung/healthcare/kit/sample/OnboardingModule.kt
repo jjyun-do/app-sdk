@@ -17,7 +17,6 @@ import com.samsung.healthcare.kit.model.SignUpModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel.ViewType.DropMenu
 import com.samsung.healthcare.kit.model.question.QuestionModel
-import com.samsung.healthcare.kit.sample.R.string
 import com.samsung.healthcare.kit.sample.registration.RegistrationModel
 import com.samsung.healthcare.kit.sample.registration.RegistrationStep
 import com.samsung.healthcare.kit.step.ConsentTextStep

@@ -65,8 +65,10 @@ data class Task(
             item.contents.explanation,
             null,
             null,
-            listOf((item.contents.itemProperties as ScaleProperties).low,
-                (item.contents.itemProperties as ScaleProperties).high),
+            listOf(
+                (item.contents.itemProperties as ScaleProperties).low,
+                (item.contents.itemProperties as ScaleProperties).high
+            ),
             Slider
         )
 

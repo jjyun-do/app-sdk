@@ -7,7 +7,6 @@ import org.quartz.CronExpression
 import java.time.LocalDateTime
 import java.util.Date
 
-
 class TaskGenerator {
     companion object {
         fun generate(spec: TaskSpec): List<Task> {
@@ -22,7 +21,7 @@ class TaskGenerator {
                     mutableListOf()
 
             var currentTime: Date? = cronExpression.getTimeAfter(startTime)
-            
+
             while (currentTime != null && currentTime <= endTime) {
                 schedules.add(currentTime)
                 currentTime = cronExpression.getTimeAfter(currentTime)
