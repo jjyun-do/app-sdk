@@ -1,5 +1,7 @@
 package com.samsung.healthcare.kit.model.question
 
+import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel.ViewType.Slider
+
 class ChoiceQuestionModel<R>(
     id: String,
     query: String,
@@ -14,7 +16,7 @@ class ChoiceQuestionModel<R>(
     var selection: Int? = null
         set(value) {
             if (value != null) {
-                if (value < 0 || candidates.size <= value)
+                if (value < 0)
                     throw IndexOutOfBoundsException("selected value is out of bound.")
             }
 
@@ -25,7 +27,11 @@ class ChoiceQuestionModel<R>(
         candidates.ifEmpty { throw IllegalArgumentException("at least one candidate is required.") }
     }
 
-    override fun getResponse(): R? = selection?.let { candidates[it] }
+    override fun getResponse(): R? =
+        if (viewType != Slider)
+            selection?.let { candidates[it] }
+        else
+            selection as R
 
     enum class ViewType {
         Slider,

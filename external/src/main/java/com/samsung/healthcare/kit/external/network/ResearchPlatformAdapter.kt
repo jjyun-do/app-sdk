@@ -21,14 +21,12 @@ class ResearchPlatformAdapter private constructor(
         networkClient.registerUser(idToken, projectId, user)
     }
 
-    override suspend fun getTasks(idToken: String, lastSyncTime: LocalDateTime): List<TaskSpec> {
-        return networkClient.getTasks(idToken, projectId, lastSyncTime)
-    }
+    override suspend fun getTasks(idToken: String, lastSyncTime: LocalDateTime): List<TaskSpec> =
+        networkClient.getTasks(idToken, projectId, lastSyncTime)
 
-    override suspend fun uploadResult(idToken: String, result: TaskResult) {
-        return networkClient.uploadTaskResult(idToken, projectId, listOf(result))
-    }
-
+    override suspend fun uploadResult(idToken: String, result: TaskResult) =
+        networkClient.uploadTaskResult(idToken, projectId, listOf(result))
+    
     companion object {
         private lateinit var INSTANCE: ResearchPlatformAdapter
 

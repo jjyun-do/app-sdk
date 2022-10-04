@@ -2,7 +2,9 @@ package com.samsung.healthcare.kit.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.samsung.healthcare.kit.external.data.ChoiceProperties
 import com.samsung.healthcare.kit.external.data.Item
+import com.samsung.healthcare.kit.external.data.ScaleProperties
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel.ViewType
 import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel.ViewType.Slider
@@ -56,35 +58,38 @@ data class Task(
         }
     }.build()
 
-    private fun toSliderQuestionModel(item: Item): QuestionModel<Any> = ChoiceQuestionModel(
-        item.name,
-        item.contents.title,
-        item.contents.explanation,
-        null,
-        null,
-        item.contents.properties.options.map { option -> option.value },
-        Slider
-    )
+    private fun toSliderQuestionModel(item: Item): QuestionModel<Any> =
+        ChoiceQuestionModel(
+            item.name,
+            item.contents.title,
+            item.contents.explanation,
+            null,
+            null,
+            listOf((item.contents.itemProperties as ScaleProperties).low,
+                (item.contents.itemProperties as ScaleProperties).high),
+            Slider
+        )
 
     private fun toChoiceQuestionModel(item: Item): QuestionModel<Any> =
-        if (item.contents.properties.tag == "checkbox") toMultiChoiceQuestionModel(item) as QuestionModel<Any>
+        if (item.contents.itemProperties.tag.uppercase() == "CHECKBOX") toMultiChoiceQuestionModel(item) as QuestionModel<Any>
         else ChoiceQuestionModel(
             item.name,
             item.contents.title,
             item.contents.explanation,
             null,
             null,
-            item.contents.properties.options.map { option -> option.value },
+            (item.contents.itemProperties as ChoiceProperties).options.map { option -> option.value },
             ViewType.values()
-                .first { type -> type.name.equals(item.contents.properties.tag, ignoreCase = true) }
+                .first { type -> type.name.equals(item.contents.itemProperties.tag, ignoreCase = true) }
         )
 
-    private fun toMultiChoiceQuestionModel(item: Item) = MultiChoiceQuestionModel(
-        item.name,
-        item.contents.title,
-        item.contents.explanation,
-        null,
-        null,
-        item.contents.properties.options.map { option -> option.value },
-    )
+    private fun toMultiChoiceQuestionModel(item: Item): MultiChoiceQuestionModel =
+        MultiChoiceQuestionModel(
+            item.name,
+            item.contents.title,
+            item.contents.explanation,
+            null,
+            null,
+            (item.contents.itemProperties as ChoiceProperties).options.map { option -> option.value },
+        )
 }

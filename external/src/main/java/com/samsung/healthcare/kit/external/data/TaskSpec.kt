@@ -19,20 +19,34 @@ data class Item(
     val name: String,
     val type: String,
     val contents: Contents,
+    val sequence: Int,
 )
 
 data class Contents(
     val type: String,
     val title: String,
     val explanation: String? = null,
-    val properties: Properties,
-    val sequence: Int,
+    @SerializedName("properties")
+    val itemProperties: ItemProperties,
+    val required: Boolean,
 )
 
-data class Properties(
+open class ItemProperties(
     val tag: String,
-    val options: List<Option>,
 )
+
+class ChoiceProperties(
+    tag: String,
+    val options: List<Option>,
+) : ItemProperties(tag)
+
+class ScaleProperties(
+    tag: String,
+    val low: Int,
+    val high: Int,
+    val lowLabel: String?,
+    val highLabel: String?,
+) : ItemProperties(tag)
 
 data class Option(
     val value: String,

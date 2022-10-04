@@ -55,7 +55,7 @@ class SubStepHolder(
         subSteps.map {
             Result(
                 it.model.id,
-                it.getResult() as String
+                it.getResult().toString()
             )
         }
 }

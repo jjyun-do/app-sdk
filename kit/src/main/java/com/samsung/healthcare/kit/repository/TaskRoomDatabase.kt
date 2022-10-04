@@ -16,7 +16,7 @@ import com.samsung.healthcare.kit.entity.Task
     value = [
         PropertiesTypeConverter::class,
         LocalDateTimeConverter::class,
-        ResultConverter::class
+        ResultConverter::class,
     ]
 )
 abstract class TaskRoomDatabase : RoomDatabase() {
@@ -30,7 +30,7 @@ abstract class TaskRoomDatabase : RoomDatabase() {
             synchronized(this) {
                 if (Companion::INSTANCE.isInitialized.not()) {
                     INSTANCE = Room.databaseBuilder(context, TaskRoomDatabase::class.java, "task")
-                        .addTypeConverter(PropertiesTypeConverter(Gson()))
+                        .addTypeConverter(PropertiesTypeConverter())
                         .addTypeConverter(LocalDateTimeConverter())
                         .addTypeConverter(ResultConverter(Gson()))
                         .build()

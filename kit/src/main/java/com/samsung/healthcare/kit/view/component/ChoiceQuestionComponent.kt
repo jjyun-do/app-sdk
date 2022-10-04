@@ -58,6 +58,9 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
     fun SliderGroup(question: ChoiceQuestionModel<*>, modifier: Modifier) {
         var sliderState by remember { mutableStateOf(question.selection ?: 0) }
 
+        val low: Float = (question.candidates.first() as Int).toFloat()
+        val high: Float = (question.candidates.last() as Int).toFloat()
+
         Column(modifier = modifier) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -73,8 +76,8 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
             }
             Slider(
                 value = sliderState.toFloat(),
-                valueRange = 0f..(question.candidates.lastIndex).toFloat(),
-                steps = question.candidates.size - 2,
+                valueRange = low..high,
+                steps = (high - low - 1).toInt(),
                 onValueChange = { newValue ->
                     sliderState = newValue.roundToInt()
                     question.selection = newValue.roundToInt()
