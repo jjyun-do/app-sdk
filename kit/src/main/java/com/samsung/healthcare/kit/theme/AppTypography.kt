@@ -101,6 +101,12 @@ data class AppTypography(
         fontWeight = FontWeight.W400,
         fontSize = 12.sp
     ),
+
+    val body4: TextStyle = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.W400,
+        fontSize = 10.sp
+    ),
 )
 
 internal val LocalTypography = staticCompositionLocalOf { AppTypography() }

@@ -17,7 +17,9 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Slider
+import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,32 +50,25 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
 
             when (model.viewType) {
                 ViewType.Radio -> RadioGroup(model, modifier)
-                ViewType.Slider -> SliderGroup(model, modifier)
+                ViewType.Slider -> SliderGroup(model)
                 ViewType.DropMenu -> DropDownGroup(model, modifier)
             }
         }
     }
 
     @Composable
-    fun SliderGroup(question: ChoiceQuestionModel<*>, modifier: Modifier) {
+    fun SliderGroup(question: ChoiceQuestionModel<*>) {
         var sliderState by remember { mutableStateOf(question.selection ?: 0) }
 
         val low: Float = (question.candidates.first() as Int).toFloat()
         val high: Float = (question.candidates.last() as Int).toFloat()
+        val columnModifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 50.dp, horizontal = 20.dp)
 
-        Column(modifier = modifier) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                question.candidates.forEach {
-                    Text(
-                        text = it.toString(),
-                        style = AppTheme.typography.body1,
-                        color = AppTheme.colors.textPrimary,
-                    )
-                }
-            }
+        Column(
+            modifier = columnModifier
+        ) {
             Slider(
                 value = sliderState.toFloat(),
                 valueRange = low..high,
@@ -81,8 +76,28 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                 onValueChange = { newValue ->
                     sliderState = newValue.roundToInt()
                     question.selection = newValue.roundToInt()
-                }
+                },
+                colors = SliderDefaults.colors(
+                    thumbColor = AppTheme.colors.primary,
+                    activeTickColor = AppTheme.colors.primary,
+                    activeTrackColor = AppTheme.colors.secondaryVariant
+                )
             )
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                question.candidates.forEach {
+                    Text(
+                        text = it.toString(),
+                        style = AppTheme.typography.body4,
+                        color = AppTheme.colors.textPrimary,
+                        modifier = Modifier
+                            .padding(horizontal = 5.dp)
+                    )
+                }
+            }
         }
     }
 
@@ -108,7 +123,13 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                     selectedIndex = question.candidates
                         .indexOfFirst { it.toString() == selected }
                 },
-                textStyle = AppTheme.typography.body1.copy(color = AppTheme.colors.textPrimary),
+                textStyle = AppTheme.typography.body1,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    textColor = AppTheme.colors.textHint,
+                    focusedBorderColor = AppTheme.colors.primary,
+                    unfocusedBorderColor = AppTheme.colors.border,
+                    trailingIconColor = AppTheme.colors.primary
+                ),
                 modifier = Modifier
                     .fillMaxWidth(),
                 readOnly = true,
@@ -120,7 +141,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                     )
                 },
                 // TODO handle placeholder
-                placeholder = { Text(text = "Select one", color = AppTheme.colors.textHint) },
+                placeholder = { Text(text = "Select One", color = AppTheme.colors.textHint) },
             )
 
             ExposedDropdownMenu(
@@ -134,7 +155,9 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
             ) {
                 question.candidates.forEachIndexed { index, candidate ->
                     DropdownMenuItem(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 10.dp, horizontal = 8.dp),
                         onClick = {
                             selectedIndex = index
                             question.selection = index
@@ -145,13 +168,18 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                             selected = selectedIndex == index,
                             onClick = null,
                             enabled = true,
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = AppTheme.colors.primary,
+                                unselectedColor = AppTheme.colors.primaryVariant,
+                                disabledColor = Color(0xFFA1A1A1),
+                            )
                         )
                         Text(
                             text = candidate.toString(),
                             style = AppTheme.typography.body2,
                             color = AppTheme.colors.textPrimary,
                             modifier = Modifier
-                                .padding(start = 8.dp)
+                                .padding(start = 12.dp)
                         )
                     }
                 }
@@ -206,6 +234,37 @@ fun RadioPreview() {
         id = "radio",
         query = "Are you designer?",
         candidates = listOf("developer", "designer")
+    )
+
+    return component.Render(model, CallbackCollection())
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SliderPreview() {
+    val component = ChoiceQuestionComponent<ChoiceQuestionModel<Int>>()
+    val model = ChoiceQuestionModel<Int>(
+        id = "slider",
+        query = "How was your symptom level for headaches?",
+        explanation = "Please tap on the slider to give a rating, from 0 being no concern to 10 being extremely concerned.",
+        candidates = listOf(0, 10),
+        viewType = ViewType.Slider
+    )
+
+    return component.Render(model, CallbackCollection())
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun DropdownPreview() {
+    val component = ChoiceQuestionComponent<ChoiceQuestionModel<Int>>()
+    val model = ChoiceQuestionModel<Int>(
+        id = "slider",
+        query = "How was your symptom level for headaches?",
+        explanation = "Please tap on the slider to give a rating, from 0 being no concern to 10 being extremely concerned.",
+        candidates = (20..50).toList(),
+        viewType = ViewType.DropMenu
     )
 
     return component.Render(model, CallbackCollection())

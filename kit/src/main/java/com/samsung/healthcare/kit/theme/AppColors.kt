@@ -270,7 +270,7 @@ fun blueColors(
     primary: Color = Color(0xFF4475E3),
     primaryVariant: Color = Color(0xFFB3C6F1),
     secondary: Color = Color(0xFF4475E3),
-    secondaryVariant: Color = Color(0xFF4475E3),
+    secondaryVariant: Color = Color(0xFFE3EAFB),
     background: Color = Color(0xFFFFFFFF),
     surface: Color = Color(0xFFFFFFFF),
     error: Color = Color(0xFF4475E3),

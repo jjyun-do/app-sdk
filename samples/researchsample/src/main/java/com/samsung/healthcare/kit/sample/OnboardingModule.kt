@@ -106,7 +106,7 @@ object OnboardingModule {
     @Singleton
     @Provides
     fun provideEligibilityCheckerStep(@ApplicationContext context: Context): EligibilityCheckerStep =
-        EligibilityCheckerStep.Builder("Eligibility-Checker-Step")
+        EligibilityCheckerStep.Builder("Eligibility")
             .addQuestions(eligibilityQuestions).build()
 
     @Singleton
