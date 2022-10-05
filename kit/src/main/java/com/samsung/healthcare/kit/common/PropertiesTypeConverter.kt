@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.samsung.healthcare.kit.entity.Task.Properties
 import com.samsung.healthcare.kit.external.data.ItemProperties
+import com.samsung.healthcare.kit.external.network.util.PropertyDeserializer
 
 @ProvidedTypeConverter
 class PropertiesTypeConverter() {

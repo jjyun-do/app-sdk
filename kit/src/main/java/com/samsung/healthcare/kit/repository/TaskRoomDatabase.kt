@@ -11,7 +11,7 @@ import com.samsung.healthcare.kit.common.PropertiesTypeConverter
 import com.samsung.healthcare.kit.common.ResultConverter
 import com.samsung.healthcare.kit.entity.Task
 
-@Database(entities = [Task::class], version = 1)
+@Database(entities = [Task::class], version = 1, exportSchema = false)
 @TypeConverters(
     value = [
         PropertiesTypeConverter::class,

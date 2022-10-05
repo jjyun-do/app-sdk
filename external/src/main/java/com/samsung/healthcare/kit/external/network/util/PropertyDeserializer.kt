@@ -1,4 +1,4 @@
-package com.samsung.healthcare.kit.common
+package com.samsung.healthcare.kit.external.network.util
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer

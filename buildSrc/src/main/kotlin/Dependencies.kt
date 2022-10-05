@@ -35,6 +35,8 @@ object Versions {
     const val RETROFIT = "2.9.0"
     const val OKHTTP = "4.5.0"
     const val SUPPORT_ANNOTATION = "28"
+    const val GSON = "2.9.0"
+    const val CRON_QUARTZ = "2.3.2"
 
     const val DOKKA = "1.6.21"
 
@@ -49,7 +51,7 @@ object Versions {
         const val EXT = "1.1.3"
         const val CORE = "5.8.1"
         const val TEST = "4.13.2"
-        const val PLUGIN = "1.8.2.0"
+        const val PLUGIN = "1.8.2.1"
         const val MANNODERMAUS = "1.3.0"
     }
 
@@ -84,6 +86,9 @@ object AppDependencies {
 
     const val SUPPORT_ANNOTATION =
         "com.android.support:support-annotations:${Versions.SUPPORT_ANNOTATION}"
+
+    const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
+    const val CRON_QUARTZ = "org.quartz-scheduler:quartz:${Versions.CRON_QUARTZ}"
 
     const val HILT_DAGGER = "com.google.dagger:hilt-android:${Versions.Hilt.DAGGER}"
     const val HILT_DAGGER_COMPILER = "com.google.dagger:hilt-compiler:${Versions.Hilt.DAGGER}"

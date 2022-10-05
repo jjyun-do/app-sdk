@@ -69,8 +69,8 @@ dependencies {
     implementation(AppDependencies.roomLibs)
 
     kapt(listOf(AppDependencies.ANDROIDX_ROOM_COMPILER))
-    implementation("org.quartz-scheduler:quartz:2.3.2")
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation(AppDependencies.GSON)
+    implementation(AppDependencies.CRON_QUARTZ)
 
     debugImplementation(AppDependencies.uiDebugLibs)
 
