@@ -254,7 +254,6 @@ fun SliderPreview() {
     return component.Render(model, CallbackCollection())
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun DropdownPreview() {
