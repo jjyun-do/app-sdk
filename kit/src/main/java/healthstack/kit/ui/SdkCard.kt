@@ -97,7 +97,7 @@ fun SdkCardPreview() {
                         .fillMaxWidth()
                 )
                 Image(
-                    painter = painterResource(R.drawable.ic_100tb),
+                    painter = painterResource(R.drawable.card_sample_image_alpha),
                     contentDescription = "",
                     modifier = Modifier.fillMaxWidth(),
                     contentScale = ContentScale.FillWidth
