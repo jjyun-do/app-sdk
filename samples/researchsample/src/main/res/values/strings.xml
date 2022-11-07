@@ -55,7 +55,6 @@
         consequat, risus eget commodo suscipit, lorem ex condimentum orci, et sollicitudin nisi eros sed lectus. Sed at
         erat nisl. Nunc venenatis mi tellus, vitae congue erat dictum a.
     </string>
-    <string name="research_platform_endpoint">http://research-platform.dev.ai-service.io</string>
-    <string name="research_project_id">2</string>
-    <string name="google_client_id">101507942863-53fh89u7vh2ril2jdr4uh2oi5a9v88lm.apps.googleusercontent.com</string>
+    <string name="research_platform_endpoint">http://you.must.set.backend.url</string>
+    <string name="research_project_id">you_must_set_project_id</string>
 </resources>

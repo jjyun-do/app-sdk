@@ -53,15 +53,19 @@ android {
 
 dependencies {
     implementation(project(":kit"))
-    implementation(project(":external"))
+    implementation(project(":app-support"))
+    implementation(project(":healthdata-link:interface"))
+    implementation(project(":healthdata-link:healthplatform"))
+    implementation(project(":backend-integration:interface"))
+    implementation(project(":backend-integration:healthstack-adapter"))
     implementation(project(":resources:korean"))
+    implementation(project(":resources:korean"))
+
     implementation(platform(AppDependencies.FIREBASE_BOM))
     implementation(AppDependencies.authImplLibs)
     implementation(AppDependencies.composeImplLibs)
     implementation(AppDependencies.hiltImplLibs)
     implementation(AppDependencies.healthDataImplLibs)
-
-    // debugImplementation(AppDependencies.uiDebugLibs)
-
+    
     kapt(AppDependencies.hiltKaptLibs)
 }

@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = 32
 
     defaultConfig {
-        minSdkVersion(29)
-        targetSdkVersion(31)
+        minSdk = 29
+        targetSdk = 31
 
         // 1) Make sure to use the AndroidJUnitRunner, or a subclass of it. This requires a dependency on androidx.test:runner, too!
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -54,23 +54,16 @@ android {
 }
 
 dependencies {
-    implementation(project(":external"))
+    implementation(project(":healthdata-link:interface"))
 
     implementation(platform(AppDependencies.FIREBASE_BOM))
     implementation(AppDependencies.authImplLibs)
-    implementation(AppDependencies.ANDROIDX_DATASTORE)
     implementation(AppDependencies.ANDROIDX_NAVIGATION_COMPOSE)
     implementation(AppDependencies.composeImplLibs)
     implementation(AppDependencies.ACCOMPANIST_PAGER)
     implementation(AppDependencies.SIGNATURE)
     implementation(AppDependencies.coilImplLibs)
-    implementation(AppDependencies.GOOGLE_HEALTH_DATA)
     implementation(AppDependencies.SUPPORT_ANNOTATION)
-    implementation(AppDependencies.roomLibs)
-
-    kapt(listOf(AppDependencies.ANDROIDX_ROOM_COMPILER))
-    implementation(AppDependencies.GSON)
-    implementation(AppDependencies.CRON_QUARTZ)
 
     debugImplementation(AppDependencies.uiDebugLibs)
 
