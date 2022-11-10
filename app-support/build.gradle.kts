@@ -76,6 +76,7 @@ dependencies {
 
     testRuntimeOnly(AppDependencies.JUNIT_ENGINE)
     testImplementation(AppDependencies.testImplLibs)
+    testImplementation(AppDependencies.coroutineTestImplLibs)
 
     androidTestRuntimeOnly(AppDependencies.JUNIT_MANNO_RUNNER)
     androidTestImplementation(AppDependencies.androidTestImplLibs)

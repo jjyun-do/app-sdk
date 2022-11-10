@@ -66,13 +66,13 @@ class TaskRepositoryImpl : TaskRepository {
         taskDao.insertAll(taskEntities)
     }
 
-    override fun getActiveDailyTask(targetTime: LocalDateTime): Flow<List<ViewTask>> =
+    override fun getActiveTasks(targetTime: LocalDateTime): Flow<List<ViewTask>> =
         taskDao.getActiveTasks(targetTime.toString())
             .map { tasks ->
                 tasks.map { it.toViewTask() }
             }
 
-    override fun getUpcomingDailyTask(targetTime: LocalDateTime): Flow<List<ViewTask>> =
+    override fun getUpcomingTasks(targetTime: LocalDateTime): Flow<List<ViewTask>> =
         taskDao.getUpcomingTasks(
             targetTime.toString(),
             targetTime.toLocalDate().plusDays(1).toString()
@@ -80,7 +80,7 @@ class TaskRepositoryImpl : TaskRepository {
             tasks.map { it.toViewTask() }
         }
 
-    override fun getCompletedDailyTasks(now: LocalDate): Flow<List<ViewTask>> {
+    override fun getCompletedTasks(now: LocalDate): Flow<List<ViewTask>> {
         return taskDao.getCompletedTasks(
             now.toString(),
             now.plusDays(1).toString()

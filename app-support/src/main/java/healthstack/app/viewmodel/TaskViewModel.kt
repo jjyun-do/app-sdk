@@ -38,7 +38,7 @@ class TaskViewModel(
     init {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                taskRepository.getActiveDailyTask(targetDateTime)
+                taskRepository.getActiveTasks(targetDateTime)
                     .collect { tasks ->
                         _activeTasks.value = TasksState(tasks)
                     }
@@ -46,7 +46,7 @@ class TaskViewModel(
         }
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                taskRepository.getUpcomingDailyTask(targetDateTime)
+                taskRepository.getUpcomingTasks(targetDateTime)
                     .collect { tasks ->
                         _todayTasks.value = TasksState(tasks)
                     }
@@ -55,7 +55,7 @@ class TaskViewModel(
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                taskRepository.getCompletedDailyTasks(targetDateTime.toLocalDate())
+                taskRepository.getCompletedTasks(targetDateTime.toLocalDate())
                     .collect { tasks ->
                         _completedTasks.value = TasksState(tasks)
                     }
