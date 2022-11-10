@@ -43,6 +43,8 @@ dependencies {
 
     testRuntimeOnly(AppDependencies.JUNIT_ENGINE)
     testImplementation(AppDependencies.testImplLibs)
+    testImplementation(AppDependencies.coroutineTestImplLibs)
+
 }
 
 tasks.dokkaHtml.configure {

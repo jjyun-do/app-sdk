@@ -33,7 +33,7 @@ interface HealthStackBackendAPI {
         @Header("id-token") idToken: String,
         @Path("projectId") projectId: String,
         @Query("last_sync_time") lastSyncTime: LocalDateTime,
-        @Query("end_time") endTime: LocalDateTime = LocalDateTime.now(),
+        @Query("end_time") endTime: LocalDateTime,
         @Query("status") status: String = "PUBLISHED",
     ): List<TaskSpec>
 

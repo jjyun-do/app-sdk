@@ -4,7 +4,7 @@ import healthstack.backend.integration.BackendFacade
 import healthstack.healthdata.link.HealthData
 import java.time.LocalDateTime
 
-class HealthStackBackendAdapter private constructor(
+class HealthStackBackendAdapter(
     private val networkClient: HealthStackBackendAPI,
     private val projectId: String,
 ) : BackendFacade {
@@ -19,11 +19,12 @@ class HealthStackBackendAdapter private constructor(
 
     override suspend fun getTasks(
         idToken: String,
-        lastSyncTime: LocalDateTime
+        lastSyncTime: LocalDateTime,
+        endTime: LocalDateTime,
     ): List<healthstack.backend.integration.task.TaskSpec> =
-        networkClient.getTasks(idToken, projectId, lastSyncTime)
+        networkClient.getTasks(idToken, projectId, lastSyncTime, endTime)
 
-    override suspend fun uploadResult(idToken: String, result: healthstack.backend.integration.task.TaskResult) =
+    override suspend fun uploadTaskResult(idToken: String, result: healthstack.backend.integration.task.TaskResult) =
         networkClient.uploadTaskResult(idToken, projectId, listOf(result))
 
     companion object {

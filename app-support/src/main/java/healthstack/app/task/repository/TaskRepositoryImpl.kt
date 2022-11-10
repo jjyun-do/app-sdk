@@ -39,7 +39,7 @@ class TaskRepositoryImpl : TaskRepository {
                 user.getIdToken(false).addOnSuccessListener { tokenResult ->
                     tokenResult.token?.let { token ->
                         CoroutineScope(Dispatchers.IO).launch {
-                            BackendFacadeHolder.getInstance().uploadResult(
+                            BackendFacadeHolder.getInstance().uploadTaskResult(
                                 token,
                                 TaskResult(
                                     userId = user.uid,

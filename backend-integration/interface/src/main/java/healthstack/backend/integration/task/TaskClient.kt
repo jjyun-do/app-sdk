@@ -3,7 +3,11 @@ package healthstack.backend.integration.task
 import java.time.LocalDateTime
 
 interface TaskClient {
-    suspend fun getTasks(idToken: String, lastSyncTime: LocalDateTime): List<TaskSpec>
+    suspend fun getTasks(
+        idToken: String,
+        lastSyncTime: LocalDateTime,
+        endTime: LocalDateTime = LocalDateTime.now(),
+    ): List<TaskSpec>
 
-    suspend fun uploadResult(idToken: String, result: TaskResult)
+    suspend fun uploadTaskResult(idToken: String, result: TaskResult)
 }
