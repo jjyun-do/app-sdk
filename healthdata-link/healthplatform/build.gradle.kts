@@ -7,7 +7,6 @@ plugins {
     id("org.jetbrains.dokka")
     id("de.mannodermaus.android-junit5")
     id("io.gitlab.arturbosch.detekt")
-    id("jacoco")
     id("kotlin-kapt")
 }
 
@@ -22,6 +21,18 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    buildTypes {
+        debug {
+            isTestCoverageEnabled = true
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
     }
 
     kotlinOptions {
@@ -56,8 +67,4 @@ tasks.dokkaHtml.configure {
             noAndroidSdkLink.set(false)
         }
     }
-}
-
-jacoco {
-    toolVersion = Versions.JACOCO
 }

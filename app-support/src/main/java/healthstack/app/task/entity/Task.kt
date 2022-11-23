@@ -73,7 +73,8 @@ data class Task(
         )
 
     private fun toChoiceQuestionModel(item: Item): QuestionModel<Any> =
-        if (item.contents.itemProperties.tag.uppercase() == "CHECKBOX") toMultiChoiceQuestionModel(item) as QuestionModel<Any>
+        if (item.contents.itemProperties.tag.uppercase() == "CHECKBOX")
+            toMultiChoiceQuestionModel(item) as QuestionModel<Any>
         else ChoiceQuestionModel(
             item.name,
             item.contents.title,

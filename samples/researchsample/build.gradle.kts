@@ -59,13 +59,12 @@ dependencies {
     implementation(project(":backend-integration:interface"))
     implementation(project(":backend-integration:healthstack-adapter"))
     implementation(project(":resources:korean"))
-    implementation(project(":resources:korean"))
 
     implementation(platform(AppDependencies.FIREBASE_BOM))
     implementation(AppDependencies.authImplLibs)
     implementation(AppDependencies.composeImplLibs)
     implementation(AppDependencies.hiltImplLibs)
     implementation(AppDependencies.healthDataImplLibs)
-    
+
     kapt(AppDependencies.hiltKaptLibs)
 }

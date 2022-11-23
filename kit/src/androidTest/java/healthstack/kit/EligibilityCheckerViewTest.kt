@@ -1,14 +1,14 @@
-package com.samsung.healthcare.kit.view
+package healthstack.kit
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.samsung.healthcare.kit.R
-import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.model.EligibilityCheckerModel
-import com.samsung.healthcare.kit.model.question.ChoiceQuestionModel
-import com.samsung.healthcare.kit.step.sub.QuestionSubStep
-import com.samsung.healthcare.kit.step.sub.SubStepHolder
-import com.samsung.healthcare.kit.view.component.ChoiceQuestionComponent
+import healthstack.kit.task.base.CallbackCollection
+import healthstack.kit.task.onboarding.model.EligibilityCheckerModel
+import healthstack.kit.task.onboarding.view.EligibilityCheckerView
+import healthstack.kit.task.survey.question.QuestionSubStep
+import healthstack.kit.task.survey.question.SubStepHolder
+import healthstack.kit.task.survey.question.component.ChoiceQuestionComponent
+import healthstack.kit.task.survey.question.model.ChoiceQuestionModel
 import org.junit.Rule
 import org.junit.Test
 
@@ -34,7 +34,7 @@ class EligibilityCheckerViewTest {
     private fun createEligibilityCheckerModel(
         id: String = "eligibility-checker-model",
         title: String = "Eligibility-Checker-Title",
-        drawableId: Int = R.drawable.sample_image1,
+        drawableId: Int = R.drawable.sample_image_alpha1,
     ): EligibilityCheckerModel =
         EligibilityCheckerModel(id, title, drawableId)
 

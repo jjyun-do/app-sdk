@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import healthstack.kit.R.string
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.View
 import healthstack.kit.task.survey.model.SurveyModel
@@ -173,6 +174,7 @@ fun SinglePageSurveyLayout(
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun EligibilityCheckerViewPreview() {

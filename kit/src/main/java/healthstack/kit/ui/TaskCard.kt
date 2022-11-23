@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import healthstack.kit.R
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 
 @Composable
@@ -157,6 +158,7 @@ fun TaskCard(
         }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun TaskCardPreview() =
@@ -166,6 +168,7 @@ fun TaskCardPreview() =
         buttonText = "Get started"
     ) { }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun TaskCardCompletedPreview() =

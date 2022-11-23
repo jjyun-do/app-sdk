@@ -1,6 +1,8 @@
 package healthstack.kit.task.survey
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import healthstack.kit.R
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.Task
 import healthstack.kit.task.survey.model.SurveyModel
@@ -53,7 +55,7 @@ open class SurveyTask private constructor(
             taskName = name,
             description = description,
             buttonEnabled = isCompleted.not(),
-            buttonText = "Get started"
+            buttonText = LocalContext.current.getString(R.string.start_task)
         ) {
             onClick()
         }

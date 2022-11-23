@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import healthstack.kit.R
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.View
 import healthstack.kit.task.onboarding.model.IntroModel
@@ -190,6 +191,7 @@ fun IntroSections(sections: List<IntroModel.IntroSection>) =
         }
     }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun SummaryPreview() =
@@ -201,6 +203,7 @@ fun SummaryPreview() =
         )
     )
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun IntroViewPreview() {
@@ -221,13 +224,16 @@ fun IntroViewPreview() {
                     "Overview",
                     "CardioFlow is a study developed by the University of California, San Francisco.\n" +
                         "\n" +
-                        "Through this study, we identify and measure the data of your vital signs and symptom reports.\n" +
+                        "Through this study, we identify and " +
+                        "measure the data of your vital signs and symptom reports.\n" +
                         "\n" +
-                        "With your help, we could test our algorithms and develop technology that contributes to preventing cardiovascular diseases in the U.S.",
+                        "With your help, we could test our algorithms and develop technology that contributes " +
+                        "to preventing cardiovascular diseases in the U.S.",
                 ),
                 IntroSection(
                     "How to participate",
-                    "Wear the watch as much as possible and take active measurements 3 times a day when notified."
+                    "Wear the watch as much as possible and " +
+                        "take active measurements 3 times a day when notified."
                 )
             )
         ),
@@ -236,6 +242,7 @@ fun IntroViewPreview() {
     )
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun DescriptionPreview() =
@@ -243,7 +250,12 @@ fun DescriptionPreview() =
         listOf(
             IntroModel.IntroSection(
                 "Description 1",
-                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia"
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
+                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi " +
+                    "ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                    "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " +
+                    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia"
             )
         )
     )

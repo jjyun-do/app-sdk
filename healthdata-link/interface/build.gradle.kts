@@ -20,6 +20,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    buildTypes {
+        debug {
+            isTestCoverageEnabled = true
+        }
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }

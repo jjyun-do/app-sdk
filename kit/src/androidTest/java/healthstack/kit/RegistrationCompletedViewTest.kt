@@ -1,10 +1,10 @@
-package com.samsung.healthcare.kit.view
+package healthstack.kit
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.samsung.healthcare.kit.R
-import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.model.RegistrationCompletedModel
+import healthstack.kit.task.base.CallbackCollection
+import healthstack.kit.task.signup.model.RegistrationCompletedModel
+import healthstack.kit.task.signup.view.RegistrationCompletedView
 import org.junit.Rule
 import org.junit.Test
 
@@ -16,8 +16,10 @@ class RegistrationCompletedViewTest {
         id: String = "registration-completed-model",
         title: String = "You are done!",
         buttonText: String = "Continue",
-        description: String = "Congratulations! Everything is all set for you. Now please tap on the button below to start your SleepCare journey!",
-        drawableId: Int = R.drawable.sample_image4,
+        description: String =
+            "Congratulations! Everything is all set for you. " +
+                "Now please tap on the button below to start your SleepCare journey!",
+        drawableId: Int = R.drawable.sample_image_alpha4,
     ): RegistrationCompletedModel =
         RegistrationCompletedModel(id, title, buttonText, description, drawableId)
 

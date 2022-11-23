@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 
 @Composable
@@ -28,7 +29,7 @@ fun LabeledCheckbox(
         Checkbox(
             modifier = Modifier
                 .padding(end = 10.dp)
-                .testTag("checkBox"),
+                .testTag(labelText),
             checked = isChecked,
             onCheckedChange = {
                 onCheckedChange(it)
@@ -48,11 +49,13 @@ fun LabeledCheckbox(
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun LabeledCheckBoxUnCheckedPreview() =
     LabeledCheckbox(false, {}, "un-checked")
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun LabeledCheckBoxCheckedPreview() =

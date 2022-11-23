@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 
 @Composable
@@ -44,7 +45,7 @@ fun TopBar(
                 modifier = Modifier
                     .padding(12.dp)
                     .clickable { onClickAction() },
-                contentDescription = "",
+                contentDescription = "action button icon",
                 tint = color,
             )
         },
@@ -90,10 +91,12 @@ fun TopBar(
     )
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun ConsentTopBarPreview() = TopBar(onClickBack = {})
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun ConsentTopBarPreview2() = TopBar(onClickBack = {}, onClickAction = {})

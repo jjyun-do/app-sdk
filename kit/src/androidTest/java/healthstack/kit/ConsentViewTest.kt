@@ -1,15 +1,23 @@
-package com.samsung.healthcare.kit.view
+package healthstack.kit
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.model.ConsentTextModel
+import healthstack.healthdata.link.HealthDataLink
+import healthstack.healthdata.link.HealthDataLinkHolder
+import healthstack.kit.task.base.CallbackCollection
+import healthstack.kit.task.onboarding.model.ConsentTextModel
+import healthstack.kit.task.onboarding.view.ConsentTextView
+import io.mockk.coEvery
+import io.mockk.coJustRun
+import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
 
 class ConsentViewTest {
     @get:Rule
     val rule = createComposeRule()
+
+    val healthLinkMock = mockk<HealthDataLink>()
 
     private fun createConsentTextModel(
         id: String = "consent-text-model",
@@ -34,6 +42,11 @@ class ConsentViewTest {
         val consentTextModel = createConsentTextModel(title = "testTitle")
         val consentTextView = createConsentTextView()
         val callbackCollection = CallbackCollection()
+
+        HealthDataLinkHolder.initialize(healthLinkMock)
+
+        coJustRun { healthLinkMock.requestPermissions() }
+        coEvery { healthLinkMock.hasAllPermissions() } returns true
 
         rule.setContent {
             consentTextView.Render(consentTextModel, callbackCollection, null)

@@ -5,6 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import healthstack.kit.R
 import healthstack.kit.R.drawable
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.ImageArticleModel
 import healthstack.kit.task.base.View
@@ -33,6 +34,7 @@ class EligibilityResultView : View<EligibilityResultModel>() {
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun EligibilityResultViewSuccessPreview() {
@@ -43,7 +45,8 @@ fun EligibilityResultViewSuccessPreview() {
         successModel = ImageArticleModel(
             id = "eligibility",
             title = "Great, You’re in!",
-            description = "Congratulations! You are eligible for the study. Next, we will need to collect your consent, and you will be ready to go.",
+            description = "Congratulations! You are eligible for the study. " +
+                "Next, we will need to collect your consent, and you will be ready to go.",
             drawableId = drawable.sample_image_alpha1
         ),
         failModel = ImageArticleModel(
@@ -64,6 +67,7 @@ fun EligibilityResultViewSuccessPreview() {
     )
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun EligibilityResultViewFailPreview() {
@@ -74,7 +78,8 @@ fun EligibilityResultViewFailPreview() {
         successModel = ImageArticleModel(
             id = "eligibility",
             title = "Great, You’re in!",
-            description = "Congratulations! You are eligible for the study. Next, we will need to collect your consent, and you will be ready to go.",
+            description = "Congratulations! You are eligible for the study. " +
+                "Next, we will need to collect your consent, and you will be ready to go.",
             drawableId = drawable.sample_image_alpha1
         ),
         failModel = ImageArticleModel(

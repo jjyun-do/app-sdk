@@ -16,6 +16,7 @@ import healthstack.backend.integration.task.ChoiceProperties
 import healthstack.backend.integration.task.Contents
 import healthstack.backend.integration.task.Item
 import healthstack.backend.integration.task.Option
+import java.time.LocalDateTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -27,7 +28,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import org.junit.runner.RunWith
-import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 @TestInstance(PER_CLASS)
@@ -43,20 +43,22 @@ class TaskDaoTest {
         properties = Properties(
             title = "Daily Survey",
             description = "Daily",
-            items = listOf(Item(
-                name = "Question0",
-                type = "Question",
-                contents = Contents(
-                    title = "good morning",
-                    required = true,
-                    type = "CHOICE",
-                    itemProperties = ChoiceProperties(
-                        tag = "RADIO",
-                        options = listOf(Option("value"))
-                    )
-                ),
-                sequence = 0
-            ))
+            items = listOf(
+                Item(
+                    name = "Question0",
+                    type = "Question",
+                    contents = Contents(
+                        title = "good morning",
+                        required = true,
+                        type = "CHOICE",
+                        itemProperties = ChoiceProperties(
+                            tag = "RADIO",
+                            options = listOf(Option("value"))
+                        )
+                    ),
+                    sequence = 0
+                )
+            )
         ),
         result = null,
         createdAt = curTime,

@@ -1,10 +1,10 @@
-package com.samsung.healthcare.kit.view
+package healthstack.kit
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.samsung.healthcare.kit.R
-import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.model.EligibilityIntroModel
+import healthstack.kit.task.base.CallbackCollection
+import healthstack.kit.task.onboarding.model.EligibilityIntroModel
+import healthstack.kit.task.onboarding.view.EligibilityIntroView
 import org.junit.Rule
 import org.junit.Test
 
@@ -24,7 +24,7 @@ class EligibilityIntroViewTest {
         title: String = "Eligibility-Intro-Title",
         description: String = "description",
         conditions: List<EligibilityIntroModel.EligibilityCondition> = eligibilitySections,
-        drawableId: Int = R.drawable.sample_image1,
+        drawableId: Int = R.drawable.sample_image_alpha1,
         viewType: EligibilityIntroModel.ViewType = EligibilityIntroModel.ViewType.Card,
     ): EligibilityIntroModel = EligibilityIntroModel(
         id, title, description, drawableId, conditions, viewType

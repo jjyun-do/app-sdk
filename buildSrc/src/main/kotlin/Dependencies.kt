@@ -76,6 +76,7 @@ object AppDependencies {
     const val ANDROIDX_CORE = "androidx.core:core-ktx:${Versions.AndroidX.CORE_KTX}"
     const val ANDROIDX_COMPAT = "androidx.appcompat:appcompat:${Versions.AndroidX.COMPAT}"
     const val ANDROIDX_WORK = "androidx.work:work-runtime-ktx:${Versions.AndroidX.WORK}"
+    const val ANDROIDX_WORK_TESTING = "androidx.work:work-testing:${Versions.AndroidX.WORK}"
     const val ANDROIDX_CONCURRENT = "androidx.concurrent:concurrent-futures-ktx:${Versions.AndroidX.CONCURRENT}"
     const val ANDROIDX_DATASTORE = "androidx.datastore:datastore-preferences:${Versions.AndroidX.DATASTORE}"
     const val ANDROIDX_NAVIGATION_COMPOSE =

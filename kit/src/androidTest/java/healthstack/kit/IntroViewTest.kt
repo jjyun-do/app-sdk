@@ -1,11 +1,11 @@
-package com.samsung.healthcare.kit.view
+package healthstack.kit
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.samsung.healthcare.kit.R
-import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.model.IntroModel
-import com.samsung.healthcare.kit.model.IntroModel.IntroSection
+import healthstack.kit.task.base.CallbackCollection
+import healthstack.kit.task.onboarding.model.IntroModel
+import healthstack.kit.task.onboarding.model.IntroModel.IntroSection
+import healthstack.kit.task.onboarding.view.IntroView
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,8 +17,8 @@ class IntroViewTest {
     private fun createIntroModel(
         id: String = "intro-model",
         title: String = "SleepCare",
-        drawableId: Int = R.drawable.sample_image4,
-        logoDrawableId: Int = R.drawable.ic_sample_icon,
+        drawableId: Int = R.drawable.sample_image_alpha4,
+        logoDrawableId: Int = R.drawable.ic_launcher,
         summaries: List<Pair<Int, String>> = listOf(
             R.drawable.ic_watch to "Wear your watch",
         ),

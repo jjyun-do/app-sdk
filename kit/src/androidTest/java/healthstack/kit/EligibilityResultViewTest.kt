@@ -1,11 +1,11 @@
-package com.samsung.healthcare.kit.view
+package healthstack.kit
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.samsung.healthcare.kit.R
-import com.samsung.healthcare.kit.common.CallbackCollection
-import com.samsung.healthcare.kit.model.EligibilityResultModel
-import com.samsung.healthcare.kit.model.ImageArticleModel
+import healthstack.kit.task.base.CallbackCollection
+import healthstack.kit.task.base.ImageArticleModel
+import healthstack.kit.task.onboarding.model.EligibilityResultModel
+import healthstack.kit.task.onboarding.view.EligibilityResultView
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,20 +17,20 @@ class EligibilityResultViewTest {
         "success-message",
         "Great! You’re in!",
         "Congratulations! You are eligible for the study.",
-        drawableId = R.drawable.sample_image2
+        drawableId = R.drawable.sample_image_alpha2
     )
 
     private val eligibilityFailMessage: ImageArticleModel = ImageArticleModel(
         "fail-message",
         "You are not eligible for the study.",
         "Check back later and stay tuned for more studies coming soon!",
-        drawableId = R.drawable.sample_image3
+        drawableId = R.drawable.sample_image_alpha3
     )
 
     private fun createEligibilityCheckerModel(
         id: String = "eligibility-result-model",
         title: String = "Eligibility-Result-Title",
-        drawableId: Int = R.drawable.sample_image1,
+        drawableId: Int = R.drawable.sample_image_alpha1,
         successModel: ImageArticleModel = eligibilitySuccessMessage,
         failModel: ImageArticleModel = eligibilityFailMessage,
     ): EligibilityResultModel =

@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 
 @Composable
@@ -75,40 +76,30 @@ fun SquareTextField(
     )
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
-fun RoundTextFieldMaskedPreview() =
-    RoundTextField(
-        value = "password",
-        onValueChange = {},
-        shouldMask = true
-    )
+fun RoundTextFieldMaskedPreview() {
+    RoundTextField(value = "password", onValueChange = {}, shouldMask = true)
+}
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
-fun RoundTextFieldUnMaskedPreview() =
-    RoundTextField(
-        value = "",
-        onValueChange = {},
-        placeholder = "email",
-        shouldMask = false
-    )
+fun RoundTextFieldUnMaskedPreview() {
+    RoundTextField(value = "", onValueChange = {}, placeholder = "email", shouldMask = false)
+}
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
-fun SquareTextFieldMaskedPreview() =
-    SquareTextField(
-        value = "password",
-        onValueChange = {},
-        shouldMask = true
-    )
+fun SquareTextFieldMaskedPreview() {
+    SquareTextField(value = "password", onValueChange = {}, shouldMask = true)
+}
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
-fun SquareTextFieldUnMaskedPreview() =
-    SquareTextField(
-        value = "",
-        onValueChange = {},
-        placeholder = "email",
-        shouldMask = false
-    )
+fun SquareTextFieldUnMaskedPreview() {
+    SquareTextField(value = "", onValueChange = {}, placeholder = "email", shouldMask = false)
+}

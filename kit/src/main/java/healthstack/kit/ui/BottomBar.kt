@@ -26,38 +26,6 @@ import healthstack.kit.ui.ButtonShape.SQUARE
 
 @Composable
 fun BottomBar(
-    color: Color = Color(0x970347F4),
-    onClickDisagree: () -> Unit,
-    onClickAgree: () -> Unit,
-) {
-    BottomAppBar(
-        backgroundColor = Color(0xFFEFF5FA),
-        elevation = 5.dp,
-    ) {
-        Text(
-            text = "Disagree",
-            color = color,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.subtitle1,
-            modifier = Modifier
-                .padding(horizontal = 12.dp)
-                .clickable { onClickDisagree.invoke() }
-        )
-        Spacer(modifier = Modifier.weight(1f, true))
-        Text(
-            text = "Agree",
-            color = color,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.subtitle1,
-            modifier = Modifier
-                .padding(horizontal = 12.dp)
-                .clickable { onClickAgree.invoke() }
-        )
-    }
-}
-
-@Composable
-fun BottomBar(
     leftButtonText: String,
     rightButtonText: String,
     onClickLeftButton: () -> Unit,

@@ -46,6 +46,7 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import healthstack.kit.R
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.View
 import healthstack.kit.task.onboarding.model.EligibilityIntroModel
@@ -55,8 +56,8 @@ import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.BottomSquareButton
 import healthstack.kit.ui.SdkCard
 import healthstack.kit.ui.TopBar
-import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
+import kotlinx.coroutines.launch
 
 class EligibilityIntroView : View<EligibilityIntroModel>() {
     @Composable
@@ -356,6 +357,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
         (1 - fraction) * start + fraction * stop
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun EligibilityIntroViewPreview() {
@@ -375,7 +377,8 @@ fun EligibilityIntroViewPreview() {
         EligibilityIntroModel(
             id = "eligibility",
             title = "Eligibility",
-            description = "To begin with, we will ask a few questions to make sure that you are eligible to join this study.",
+            description = "To begin with, we will ask a few questions " +
+                "to make sure that you are eligible to join this study.",
             conditions = eligibilitySections,
             viewType = Card
         ),

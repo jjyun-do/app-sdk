@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import healthstack.kit.R.drawable
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 
 @Composable
@@ -71,6 +72,7 @@ fun StatusCard(@DrawableRes drawableId: Int, value: String, unit: String = "") {
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun StatusCardPreview() =
@@ -78,6 +80,7 @@ fun StatusCardPreview() =
         StatusCard(drawable.ic_100tb, "87", "BPM")
     }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun TaskStatusCardPreview() =

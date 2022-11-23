@@ -4,7 +4,6 @@ plugins {
     id("de.mannodermaus.android-junit5")
     id("org.jetbrains.dokka")
     id("io.gitlab.arturbosch.detekt")
-    id("jacoco")
     id("kotlin-kapt")
 }
 
@@ -22,6 +21,18 @@ android {
 
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    buildTypes {
+        debug {
+            isTestCoverageEnabled = true
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
         }
     }
 
@@ -51,6 +62,7 @@ android {
     lint {
         disable += "UnusedMaterialScaffoldPaddingParameter"
     }
+    buildToolsVersion = "30.0.3"
 }
 
 dependencies {
@@ -81,6 +93,7 @@ dependencies {
     androidTestRuntimeOnly(AppDependencies.JUNIT_MANNO_RUNNER)
     androidTestImplementation(AppDependencies.androidTestImplLibs)
     androidTestImplementation(AppDependencies.androidUITestImplLibs)
+    androidTestImplementation(AppDependencies.ANDROIDX_WORK_TESTING)
 }
 
 tasks.dokkaHtml.configure {
@@ -90,8 +103,4 @@ tasks.dokkaHtml.configure {
             noAndroidSdkLink.set(false)
         }
     }
-}
-
-jacoco {
-    toolVersion = Versions.JACOCO
 }

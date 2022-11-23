@@ -32,7 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import healthstack.kit.R
+import healthstack.kit.R.drawable
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 
 @Composable
@@ -50,7 +51,7 @@ fun SdkCard(
             .shadow(elevation = elevation, shape = shape, clip = false)
             .zIndex(elevation.value)
             .then(
-                if (border != null) androidx.compose.ui.Modifier.border(
+                if (border != null) Modifier.border(
                     border,
                     shape
                 ) else Modifier
@@ -65,6 +66,7 @@ fun SdkCard(
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun SdkCardPreview() {
@@ -91,52 +93,48 @@ fun SdkCardPreview() {
                     .height(240.dp)
                     .fillMaxWidth()
             ) {
-                Box(
-                    modifier = Modifier
-                        .height(100.dp)
-                        .fillMaxWidth()
-                )
-                Image(
-                    painter = painterResource(R.drawable.card_sample_image_alpha),
-                    contentDescription = "",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
-                )
+                imagePreview()
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Medical eligibilities",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.h6,
-                color = AppTheme.colors.textPrimaryAccent,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "• Pre-existing condition(s)",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.body1,
-                color = AppTheme.colors.textHint,
-                modifier = Modifier.padding(horizontal = 22.dp)
-            )
-            Text(
-                text = "• Prescription(s)",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.body1,
-                color = AppTheme.colors.textHint,
-                modifier = Modifier.padding(horizontal = 22.dp)
-            )
-            Text(
-                text = "• Living in the United States",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.body1,
-                color = AppTheme.colors.textHint,
-                modifier = Modifier.padding(horizontal = 22.dp)
-            )
+            contentPreview()
         }
     }
+}
+
+@PreviewGenerated
+@Composable
+private fun imagePreview() {
+    Box(
+        modifier = Modifier
+            .height(100.dp)
+            .fillMaxWidth()
+    )
+    Image(
+        painter = painterResource(drawable.card_sample_image_alpha),
+        contentDescription = "",
+        modifier = Modifier.fillMaxWidth(),
+        contentScale = ContentScale.FillWidth
+    )
+}
+
+@PreviewGenerated
+@Composable
+private fun contentPreview() {
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(
+        text = "Medical eligibilities",
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        style = MaterialTheme.typography.h6,
+        color = AppTheme.colors.textPrimaryAccent,
+        modifier = Modifier.padding(horizontal = 16.dp)
+    )
+    Spacer(modifier = Modifier.height(4.dp))
+    Text(
+        text = "• Pre-existing condition(s)",
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        style = MaterialTheme.typography.body1,
+        color = AppTheme.colors.textHint,
+        modifier = Modifier.padding(horizontal = 22.dp)
+    )
 }

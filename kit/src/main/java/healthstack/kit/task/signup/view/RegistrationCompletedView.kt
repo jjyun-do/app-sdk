@@ -3,6 +3,7 @@ package healthstack.kit.task.signup.view
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import healthstack.kit.R
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.ImageArticleModel
 import healthstack.kit.task.base.View
@@ -29,6 +30,7 @@ class RegistrationCompletedView : View<RegistrationCompletedModel>() {
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun RegistrationCompletedViewPreview() =

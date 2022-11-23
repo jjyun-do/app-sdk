@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -96,6 +97,7 @@ private fun DayCard(date: LocalDate, textColor: Color, modifier: Modifier) {
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun WeeklyCardPreview() =

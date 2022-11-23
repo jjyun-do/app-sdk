@@ -31,6 +31,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import healthstack.kit.R
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.SdkCard
 import healthstack.kit.ui.SquareButton
@@ -67,7 +68,8 @@ fun SignatureLayout(
             SdkCard(
                 modifier = Modifier
                     .height(200.dp)
-                    .padding(horizontal = 50.dp, vertical = 10.dp),
+                    .padding(horizontal = 50.dp, vertical = 10.dp)
+                    .testTag("signatureView"),
                 shape = RoundedCornerShape(10.dp),
                 color = Color(0xFFF3F4F4)
             ) {
@@ -78,7 +80,9 @@ fun SignatureLayout(
             }
 
             Text(
-                "By signing this document with an electronic signature, I agree that such signature will be as valid as handwritten signatures to the exxtent allowed by local law"
+                "By signing this document with an electronic signature, " +
+                    "I agree that such signature will be as valid as handwritten signatures " +
+                    "to the exxtent allowed by local law"
             )
 
             Row(
@@ -143,6 +147,7 @@ fun Context.findActivity(): Activity? =
         else -> null
     }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun SignatureViewPreview() {

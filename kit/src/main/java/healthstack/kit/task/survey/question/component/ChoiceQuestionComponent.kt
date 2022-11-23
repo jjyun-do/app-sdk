@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel.ViewType
@@ -227,6 +228,7 @@ fun RadioGroup(choiceQuestion: ChoiceQuestionModel<*>, modifier: Modifier) {
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun RadioPreview() {
@@ -237,9 +239,10 @@ fun RadioPreview() {
         candidates = listOf("developer", "designer")
     )
 
-    return component.Render(model, CallbackCollection())
+    component.Render(model, CallbackCollection())
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun SliderPreview() {
@@ -247,14 +250,16 @@ fun SliderPreview() {
     val model = ChoiceQuestionModel<Int>(
         id = "slider",
         query = "How was your symptom level for headaches?",
-        explanation = "Please tap on the slider to give a rating, from 0 being no concern to 10 being extremely concerned.",
+        explanation = "Please tap on the slider to give a rating, from 0 " +
+            "being no concern to 10 being extremely concerned.",
         candidates = listOf(0, 10),
         viewType = ViewType.Slider
     )
 
-    return component.Render(model, CallbackCollection())
+    component.Render(model, CallbackCollection())
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun DropdownPreview() {
@@ -262,10 +267,11 @@ fun DropdownPreview() {
     val model = ChoiceQuestionModel<Int>(
         id = "slider",
         query = "How was your symptom level for headaches?",
-        explanation = "Please tap on the slider to give a rating, from 0 being no concern to 10 being extremely concerned.",
+        explanation = "Please tap on the slider to give a rating, from 0 " +
+            "being no concern to 10 being extremely concerned.",
         candidates = (20..50).toList(),
         viewType = DropMenu
     )
 
-    return component.Render(model, CallbackCollection())
+    component.Render(model, CallbackCollection())
 }

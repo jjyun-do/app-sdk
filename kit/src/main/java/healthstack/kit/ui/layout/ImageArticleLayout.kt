@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import healthstack.kit.R
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.ImageArticleModel
 import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.BottomBar
@@ -82,6 +83,7 @@ fun ImageArticleLayout(
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun ImageArticleLayoutPreview() =

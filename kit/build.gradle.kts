@@ -4,7 +4,6 @@ plugins {
     id("de.mannodermaus.android-junit5")
     id("org.jetbrains.dokka")
     id("io.gitlab.arturbosch.detekt")
-    id("jacoco")
     id("kotlin-kapt")
 }
 
@@ -22,6 +21,18 @@ android {
 
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    buildTypes {
+        debug {
+            isTestCoverageEnabled = true
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
         }
     }
 
@@ -82,8 +93,4 @@ tasks.dokkaHtml.configure {
             noAndroidSdkLink.set(false)
         }
     }
-}
-
-jacoco {
-    toolVersion = Versions.JACOCO
 }

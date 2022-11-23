@@ -152,8 +152,10 @@ object OnboardingModule {
             IntroSection(
                 "Overview",
                 "CardioFlow is a study developed by the University of California, San Francisco.\n\n" +
-                    "Through this study, we identify and measure the data of your vital signs and symptom reports.\n\n" +
-                    "With your help, we could test our algorithms and develop technology that contributes to preventing cardiovascular diseases in the U.S.",
+                    "Through this study, we identify and " +
+                    "measure the data of your vital signs and symptom reports.\n\n" +
+                    "With your help, we could test our algorithms and " +
+                    "develop technology that contributes to preventing cardiovascular diseases in the U.S.",
             ),
             IntroSection(
                 "How to participate",
@@ -165,7 +167,8 @@ object OnboardingModule {
     private fun eligibilityIntro(@ApplicationContext context: Context) = EligibilityIntroModel(
         id = "eligibility",
         title = "Eligibility",
-        description = "To begin with, we will ask a few questions to make sure that you are eligible to join this study.",
+        description = "To begin with, we will ask a few questions " +
+            "to make sure that you are eligible to join this study.",
         conditions = eligibilitySections,
         viewType = Card
     )
@@ -200,7 +203,9 @@ object OnboardingModule {
         id = "sign-up-model",
         title = "CardioFlow",
         listOf(Basic, Google),
-        description = "Thanks for joining the study!\nNow please create an account to keep track\nof your data and keep it safe.",
+        description = "Thanks for joining the study!\n" +
+            "Now please create an account to keep track\n" +
+            "of your data and keep it safe.",
         drawableId = drawable.ic_launcher
     )
 
@@ -209,7 +214,8 @@ object OnboardingModule {
             id = "registration-completed-model",
             title = "You are done!",
             buttonText = "Continue",
-            description = "Congratulations! Everything is all set for you. Now please tap on the button below to start your CardioFlow journey!",
+            description = "Congratulations! Everything is all set for you. " +
+                "Now please tap on the button below to start your CardioFlow journey!",
             drawableId = drawable.sample_image_alpha1
         )
 
@@ -227,7 +233,8 @@ object OnboardingModule {
     private val eligibilitySuccessMessage: ImageArticleModel = ImageArticleModel(
         id = "eligibility",
         title = "Great, You’re in!",
-        description = "Congratulations! You are eligible for the study. Next, we will need to collect your consent, and you will be ready to go.",
+        description = "Congratulations! You are eligible for the study. " +
+            "Next, we will need to collect your consent, and you will be ready to go.",
         drawableId = drawable.sample_image_alpha1
     )
 

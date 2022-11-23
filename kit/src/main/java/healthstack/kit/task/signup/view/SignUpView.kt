@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import healthstack.kit.R
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.auth.AuthCallback
 import healthstack.kit.auth.AuthContractFactory
 import healthstack.kit.auth.SignInProvider
@@ -170,6 +171,7 @@ class SignUpView : View<SignUpModel>() {
     }
 }
 
+@PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun SignUpViewPreview() =
