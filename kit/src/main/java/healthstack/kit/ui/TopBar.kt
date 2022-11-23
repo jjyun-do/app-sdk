@@ -94,9 +94,13 @@ fun TopBar(
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
-fun ConsentTopBarPreview() = TopBar(onClickBack = {})
+fun ConsentTopBarPreview() {
+    TopBar(onClickBack = {})
+}
 
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
-fun ConsentTopBarPreview2() = TopBar(onClickBack = {}, onClickAction = {})
+fun ConsentTopBarPreview2() {
+    TopBar(onClickBack = {}, onClickAction = {})
+}

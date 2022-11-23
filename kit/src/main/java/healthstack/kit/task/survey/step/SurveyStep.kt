@@ -26,6 +26,7 @@ open class SurveyStep(
 
     class Builder(
         private val title: String,
+        private val view: View<SurveyModel> = SurveyView(),
     ) {
         private val questionnaireSubSteps = mutableListOf<QuestionSubStep<*, *>>()
 
@@ -49,6 +50,7 @@ open class SurveyStep(
                 id = UUID.randomUUID().toString(),
                 name = "not used",
                 model = SurveyModel(UUID.randomUUID().toString(), title),
+                view = view,
                 subStepHolder = SubStepHolder(
                     "sub-step-holder",
                     "Sub-Step-Holder",
