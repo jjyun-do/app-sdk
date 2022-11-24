@@ -10,8 +10,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
@@ -32,6 +36,7 @@ class HealthStackBackendAdapterTest {
         healthStackBackendAdapter = HealthStackBackendAdapter(networkClientStub, projectId)
     }
 
+    @Tag("positive")
     @Test
     fun `test sync health data api`() {
         val healthData = HealthData("HeartRate", emptyList())
@@ -42,6 +47,7 @@ class HealthStackBackendAdapterTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test register user api`() {
         val user = User("id", emptyMap())
@@ -52,10 +58,11 @@ class HealthStackBackendAdapterTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test get task api`() {
         val lastSyncTime = LocalDateTime.now()
-        val endTime = LocalDateTime.now()
+        val endTime = lastSyncTime.plusHours(1L)
         val taskSpec = TaskSpec(
             0, "taskId", "title", "description",
             "0 0 12 1/1 * ? *", "2022-09-12T12:00:00", "2022-09-12T12:00:00",
@@ -73,6 +80,30 @@ class HealthStackBackendAdapterTest {
         }
     }
 
+    @Tag("negative")
+    @Test
+    fun `getTasks should throw IllegalArgumentException when endTime is equal to lastSyncTime`() {
+        val lastSyncTime = LocalDateTime.now()
+        runTest {
+            assertThrows<IllegalArgumentException> {
+                healthStackBackendAdapter.getTasks(idToken, lastSyncTime, lastSyncTime)
+            }
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `getTasks should throw IllegalArgumentException when endTime is less than lastSyncTime`() {
+        val lastSyncTime = LocalDateTime.now()
+        val endTime = lastSyncTime.minusDays(1L)
+        runTest {
+            assertThrows<IllegalArgumentException> {
+                healthStackBackendAdapter.getTasks(idToken, lastSyncTime, endTime)
+            }
+        }
+    }
+
+    @Tag("positive")
     @Test
     fun `test upload task api`() {
         val taskResult = TaskResult(
@@ -83,6 +114,23 @@ class HealthStackBackendAdapterTest {
         runTest {
             healthStackBackendAdapter.uploadTaskResult(idToken, taskResult)
             verify(networkClientStub).uploadTaskResult(idToken, projectId, listOf(taskResult))
+        }
+    }
+
+    @Tag("negative")
+    @ParameterizedTest
+    @ValueSource(strings = ["", "   "])
+    fun `constructor should throw IllegalArgumentException when projectId is empty`(projectId: String) {
+        assertThrows<IllegalArgumentException> {
+            HealthStackBackendAdapter(networkClientStub, projectId)
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `getInstance should throw UninitializedPropertyAccessException when INSTANCE is not initialized`() {
+        assertThrows<UninitializedPropertyAccessException> {
+            HealthStackBackendAdapter.getInstance()
         }
     }
 }

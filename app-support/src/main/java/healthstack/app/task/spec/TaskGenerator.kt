@@ -2,11 +2,14 @@ package healthstack.app.task.spec
 
 import healthstack.app.task.entity.Task.Properties
 import healthstack.backend.integration.task.TaskSpec
+import java.text.ParseException
 import java.time.LocalDateTime
 import java.util.Date
 import org.quartz.CronExpression
 
 object TaskGenerator {
+
+    @Throws(ParseException::class)
     fun generate(spec: TaskSpec): List<healthstack.app.task.entity.Task> {
         val startTime: Date = TimeUtil.stringToDate(spec.startTime)
         val endTime: Date = TimeUtil.stringToDate(spec.endTime)

@@ -12,6 +12,8 @@ import com.google.android.libraries.healthdata.data.SampleDataTypes
 import com.google.android.libraries.healthdata.permission.AccessType
 import com.google.android.libraries.healthdata.permission.Permission
 import com.google.common.util.concurrent.ListenableFuture
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.guava.future
 import kotlinx.coroutines.test.runTest
@@ -20,13 +22,13 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertThrows
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
-import java.time.Instant
 
 @DisplayName("Health Platform Adapter Test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -65,6 +67,7 @@ class HealthPlatformAdapterTest {
         )
     }
 
+    @Tag("negative")
     @Test
     fun `test convert string to health data type`() {
         val fakeHealthData = "fakeHealthData"
@@ -74,6 +77,7 @@ class HealthPlatformAdapterTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test health platform adapter has permissions`() {
         runTest {
@@ -88,6 +92,7 @@ class HealthPlatformAdapterTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test health platform adapter doesn't have permissions`() {
         runTest {
@@ -102,6 +107,7 @@ class HealthPlatformAdapterTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test health platform adapter has all permissions`() {
         runTest {
@@ -116,6 +122,7 @@ class HealthPlatformAdapterTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test health platform adapter read sample data`() {
         val requestStartTime = Instant.parse("2022-05-25T10:10:20.274Z")
@@ -158,6 +165,7 @@ class HealthPlatformAdapterTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test health platform adapter read interval data`() {
         val requestStartTime = Instant.parse("2022-05-25T10:10:20.274Z")
@@ -195,6 +203,62 @@ class HealthPlatformAdapterTest {
                 healthPlatformAdapter.getHealthData(requestStartTime, requestEndTime, "Steps").data
 
             assertEquals(readData[0]["count"], 5.toLong())
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `getHealthData should throw IllegalArgumentException when health data is not valid`() {
+        val endTime = Instant.now()
+        val startTime = endTime.minus(1L, ChronoUnit.DAYS)
+        val invalidHealthData = "invalid-health-data"
+        runTest {
+            assertThrows<IllegalArgumentException> {
+                healthPlatformAdapter.getHealthData(startTime, endTime, invalidHealthData)
+            }
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `getHealthData should throw IllegalArgumentException when endTime is greater than startTime`() {
+        val endTime = Instant.now()
+        val startTime = endTime.plus(1L, ChronoUnit.DAYS)
+        val heartRate = "HeartRate"
+        runTest {
+            assertThrows<IllegalArgumentException> {
+                healthPlatformAdapter.getHealthData(startTime, endTime, heartRate)
+            }
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `getHealthData should throw IllegalStateException when endTime is greater than startTime`() {
+        val endTime = Instant.now()
+        val startTime = endTime.minus(1L, ChronoUnit.DAYS)
+        val heartRate = "HeartRate"
+        runTest {
+            `when`(healthDataClientStub.getGrantedPermissions(heartRateReadPermission))
+                .thenReturn(
+                    future {
+                        emptySet()
+                    }
+                )
+            assertThrows<IllegalStateException> {
+                healthPlatformAdapter.getHealthData(startTime, endTime, heartRate)
+            }
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `constructor should throw IllegalArgumentException when HealthDataTypeString include invalid type`() {
+        assertThrows<IllegalArgumentException> {
+            HealthPlatformAdapter(
+                healthDataClientStub,
+                healthDataTypeStrings + "invalid-health-data"
+            )
         }
     }
 }

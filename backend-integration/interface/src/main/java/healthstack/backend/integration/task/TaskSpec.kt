@@ -13,7 +13,12 @@ data class TaskSpec(
     val endTime: String,
     val validTime: Long,
     val items: List<Item>,
-)
+) {
+    init {
+        require(0 <= validTime)
+        require(title.isNotBlank())
+    }
+}
 
 data class Item(
     val name: String,

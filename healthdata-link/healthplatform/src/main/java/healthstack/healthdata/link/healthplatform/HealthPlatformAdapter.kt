@@ -73,9 +73,11 @@ class HealthPlatformAdapter(
         endTime: Instant,
         healthDataTypeName: String,
     ): HealthData {
-        val healthDataType = convertStringToHealthDataType(healthDataTypeName)
-        val permissionSet = hashSetOf(Permission.create(healthDataType, AccessType.READ))
+        require(endTime.isAfter(startTime))
 
+        val healthDataType = convertStringToHealthDataType(healthDataTypeName)
+
+        val permissionSet = hashSetOf(Permission.create(healthDataType, AccessType.READ))
         if (!hasPermissions(permissionSet))
             throw IllegalStateException("Required permissions are not granted.")
 

@@ -13,6 +13,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -33,6 +34,7 @@ class TaskRepositoryImplTest {
         taskRepositoryImpl = TaskRepositoryImpl()
     }
 
+    @Tag("positive")
     @Test
     fun `test insertAll api`() {
         val targetTasks = emptyList<Task>()
@@ -46,6 +48,7 @@ class TaskRepositoryImplTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test getActiveTasks api`() {
         val targetTime = LocalDateTime.now()
@@ -59,6 +62,7 @@ class TaskRepositoryImplTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test getUpcomingTasks api`() {
         val targetTime = LocalDateTime.now()
@@ -75,6 +79,7 @@ class TaskRepositoryImplTest {
         }
     }
 
+    @Tag("positive")
     @Test
     fun `test getCompletedTasks api`() {
         val targetTime = LocalDate.now()

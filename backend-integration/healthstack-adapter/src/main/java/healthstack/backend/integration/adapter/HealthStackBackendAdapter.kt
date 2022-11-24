@@ -9,6 +9,10 @@ class HealthStackBackendAdapter(
     private val projectId: String,
 ) : BackendFacade {
 
+    init {
+        require(projectId.isNotBlank())
+    }
+
     override suspend fun sync(idToken: String, healthData: HealthData) {
         networkClient.sync(idToken, projectId, healthData)
     }
@@ -17,12 +21,16 @@ class HealthStackBackendAdapter(
         networkClient.registerUser(idToken, projectId, user)
     }
 
+    @Throws(IllegalArgumentException::class)
     override suspend fun getTasks(
         idToken: String,
         lastSyncTime: LocalDateTime,
         endTime: LocalDateTime,
-    ): List<healthstack.backend.integration.task.TaskSpec> =
-        networkClient.getTasks(idToken, projectId, lastSyncTime, endTime)
+    ): List<healthstack.backend.integration.task.TaskSpec> {
+        require(endTime.isAfter(lastSyncTime))
+
+        return networkClient.getTasks(idToken, projectId, lastSyncTime, endTime)
+    }
 
     override suspend fun uploadTaskResult(idToken: String, result: healthstack.backend.integration.task.TaskResult) =
         networkClient.uploadTaskResult(idToken, projectId, listOf(result))
