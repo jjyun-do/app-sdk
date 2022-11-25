@@ -3,6 +3,7 @@ package healthstack.app.task.spec
 import healthstack.backend.integration.task.ChoiceProperties
 import healthstack.backend.integration.task.Contents
 import healthstack.backend.integration.task.Item
+import healthstack.backend.integration.task.ItemProperties
 import healthstack.backend.integration.task.Option
 import healthstack.backend.integration.task.ScaleProperties
 import healthstack.backend.integration.task.TaskSpec
@@ -82,6 +83,38 @@ class TaskGeneratorTest {
             assertNotNull(task.scheduledAt)
             assertEquals(task.scheduledAt?.plusMinutes(everydayTaskSpec.validTime), task.validUntil)
             assertEquals(everydayTaskSpec.items.size, task.properties.items.size)
+            everydayTaskSpec.items.forEachIndexed { index, item ->
+                assertEquals(item, task.properties.items[index])
+            }
+        }
+    }
+
+    private fun assertEquals(expected: Item, actual: Item) {
+        assertEquals(expected.name, actual.name)
+        assertEquals(expected.type, actual.type)
+        assertEquals(expected.sequence, actual.sequence)
+        assertEquals(expected.contents, actual.contents)
+    }
+
+    private fun assertEquals(expected: Contents, actual: Contents) {
+        assertEquals(expected.type, actual.type)
+        assertEquals(expected.title, actual.title)
+        assertEquals(expected.explanation, actual.explanation)
+        assertEquals(expected.required, actual.required)
+        assertEquals(expected.itemProperties, actual.itemProperties)
+    }
+
+    private fun assertEquals(expected: ItemProperties, actual: ItemProperties) {
+        assertEquals(expected.tag, actual.tag)
+
+        if (expected is ChoiceProperties) {
+            assertEquals(expected.options, (actual as? ChoiceProperties)?.options)
+        } else if (expected is ScaleProperties) {
+            val actualProps = (actual as? ScaleProperties)
+            assertEquals(expected.high, actualProps?.high)
+            assertEquals(expected.low, actualProps?.low)
+            assertEquals(expected.highLabel, actualProps?.highLabel)
+            assertEquals(expected.lowLabel, actualProps?.lowLabel)
         }
     }
 

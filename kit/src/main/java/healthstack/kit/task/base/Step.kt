@@ -21,7 +21,7 @@ abstract class Step<T : StepModel, R>(
     val name: String,
     val model: T,
     val view: View<T>,
-    val getResult: () -> R,
+    private val getResult: () -> R,
 ) {
     /**
      * A method for rendering UI.

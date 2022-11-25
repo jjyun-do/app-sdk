@@ -13,6 +13,9 @@ import healthstack.kit.task.survey.question.model.MultiChoiceQuestionModel
 import healthstack.kit.task.survey.question.model.QuestionModel
 import java.time.LocalDateTime
 
+internal const val CHOICE = "CHOICE"
+internal const val SCALE = "SCALE"
+
 @Entity
 data class Task(
     @PrimaryKey
@@ -50,16 +53,19 @@ data class Task(
         properties.items.map {
             this.addQuestion(
                 when (it.contents.type) {
-                    "CHOICE" -> toChoiceQuestionModel(it)
-                    "SCALE" -> toSliderQuestionModel(it)
-                    else -> throw Error("item view type is incorrect")
+                    CHOICE -> toChoiceQuestionModel(it)
+                    SCALE -> toSliderQuestionModel(it)
+                    else -> throw NotImplementedError("not supported content type")
                 }
             )
         }
     }.build()
 
-    private fun toSliderQuestionModel(item: Item): QuestionModel<Any> =
-        ChoiceQuestionModel(
+    private fun toSliderQuestionModel(item: Item): QuestionModel<Any> {
+        require(item.contents.type == SCALE)
+        require(item.contents.itemProperties is ScaleProperties)
+
+        return ChoiceQuestionModel(
             item.name,
             item.contents.title,
             item.contents.explanation,
@@ -71,9 +77,13 @@ data class Task(
             ),
             Slider
         )
+    }
 
-    private fun toChoiceQuestionModel(item: Item): QuestionModel<Any> =
-        if (item.contents.itemProperties.tag.uppercase() == "CHECKBOX")
+    private fun toChoiceQuestionModel(item: Item): QuestionModel<Any> {
+        require(item.contents.type == CHOICE)
+        require(item.contents.itemProperties is ChoiceProperties)
+
+        return if (item.contents.itemProperties.tag.uppercase() == "CHECKBOX")
             toMultiChoiceQuestionModel(item) as QuestionModel<Any>
         else ChoiceQuestionModel(
             item.name,
@@ -85,6 +95,7 @@ data class Task(
             ViewType.values()
                 .first { type -> type.name.equals(item.contents.itemProperties.tag, ignoreCase = true) }
         )
+    }
 
     private fun toMultiChoiceQuestionModel(item: Item): MultiChoiceQuestionModel =
         MultiChoiceQuestionModel(
