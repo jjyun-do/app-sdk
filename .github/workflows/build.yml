@@ -52,7 +52,7 @@ jobs:
         run: tar -xf caches.tar
 
       - name: Build with Gradle
-        run: ./gradlew build --exclude-task test --exclude-task detekt
+        run: ./gradlew build -x test -x detekt -x :sample:researchsample:build
 
       - name: report jacoco
         run: ./gradlew jacocoTestReport

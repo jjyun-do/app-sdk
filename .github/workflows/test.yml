@@ -28,4 +28,4 @@ jobs:
           ./gradlew --version
 
       - name: Test with Gradle
-        run: ./gradlew testWithLint
+        run: ./gradlew testWithLint -x :sample:researchsample:test

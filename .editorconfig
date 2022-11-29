@@ -8,6 +8,9 @@ insert_final_newline = true
 indent_style = space
 trim_trailing_whitespace = true
 
+[*.yml]
+indent_size = 2
+
 [*.{kt, kts}]
 disabled_rules = import-ordering
 max_line_length = 120
