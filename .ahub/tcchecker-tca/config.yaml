@@ -1,0 +1,34 @@
+version: 2
+test:
+  - name: TCM
+    testCaseLanguage: KOTLIN
+    testFW: JUNIT
+    testCaseFolder:
+      - ./app-support/src/test
+      - ./backend-integration/healthstack-adapter/src/test
+      - ./healthdata-link/healthplatform/src/test
+      - ./platform/src/test
+
+    testFile:
+      - extension: kt
+        ends:
+          - Test
+          - Tests
+
+    testCase:
+      - condition:
+          - annotation:
+              match:
+                - '@Test'
+
+    positiveTestCase:
+      - condition:
+          - annotation:
+              match:
+              - '@Tag("positive")'
+
+    negativeTestCase:
+      - condition:
+          - annotation:
+              match:
+                - '@Tag("negative")'
