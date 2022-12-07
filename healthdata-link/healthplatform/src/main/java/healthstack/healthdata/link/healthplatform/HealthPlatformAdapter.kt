@@ -19,28 +19,28 @@ import java.time.Instant
 
 class HealthPlatformAdapter(
     private val healthDataClient: HealthDataClient,
-    healthDataTypeStrings: List<String>,
+    healthDataTypeNames: List<String>,
 ) : HealthDataLink {
     companion object {
-        private val allSampleDataTypeStrings: Set<String> =
+        private val allSampleDataNames: Set<String> =
             SampleDataTypes.getAllDataTypes().map {
                 it.name
             }.toHashSet()
 
-        private val allIntervalDataTypeStrings: Set<String> =
+        private val allIntervalDataNames: Set<String> =
             IntervalDataTypes.getAllDataTypes().map {
                 it.name
             }.toHashSet()
 
         fun convertStringToHealthDataType(healthDataTypeString: String) =
             when (healthDataTypeString) {
-                in allSampleDataTypeStrings -> SampleDataTypes.fromName(healthDataTypeString)
-                in allIntervalDataTypeStrings -> IntervalDataTypes.fromName(healthDataTypeString)
+                in allSampleDataNames -> SampleDataTypes.fromName(healthDataTypeString)
+                in allIntervalDataNames -> IntervalDataTypes.fromName(healthDataTypeString)
                 else -> throw IllegalArgumentException("Cannot find dataType with given string.")
             }
     }
 
-    private val healthDataTypes: List<DataType> = healthDataTypeStrings.map {
+    private val healthDataTypes: List<DataType> = healthDataTypeNames.map {
         convertStringToHealthDataType(it)
     }
 
@@ -76,8 +76,8 @@ class HealthPlatformAdapter(
         require(endTime.isAfter(startTime))
 
         val healthDataType = convertStringToHealthDataType(healthDataTypeName)
+        val permissionSet = setOf(Permission.create(healthDataType, AccessType.READ))
 
-        val permissionSet = hashSetOf(Permission.create(healthDataType, AccessType.READ))
         if (!hasPermissions(permissionSet))
             throw IllegalStateException("Required permissions are not granted.")
 
@@ -107,6 +107,6 @@ class HealthPlatformAdapter(
         return healthDataClient.readData(request).await().toHealthData(healthDataType)
     }
 
-    override fun isIntervalData(healthDataTypeString: String): Boolean =
-        healthDataTypeString in allIntervalDataTypeStrings
+    override fun isIntervalData(healthDataName: String): Boolean =
+        healthDataName in allIntervalDataNames
 }

@@ -14,6 +14,7 @@ object Versions {
 
     object Google {
         const val HEALTH_DATA = "1.0.0-alpha01"
+        const val HEALTH_CONNECT = "1.0.0-alpha03"
         const val GMS = "4.3.10"
         const val FIREBASE_BOM = "30.1.0"
         const val PLAY_SERVICE_AUTH = "20.2.0"
@@ -99,6 +100,7 @@ object AppDependencies {
 
     const val GOOGLE_HEALTH_DATA =
         "com.google.android.libraries.healthdata:health-data-api:${Versions.Google.HEALTH_DATA}"
+    const val GOOGLE_HEALTH_CONNECT = "androidx.health:health-connect-client:${Versions.Google.HEALTH_CONNECT}"
 
     val healthDataImplLibs = arrayListOf<String>().apply {
         add(ANDROIDX_WORK)

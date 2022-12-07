@@ -10,7 +10,7 @@ interface HealthDataLink {
     suspend fun getHealthData(
         startTime: Instant,
         endTime: Instant,
-        healthDataType: String,
+        healthDataTypeName: String,
     ): HealthData
 
     fun isIntervalData(healthDataName: String): Boolean
