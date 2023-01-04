@@ -3,7 +3,6 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 object Versions {
     const val KOTLIN = "1.7.0"
     const val ANDROID_BUILD = "7.2.2"
-    const val LIFECYCLE_VIEWMODEL_COMPOSE = "2.3.0"
 
     object Hilt {
         const val DAGGER = "2.42"
@@ -14,14 +13,13 @@ object Versions {
 
     object Google {
         const val HEALTH_DATA = "1.0.0-alpha01"
-        const val HEALTH_CONNECT = "1.0.0-alpha03"
+        const val HEALTH_CONNECT = "1.0.0-alpha07"
         const val GMS = "4.3.10"
         const val FIREBASE_BOM = "30.1.0"
         const val PLAY_SERVICE_AUTH = "20.2.0"
     }
 
     object AndroidX {
-        const val CORE = "1.6.0"
         const val CORE_KTX = "1.7.0"
         const val COMPAT = "1.4.1"
         const val WORK = "2.7.1"
@@ -31,6 +29,8 @@ object Versions {
         const val DATASTORE = "1.0.0"
         const val NAVIGATION_COMPOSE = "2.4.2"
         const val ROOM = "2.4.3"
+        const val ACTIVITY = "1.6.1"
+        const val FRAGMENT = "1.5.5"
     }
 
     const val RETROFIT = "2.9.0"
@@ -85,6 +85,8 @@ object AppDependencies {
     const val ANDROIDX_ROOM = "androidx.room:room-runtime:${Versions.AndroidX.ROOM}"
     const val ANDROIDX_ROOM_COMPILER = "androidx.room:room-compiler:${Versions.AndroidX.ROOM}"
     const val ANDROIDX_ROOM_KTX = "androidx.room:room-ktx:${Versions.AndroidX.ROOM}"
+    const val ANDROIDX_ACTIVITY = "androidx.activity:activity-ktx:${Versions.AndroidX.ACTIVITY}"
+    const val ANDROIDX_FRAGMENT = "androidx.fragment:fragment-ktx:${Versions.AndroidX.FRAGMENT}"
 
     const val SUPPORT_ANNOTATION =
         "com.android.support:support-annotations:${Versions.SUPPORT_ANNOTATION}"
@@ -100,11 +102,16 @@ object AppDependencies {
 
     const val GOOGLE_HEALTH_DATA =
         "com.google.android.libraries.healthdata:health-data-api:${Versions.Google.HEALTH_DATA}"
-    const val GOOGLE_HEALTH_CONNECT = "androidx.health:health-connect-client:${Versions.Google.HEALTH_CONNECT}"
+    const val GOOGLE_HEALTH_CONNECT = "androidx.health.connect:connect-client:${Versions.Google.HEALTH_CONNECT}"
 
     val healthDataImplLibs = arrayListOf<String>().apply {
         add(ANDROIDX_WORK)
         add(GOOGLE_HEALTH_DATA)
+    }
+
+    val activityImplLibs = arrayListOf<String>().apply {
+        add(ANDROIDX_ACTIVITY)
+        add(ANDROIDX_FRAGMENT)
     }
 
     val androidXImplLibs = arrayListOf<String>().apply {

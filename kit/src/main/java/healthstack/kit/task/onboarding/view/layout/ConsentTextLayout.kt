@@ -17,9 +17,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,6 +40,7 @@ import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.BottomBarWithGradientBackground
 import healthstack.kit.ui.LabeledCheckbox
 import healthstack.kit.ui.TopBar
+import kotlinx.coroutines.launch
 import java.nio.ByteBuffer
 
 @Composable
@@ -49,16 +51,19 @@ fun ConsentTextLayout(
     callbackCollection: CallbackCollection,
     onClickPad: () -> Unit = {},
 ) {
+    val healthDataLink = HealthDataLinkHolder.getInstance()
+
     var allChecked by rememberSaveable { mutableStateOf(model.isAllChecked()) }
     val scrollState = rememberScrollState()
     var isEveryPermissionActive by rememberSaveable { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
 
-    val healthDataLink = HealthDataLinkHolder.getInstance()
+    SideEffect {
+        coroutineScope.launch {
+            isEveryPermissionActive = healthDataLink.hasAllPermissions()
 
-    LaunchedEffect(true) {
-        healthDataLink.requestPermissions()
-        if (healthDataLink.hasAllPermissions())
-            isEveryPermissionActive = true
+            if (!isEveryPermissionActive) healthDataLink.requestPermissions()
+        }
     }
 
     Scaffold(

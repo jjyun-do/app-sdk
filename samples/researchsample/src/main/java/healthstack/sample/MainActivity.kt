@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Surface
-import androidx.compose.ui.graphics.toArgb
-import com.google.android.libraries.healthdata.HealthDataService
+import androidx.health.connect.client.HealthConnectClient
 import dagger.hilt.android.AndroidEntryPoint
 import healthstack.app.BaseApplication
 import healthstack.app.status.HeartRateStatus
@@ -16,7 +15,7 @@ import healthstack.app.task.db.TaskRoomDatabase
 import healthstack.backend.integration.BackendFacadeHolder
 import healthstack.backend.integration.adapter.HealthStackBackendAdapter
 import healthstack.healthdata.link.HealthDataLinkHolder
-import healthstack.healthdata.link.healthplatform.HealthPlatformAdapter
+import healthstack.healthdata.link.healthconnect.HealthConnectAdapter
 import healthstack.kit.task.onboarding.OnboardingTask
 import healthstack.kit.task.signup.SignUpTask
 import healthstack.kit.theme.AppColors
@@ -38,16 +37,19 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val healthDataRequired = listOf("HeartRate", "Steps", "SleepSession")
+        val healthDataRequired = listOf("HeartRateSeries", "Steps")
         val healthDataToDisplay = listOf(HeartRateStatus, SleepSessionStatus, TaskStatus)
         val healthDataSyncSpecs = listOf(
-            SyncManager.HealthDataSyncSpec("HeartRate", 15, TimeUnit.MINUTES),
+            SyncManager.HealthDataSyncSpec("HeartRateSeries", 15, TimeUnit.MINUTES),
             SyncManager.HealthDataSyncSpec("Steps", 1, TimeUnit.DAYS),
-            SyncManager.HealthDataSyncSpec("SleepSession", 1, TimeUnit.DAYS)
         )
 
         HealthDataLinkHolder.initialize(
-            HealthPlatformAdapter(HealthDataService.getClient(this), healthDataRequired)
+            HealthConnectAdapter(
+                healthDataRequired,
+                this,
+                HealthConnectClient.getOrCreate(this)
+            )
         )
 
         BackendFacadeHolder.initialize(
@@ -62,7 +64,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             Surface {
                 AppTheme(appColors) {
-                    this.window.statusBarColor = AppTheme.colors.primary.toArgb()
                     BaseApplication(
                         onboardingTask,
                         signUpTask,

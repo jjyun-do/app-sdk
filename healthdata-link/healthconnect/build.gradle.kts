@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 29
@@ -50,7 +50,7 @@ android {
 dependencies {
     implementation(project(":healthdata-link:interface"))
     implementation(AppDependencies.GOOGLE_HEALTH_CONNECT)
-
+    implementation(AppDependencies.activityImplLibs)
     testRuntimeOnly(AppDependencies.JUNIT_ENGINE)
     testImplementation(AppDependencies.testImplLibs)
     testImplementation(AppDependencies.coroutineTestImplLibs)
