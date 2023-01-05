@@ -44,6 +44,7 @@ object Versions {
     // TEST
     const val MOCKK = "1.12.3"
     const val MOCKITO = "4.0.0"
+    const val MOCKITO_INLINE = "4.11.0"
     const val RUNNER = "1.4.0"
     const val JACOCO = "0.8.7"
     const val COROUTINE = "1.6.2"
@@ -107,6 +108,7 @@ object AppDependencies {
     val healthDataImplLibs = arrayListOf<String>().apply {
         add(ANDROIDX_WORK)
         add(GOOGLE_HEALTH_DATA)
+        add(GOOGLE_HEALTH_CONNECT)
     }
 
     val activityImplLibs = arrayListOf<String>().apply {
@@ -180,6 +182,8 @@ object AppDependencies {
     const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
     const val MOCKK_ANDROID = "io.mockk:mockk-android:${Versions.MOCKK}"
     const val MOCKITO = "org.mockito:mockito-core:${Versions.MOCKITO}"
+    const val MOCKITO_KOTLIN = "org.mockito.kotlin:mockito-kotlin:${Versions.MOCKITO}"
+    const val MOCKITO_INLINE = "org.mockito:mockito-inline:${Versions.MOCKITO_INLINE}"
     const val COROUTINE_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINE}"
     const val COROUTINE_GUAVA = "org.jetbrains.kotlinx:kotlinx-coroutines-guava:${Versions.COROUTINE}"
 
@@ -191,6 +195,8 @@ object AppDependencies {
     val testImplLibs = arrayListOf<String>().apply {
         add(MOCKK)
         add(MOCKITO)
+        add(MOCKITO_KOTLIN)
+        add(MOCKITO_INLINE)
         add(JUNIT)
         add(JUNIT_API)
         add(JUNIT_PARAMS)

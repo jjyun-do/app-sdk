@@ -5,6 +5,8 @@ import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.PermissionController
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.Record
+import androidx.health.connect.client.request.ReadRecordsRequest
+import androidx.health.connect.client.time.TimeRangeFilter.Companion
 import healthstack.healthdata.link.HealthData
 import healthstack.healthdata.link.HealthDataLink
 import java.time.Instant
@@ -42,7 +44,18 @@ class HealthConnectAdapter(
     override suspend fun requestPermissions() = launcher.launch(requiredPermissions)
 
     override suspend fun getHealthData(startTime: Instant, endTime: Instant, healthDataTypeName: String): HealthData {
-        TODO("Not yet implemented")
+        // TODO: check permission
+
+        val recordType = HealthConnectUtils.nameToRecord(healthDataTypeName)
+
+        val recordsResponse = healthConnectClient.readRecords(
+            ReadRecordsRequest(
+                recordType,
+                Companion.between(startTime, endTime)
+            )
+        )
+
+        return recordsResponse.toHealthData(healthDataTypeName)
     }
 
     override fun isIntervalData(healthDataName: String): Boolean {
