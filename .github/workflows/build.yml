@@ -1,75 +1,43 @@
-# This workflow will build a Java project with Gradle
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
-
 name: build
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: [ code-large ]
+    runs-on: code-large
+
     container:
-      image: art.sec.samsung.net/new-life-experience_docker/android:31-system-jfrog
-    env:
-      GRADLE_DIR: "/root/.gradle"
-      CI_SERVER: "https://art.sec.samsung.net/"
-      REPO_NAME: "new-life-experience_generic"
+      image: data-service-docker-local.bart.sec.samsung.net/android:31-system-jfrog
+      credentials:
+        username: ${{ secrets.BART_USER }}
+        password: ${{ secrets.BART_API_KEY }}
+
     steps:
-      - uses: code-actions/checkout@v2
+      - name: ⬇️ Checkout
+        uses: code-actions/checkout@v2
 
-      - name: Set hash value
-        id: hash
-        run: echo "::set-output name=value::${{ hashFiles('**/build.gradle.kts', '**.settings.gradle.kts', '**/gradle-wrapper.properties') }}"
-
-      - name: Get Java version
-        run: java --version
-
-      - name: Get Android SDK version # TODO: user can select sdk version
-        run: sdkmanager --list
-
-      - name: Grant execute permission for gradlew
-        run: |
-          chmod +x gradlew
-          ./gradlew --version
-
-      - name: Activate jfrog cli
-        run: jf --version
-
-      - name: Configure jfrog artifactory server
-        run: jf config add ci --url "$CI_SERVER" --user "${{ secrets.ART_USER }}" --password "${{ secrets.ART_PASSWORD }}" --interactive=false
-
-      - name: Download build caches
-        id: download
-        run: |
-          jf rt dl --flat=true "$REPO_NAME/builds/${{ steps.hash.outputs.value }}/caches.tar" "$GRADLE_DIR/caches.tar"
-          echo "::set-output name=cache_file::$(ls $GRADLE_DIR | grep caches.tar)"
-
-      - name: Extract caches from tar
-        working-directory: ${{ env.GRADLE_DIR }}
-        if: ${{ steps.download.outputs.cache_file == 'caches.tar' }}
-        run: tar -xf caches.tar
-
-      - name: Build with Gradle
-        run: ./gradlew build -x test -x detekt -x :sample:researchsample:build
-
-      - name: report jacoco
-        run: ./gradlew jacocoTestReport
-
-      - uses: CODE-Actions/upload-artifact@v2
+      - name: ⬇️ Caching...
+        uses: code-actions/cache@v3
         with:
-          name: upload test report
-          path: sdk/build/test-results
+          path: |
+            .gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-      - uses: CODE-Actions/upload-artifact@v2
-        with:
-          name: upload coverage report
-          path: sdk/build/reports
-
-      - name: Compress caches with tar
-        working-directory: ${{ env.GRADLE_DIR }}
-        if: ${{ steps.download.outputs.cache_file != 'caches.tar' }}
+      - name: ⚡️ Check environment (Java & Android SDK)
         run: |
-          tar -cf caches.tar caches
-          jf rt u "caches.tar" "$REPO_NAME/builds/${{ steps.hash.outputs.value }}/caches.tar"
+          java --version
+          sdkmanager --list
+
+      - name: 🐸 Generate AAR
+        run: ./gradlew :kit:assemble :app-support:assemble
+
+      - name: 🐋 Upload AAR
+        uses: CODE-Actions/upload-artifact@v2
+        with:
+          name: AAR
+          path: '**/**/build/outputs/aar'
