@@ -2,6 +2,7 @@ package healthstack.healthdata.link.healthconnect
 
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.Record
+import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.response.ReadRecordsResponse
 import healthstack.healthdata.link.HealthData
@@ -25,6 +26,13 @@ fun ReadRecordsResponse<out Record>.toHealthData(healthDataTypeName: String): He
                 healthDataSet.add(
                     mapOf(
                         "count" to record.count,
+                        HealthData.START_TIME_KEY to record.startTime,
+                        HealthData.END_TIME_KEY to record.endTime
+                    )
+                )
+            is SleepSessionRecord ->
+                healthDataSet.add(
+                    mapOf(
                         HealthData.START_TIME_KEY to record.startTime,
                         HealthData.END_TIME_KEY to record.endTime
                     )

@@ -7,9 +7,11 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.Record
+import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.response.ReadRecordsResponse
 import androidx.health.platform.client.permission.Permission
+import java.time.Instant
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.BeforeAll
@@ -21,7 +23,6 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
-import java.time.Instant
 
 @DisplayName("Health Connect Adapter Test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -90,6 +91,37 @@ class HealthConnectAdapterTest {
 
             assertEquals(sampleBPM, healthData.data[0]["bpm"])
             assertEquals(sampleTime, healthData.data[0]["time"])
+        }
+    }
+
+    @Tag("positive")
+    @Test
+    fun `test health connect adapter read sleep session records`() {
+        val sleepAt = Instant.parse("2023-01-01T01:00:00.000Z")
+        val awakeAt = Instant.parse("2023-01-01T08:10:00.000Z")
+        val sleepSessionRecord = SleepSessionRecord(
+            sleepAt,
+            null,
+            awakeAt,
+            null,
+        )
+
+        runTest {
+            // TODO: check permissions
+
+            `when`(readRecordsResponse.records)
+                .thenReturn(listOf(sleepSessionRecord))
+
+            `when`(healthConnectClientStub.readRecords(any<ReadRecordsRequest<out Record>>()))
+                .thenReturn(readRecordsResponse)
+
+            val healthData = healthConnectAdapter.getHealthData(
+                sleepAt.minusSeconds(1),
+                awakeAt.plusSeconds(1),
+                "SleepSession"
+            )
+            assertEquals(sleepAt, healthData.data[0]["startTime"])
+            assertEquals(awakeAt, healthData.data[0]["endTime"])
         }
     }
 

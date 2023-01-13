@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val healthDataRequired = listOf("HeartRateSeries", "Steps")
+        val healthDataRequired = listOf("HeartRateSeries", "Steps", "SleepSession")
         val healthDataToDisplay = listOf(HeartRateStatus, SleepSessionStatus, TaskStatus)
         val healthDataSyncSpecs = listOf(
             SyncManager.HealthDataSyncSpec("HeartRateSeries", 15, TimeUnit.MINUTES),

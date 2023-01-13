@@ -24,11 +24,12 @@ object SleepSessionStatus : StatusDataType() {
 
         if (healthData.data.isEmpty()) return null
         val latestSleep = healthData.data.last()
-        val startTime = latestSleep["startTime"] as String
-        val endTime = latestSleep["endTime"] as String
+        val startTime = latestSleep["startTime"] as? Instant ?: return null
+        val endTime = latestSleep["endTime"] as? Instant ?: return null
+
         val sleepDuration = Duration.between(
-            Instant.parse(startTime),
-            Instant.parse(endTime)
+            startTime,
+            endTime
         ).toMinutes() / 60.0
 
         return (sleepDuration * 10).roundToInt() / 10.0
