@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.samsung.healthcare.kit.sample">
-
-    <uses-permission android:name="android.permission.INTERNET" />
+          xmlns:tools="http://schemas.android.com/tools"
+          package="healthstack.sample">
+    <queries>
+        <package android:name="com.google.android.apps.healthdata"/>
+    </queries>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".ResearchApplication"
         android:allowBackup="true"
@@ -17,15 +19,18 @@
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"/>
+            </intent-filter>
+            <meta-data android:name="health_permissions"
+                       android:resource="@array/health_permissions"/>
         </activity>
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove" />
+            tools:node="remove"/>
     </application>
-
 </manifest>
