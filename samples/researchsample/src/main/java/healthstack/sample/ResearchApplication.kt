@@ -1,18 +1,35 @@
 package healthstack.sample
 
 import android.app.Application
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
+import androidx.health.connect.client.HealthConnectClient
 import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import healthstack.app.task.db.TaskRoomDatabase
+import healthstack.backend.integration.BackendFacadeHolder
+import healthstack.backend.integration.adapter.HealthStackBackendAdapter
+import healthstack.healthdata.link.HealthDataLinkHolder
+import healthstack.healthdata.link.healthconnect.HealthConnectAdapter
 
 @HiltAndroidApp
-class ResearchApplication : Application(), Configuration.Provider {
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+class ResearchApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
 
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
+        val healthDataRequired = listOf("HeartRateSeries", "SleepSession")
+
+        HealthDataLinkHolder.initialize(
+            HealthConnectAdapter(
+                healthDataRequired,
+                HealthConnectClient.getOrCreate(this)
+            )
+        )
+
+        BackendFacadeHolder.initialize(
+            HealthStackBackendAdapter.initialize(
+                this.getString(R.string.research_platform_endpoint),
+                this.getString(R.string.research_project_id)
+            ).let { HealthStackBackendAdapter.getInstance() }
+        )
+
+        TaskRoomDatabase.initialize(this)
+    }
 }

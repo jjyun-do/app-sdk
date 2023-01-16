@@ -13,6 +13,7 @@ import com.google.android.libraries.healthdata.data.SampleReadSpec
 import com.google.android.libraries.healthdata.data.TimeSpec
 import com.google.android.libraries.healthdata.permission.AccessType
 import com.google.android.libraries.healthdata.permission.Permission
+import healthstack.healthdata.link.Change
 import healthstack.healthdata.link.HealthData
 import healthstack.healthdata.link.HealthDataLink
 import java.time.Instant
@@ -105,6 +106,14 @@ class HealthPlatformAdapter(
         }.build()
 
         return healthDataClient.readData(request).await().toHealthData(healthDataType)
+    }
+
+    override suspend fun getChangesToken(healthDataTypeName: String): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getChanges(token: String, healthDataTypeName: String): Change {
+        TODO("Not yet implemented")
     }
 
     override fun isIntervalData(healthDataName: String): Boolean =

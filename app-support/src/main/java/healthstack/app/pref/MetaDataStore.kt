@@ -8,8 +8,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import java.time.Instant
-import java.time.temporal.ChronoUnit.DAYS
 
 private const val META_DATA_STORE_NAME = "metaDataStore"
 
@@ -20,15 +18,15 @@ private val Context.metaDataStore: DataStore<Preferences> by preferencesDataStor
 class MetaDataStore(val context: Context) {
     private val metaDataStore = context.metaDataStore
 
-    suspend fun readLatestSyncTime(healthDataTypeString: String): String {
+    suspend fun readChangesToken(healthDataTypeString: String): String? {
         return metaDataStore.data.map {
-            it[stringPreferencesKey(healthDataTypeString)] ?: Instant.now().truncatedTo(DAYS).toString()
+            it[stringPreferencesKey(healthDataTypeString)]
         }.first()
     }
 
-    suspend fun saveLatestSyncTime(healthDataTypeString: String, latestSyncTime: String) {
+    suspend fun saveChangesToken(healthDataTypeString: String, changesToken: String) {
         metaDataStore.edit {
-            it[stringPreferencesKey(healthDataTypeString)] = latestSyncTime
+            it[stringPreferencesKey(healthDataTypeString)] = changesToken
         }
     }
 

@@ -49,7 +49,7 @@ class HealthConnectAdapterTest {
         ).thenReturn(launcher)
 
         healthConnectAdapter = HealthConnectAdapter(
-            healthDataTypeStrings, context, healthConnectClientStub
+            healthDataTypeStrings, healthConnectClientStub
         )
 
         readRecordsResponse = mock<ReadRecordsResponse<out Record>>()

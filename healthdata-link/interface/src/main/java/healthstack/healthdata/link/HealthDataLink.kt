@@ -13,5 +13,12 @@ interface HealthDataLink {
         healthDataTypeName: String,
     ): HealthData
 
+    suspend fun getChangesToken(healthDataTypeName: String): String
+
+    suspend fun getChanges(
+        token: String,
+        healthDataTypeName: String,
+    ): Change
+
     fun isIntervalData(healthDataName: String): Boolean
 }

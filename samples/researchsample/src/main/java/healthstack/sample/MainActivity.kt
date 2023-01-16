@@ -4,16 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Surface
-import androidx.health.connect.client.HealthConnectClient
 import dagger.hilt.android.AndroidEntryPoint
 import healthstack.app.BaseApplication
 import healthstack.app.status.HeartRateStatus
 import healthstack.app.status.SleepSessionStatus
 import healthstack.app.status.TaskStatus
 import healthstack.app.sync.SyncManager
-import healthstack.app.task.db.TaskRoomDatabase
-import healthstack.backend.integration.BackendFacadeHolder
-import healthstack.backend.integration.adapter.HealthStackBackendAdapter
 import healthstack.healthdata.link.HealthDataLinkHolder
 import healthstack.healthdata.link.healthconnect.HealthConnectAdapter
 import healthstack.kit.task.onboarding.OnboardingTask
@@ -37,29 +33,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val healthDataRequired = listOf("HeartRateSeries", "Steps", "SleepSession")
         val healthDataToDisplay = listOf(HeartRateStatus, SleepSessionStatus, TaskStatus)
         val healthDataSyncSpecs = listOf(
             SyncManager.HealthDataSyncSpec("HeartRateSeries", 15, TimeUnit.MINUTES),
-            SyncManager.HealthDataSyncSpec("Steps", 1, TimeUnit.DAYS),
         )
 
-        HealthDataLinkHolder.initialize(
-            HealthConnectAdapter(
-                healthDataRequired,
-                this,
-                HealthConnectClient.getOrCreate(this)
-            )
-        )
-
-        BackendFacadeHolder.initialize(
-            HealthStackBackendAdapter.initialize(
-                this.getString(R.string.research_platform_endpoint),
-                this.getString(R.string.research_project_id)
-            ).let { HealthStackBackendAdapter.getInstance() }
-        )
-
-        TaskRoomDatabase.initialize(this)
+        (HealthDataLinkHolder.getInstance() as HealthConnectAdapter).createLauncher(this)
 
         setContent {
             Surface {

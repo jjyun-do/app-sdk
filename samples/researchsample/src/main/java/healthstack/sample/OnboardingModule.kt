@@ -6,7 +6,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import healthstack.app.pref.MetaDataStore
 import healthstack.kit.auth.SignInProvider.Basic
 import healthstack.kit.auth.SignInProvider.Google
 import healthstack.kit.task.base.ImageArticleModel
@@ -132,11 +131,6 @@ object OnboardingModule {
             consentText(context),
             ConsentTextView()
         )
-
-    @Singleton
-    @Provides
-    fun providePreferencesStore(@ApplicationContext context: Context): MetaDataStore =
-        MetaDataStore(context)
 
     private fun intro(@ApplicationContext context: Context) = IntroModel(
         id = "intro",
