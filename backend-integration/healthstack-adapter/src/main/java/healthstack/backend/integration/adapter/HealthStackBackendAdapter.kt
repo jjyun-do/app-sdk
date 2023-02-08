@@ -1,7 +1,10 @@
 package healthstack.backend.integration.adapter
 
 import healthstack.backend.integration.BackendFacade
+import healthstack.backend.integration.exception.RegisterException
+import healthstack.backend.integration.exception.UserAlreadyExistsException
 import healthstack.healthdata.link.HealthData
+import java.net.HttpURLConnection
 import java.time.LocalDateTime
 
 class HealthStackBackendAdapter(
@@ -18,7 +21,14 @@ class HealthStackBackendAdapter(
     }
 
     override suspend fun registerUser(idToken: String, user: healthstack.backend.integration.registration.User) {
-        networkClient.registerUser(idToken, projectId, user)
+        try {
+            networkClient.registerUser(idToken, projectId, user)
+        } catch (e: retrofit2.HttpException) {
+            when (e.code()) {
+                HttpURLConnection.HTTP_CONFLICT -> throw UserAlreadyExistsException()
+                else -> throw RegisterException()
+            }
+        }
     }
 
     @Throws(IllegalArgumentException::class)
