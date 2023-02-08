@@ -8,10 +8,12 @@ import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.Record
 import androidx.health.connect.client.records.SleepSessionRecord
+import androidx.health.connect.client.records.SleepStageRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.response.ReadRecordsResponse
 import androidx.health.platform.client.permission.Permission
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.BeforeAll
@@ -125,6 +127,39 @@ class HealthConnectAdapterTest {
         }
     }
 
+    @Tag("positive")
+    @Test
+    fun `test health connect adapter read sleep stage records`() {
+        val startTime = Instant.parse("2023-01-01T01:00:00.000Z")
+        val endTime = startTime.plus(10, ChronoUnit.MINUTES)
+        val sleepSessionRecord = SleepStageRecord(
+            startTime,
+            null,
+            endTime,
+            null,
+            stage = "sleeping"
+        )
+
+        runTest {
+            // TODO: check permissions
+
+            `when`(readRecordsResponse.records)
+                .thenReturn(listOf(sleepSessionRecord))
+
+            `when`(healthConnectClientStub.readRecords(any<ReadRecordsRequest<out Record>>()))
+                .thenReturn(readRecordsResponse)
+
+            val healthData = healthConnectAdapter.getHealthData(
+                startTime.minusSeconds(1),
+                endTime.plusSeconds(1),
+                "SleepStage"
+            )
+            assertEquals(startTime, healthData.data[0]["startTime"])
+            assertEquals(endTime, healthData.data[0]["endTime"])
+            assertEquals(sleepSessionRecord.stage, healthData.data[0]["stage"])
+        }
+    }
+
     @Tag("negative")
     @Test
     fun `getHealthData should throw IllegalArgumentException`() {
@@ -140,6 +175,22 @@ class HealthConnectAdapterTest {
                     requestStartTime,
                     requestEndTime,
                     fakeHealthDataType
+                )
+            }
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `getHealthData should throw IllegalArgumentException when endTime is before startTime`() {
+        val startTime = Instant.parse("2023-01-01T00:00:00.000Z")
+
+        runTest {
+            assertThrows<IllegalArgumentException> {
+                healthConnectAdapter.getHealthData(
+                    startTime,
+                    startTime.minusSeconds(600),
+                    "SleepStage"
                 )
             }
         }
