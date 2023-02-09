@@ -23,7 +23,8 @@ jobs:
         uses: code-actions/cache@v3
         with:
           path: |
-            .gradle
+            /root/.gradle/caches
+            /root/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
@@ -44,3 +45,6 @@ jobs:
         with:
           name: Jacoco Report
           path: '**/**/build/reports/jacoco'
+
+      - name: Stop gradle for caching
+        run: ./gradlew --stop
