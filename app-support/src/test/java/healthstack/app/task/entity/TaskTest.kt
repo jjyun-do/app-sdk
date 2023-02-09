@@ -13,6 +13,7 @@ import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.time.LocalDateTime
 
 class TaskTest {
 
@@ -24,7 +25,8 @@ class TaskTest {
             title = "property-title",
             description = "property description",
             items = emptyList()
-        )
+        ),
+        scheduledAt = LocalDateTime.now()
     )
 
     private val scaleContent = Contents(
