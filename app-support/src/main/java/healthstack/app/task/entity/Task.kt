@@ -27,7 +27,7 @@ data class Task(
     val result: List<Result>? = null,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val scheduledAt: LocalDateTime,
-    val validUntil: LocalDateTime? = null,
+    val validUntil: LocalDateTime,
     val submittedAt: LocalDateTime? = null,
     val startedAt: LocalDateTime? = null,
 ) {
@@ -49,7 +49,10 @@ data class Task(
         properties.title,
         properties.description,
         {},
-        isCompleted = result != null
+        isCompleted = result != null,
+        isActive = LocalDateTime.now().let {
+            scheduledAt <= it && it <= validUntil
+        }
     ).apply {
         properties.items.map {
             this.addQuestion(

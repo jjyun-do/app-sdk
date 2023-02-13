@@ -26,7 +26,8 @@ class TaskTest {
             description = "property description",
             items = emptyList()
         ),
-        scheduledAt = LocalDateTime.now()
+        scheduledAt = LocalDateTime.now(),
+        validUntil = LocalDateTime.now().plusDays(1)
     )
 
     private val scaleContent = Contents(
