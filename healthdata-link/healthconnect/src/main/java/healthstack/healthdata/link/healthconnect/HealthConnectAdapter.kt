@@ -47,7 +47,10 @@ class HealthConnectAdapter(
             requiredPermissions
         )
 
-    override suspend fun requestPermissions() = launcher.launch(requiredPermissions)
+    override suspend fun requestPermissions() {
+        healthConnectClient.permissionController.revokeAllPermissions()
+        launcher.launch(requiredPermissions)
+    }
 
     override suspend fun getHealthData(startTime: Instant, endTime: Instant, healthDataTypeName: String): HealthData {
         require(endTime.isAfter(startTime))
