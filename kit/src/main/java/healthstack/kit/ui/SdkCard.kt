@@ -69,7 +69,7 @@ fun SdkCard(
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
-fun SdkCardPreview() {
+private fun SdkCardPreview() =
     SdkCard(
         border = BorderStroke(width = 1.dp, color = Color.LightGray),
         modifier = Modifier
@@ -98,7 +98,6 @@ fun SdkCardPreview() {
             contentPreview()
         }
     }
-}
 
 @PreviewGenerated
 @Composable

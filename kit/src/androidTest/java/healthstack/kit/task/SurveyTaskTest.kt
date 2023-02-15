@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.test.espresso.Espresso
 import healthstack.kit.R
 import healthstack.kit.task.survey.SurveyTask
 import healthstack.kit.task.survey.question.model.MultiChoiceQuestionModel
@@ -13,6 +14,7 @@ import healthstack.kit.task.survey.question.model.TextInputQuestionModel
 import healthstack.kit.theme.AppTheme
 import healthstack.kit.theme.darkBlueColors
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -116,6 +118,48 @@ class SurveyTaskTest {
         assertTrue(step.result)
 
         assertEquals(textAnswer, textInputQuestionModel.input)
+    }
+
+    @Test
+    fun testTaskCanceled() {
+        val test = SurveyTask.Builder(
+            id = "task-2",
+            revisionId = 2,
+            taskId = "survey-sample",
+            name = "sample survey",
+            description = "test",
+            callback = {},
+        ).apply {
+            addQuestion(multiChoiceQuestionModel)
+        }.build()
+
+        var isCanceled = false
+        test.canceled = { isCanceled = true }
+
+        rule.setContent {
+            AppTheme(darkBlueColors()) {
+                test.Render()
+            }
+        }
+        Espresso.pressBack()
+        assertTrue(isCanceled)
+    }
+
+    @Test
+    fun compareTask() {
+        assertNotEquals(
+            surveyTask,
+            SurveyTask.Builder(
+                id = "task-3",
+                revisionId = 3,
+                taskId = "survey-sample",
+                name = "sample survey",
+                description = "test",
+                callback = {},
+            ).apply {
+                addQuestion(multiChoiceQuestionModel)
+            }.build()
+        )
     }
 
     private fun getNextButton(buttonName: String) =

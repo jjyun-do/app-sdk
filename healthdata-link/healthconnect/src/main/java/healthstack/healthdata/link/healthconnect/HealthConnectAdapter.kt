@@ -17,7 +17,7 @@ import kotlin.reflect.KClass
 
 class HealthConnectAdapter(
     healthDataTypeNames: List<String>,
-    val healthConnectClient: HealthConnectClient,
+    private val healthConnectClient: HealthConnectClient,
 ) : HealthDataLink {
     private val healthDataTypes: List<KClass<out Record>> = healthDataTypeNames.map {
         HealthConnectUtils.nameToRecord(it)
@@ -75,6 +75,7 @@ class HealthConnectAdapter(
     }
 
     override suspend fun getChanges(token: String, healthDataTypeName: String): Change {
+        HealthConnectUtils.nameToRecord(healthDataTypeName)
         val changesResponse = healthConnectClient.getChanges(token)
 
         return changesResponse.toChange(healthDataTypeName)

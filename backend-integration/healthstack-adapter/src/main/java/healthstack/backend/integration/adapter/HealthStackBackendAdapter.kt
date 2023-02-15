@@ -11,7 +11,6 @@ class HealthStackBackendAdapter(
     private val networkClient: HealthStackBackendAPI,
     private val projectId: String,
 ) : BackendFacade {
-
     init {
         require(projectId.isNotBlank())
     }

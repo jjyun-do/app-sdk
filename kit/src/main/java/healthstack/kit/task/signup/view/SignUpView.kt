@@ -167,8 +167,9 @@ class SignUpView : View<SignUpModel>() {
             }
 
             Spacer(modifier = Modifier.height(40.dp))
+
             if (model.providers.contains(Basic))
-                BasicSignUpComponent { }
+                SignUpComponent.of(Basic)({ })
         }
     }
 }

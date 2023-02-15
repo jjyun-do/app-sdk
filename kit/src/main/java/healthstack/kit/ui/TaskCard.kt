@@ -169,7 +169,7 @@ fun TaskCardPreview() =
         taskName = "Medical History Survey",
         description = "Please fill out this survey and help us get to know your health condition",
         buttonText = "Get started"
-    ) { }
+    )
 
 @PreviewGenerated
 @Preview(showBackground = true)
@@ -180,4 +180,4 @@ fun TaskCardCompletedPreview() =
         description = "Please fill out this survey and help us get to know your health condition",
         buttonText = "Get started",
         isCompleted = false
-    ) { }
+    )

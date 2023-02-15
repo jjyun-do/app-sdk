@@ -53,10 +53,12 @@ fun LabeledCheckbox(
 @Preview(showBackground = true)
 @Composable
 fun LabeledCheckBoxUnCheckedPreview() =
-    LabeledCheckbox(false, {}, "un-checked")
+    LabeledCheckbox(false, nothing, "un-checked")
 
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun LabeledCheckBoxCheckedPreview() =
-    LabeledCheckbox(true, {}, "checked")
+    LabeledCheckbox(true, nothing, "checked")
+
+private val nothing: (Boolean) -> Unit = { }

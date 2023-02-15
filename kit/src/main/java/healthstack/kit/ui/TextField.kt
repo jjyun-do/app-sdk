@@ -80,26 +80,28 @@ fun SquareTextField(
 @Preview(showBackground = true)
 @Composable
 fun RoundTextFieldMaskedPreview() {
-    RoundTextField(value = "password", onValueChange = {}, shouldMask = true)
+    RoundTextField(value = "password", onValueChange = nothing, shouldMask = true)
 }
 
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun RoundTextFieldUnMaskedPreview() {
-    RoundTextField(value = "", onValueChange = {}, placeholder = "email", shouldMask = false)
+    RoundTextField(value = "", onValueChange = nothing, placeholder = "email", shouldMask = false)
 }
 
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun SquareTextFieldMaskedPreview() {
-    SquareTextField(value = "password", onValueChange = {}, shouldMask = true)
+    SquareTextField(value = "password", onValueChange = nothing, shouldMask = true)
 }
 
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun SquareTextFieldUnMaskedPreview() {
-    SquareTextField(value = "", onValueChange = {}, placeholder = "email", shouldMask = false)
+    SquareTextField(value = "", onValueChange = nothing, placeholder = "email", shouldMask = false)
 }
+
+private val nothing: (arg: String) -> Unit = { }

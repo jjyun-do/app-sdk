@@ -5,17 +5,23 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.health.connect.client.HealthConnectClient
+import androidx.health.connect.client.PermissionController
+import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.Record
 import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.SleepStageRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
+import androidx.health.connect.client.response.ChangesResponse
 import androidx.health.connect.client.response.ReadRecordsResponse
 import androidx.health.platform.client.permission.Permission
 import java.time.Instant
 import java.time.temporal.ChronoUnit
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Tag
@@ -28,6 +34,7 @@ import org.mockito.kotlin.mock
 
 @DisplayName("Health Connect Adapter Test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@OptIn(ExperimentalCoroutinesApi::class)
 class HealthConnectAdapterTest {
 
     private lateinit var healthDataTypeStrings: List<String>
@@ -193,6 +200,88 @@ class HealthConnectAdapterTest {
                     "SleepStage"
                 )
             }
+        }
+    }
+
+    @Tag("positive")
+    @Test
+    fun `getChangesToken should return token string`() {
+        runTest {
+            val dataType = "SleepStage"
+            val token = "token-string"
+            `when`(
+                healthConnectClientStub.getChangesToken(any())
+            ).thenReturn(token)
+            val actualToken = healthConnectAdapter.getChangesToken(dataType)
+            assertEquals(token, actualToken)
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `getChangesToken should throw IllegalArgumentException when health-data-type is not valid`() {
+        runTest {
+            assertThrows<IllegalArgumentException> {
+                healthConnectAdapter.getChangesToken("invalid-health-type")
+            }
+        }
+    }
+
+    @Tag("positive")
+    @Test
+    fun `getChanges should return changed data`() {
+        val changeResponse = mock<ChangesResponse>()
+        `when`(
+            changeResponse.nextChangesToken
+        ).thenReturn("new-token-string")
+        `when`(
+            changeResponse.changes
+        ).thenReturn(emptyList())
+
+        runTest {
+            val dataType = "SleepSession"
+            val token = "valid-token-string"
+            `when`(
+                healthConnectClientStub.getChanges(token)
+            ).thenReturn(changeResponse)
+            val changes = healthConnectAdapter.getChanges(token, dataType)
+            assertNotNull(changes.token)
+            assertNotNull(dataType, changes.healthData.type)
+        }
+    }
+
+    @Tag("negative")
+    @Test
+    fun `getChanges should throw IllegalArgumentException when health-data-type is not valid`() {
+        runTest {
+            assertThrows<IllegalArgumentException> {
+                healthConnectAdapter.getChanges("valid-token", "invalid-type")
+            }
+        }
+    }
+
+    @Tag("positive")
+    @Test
+    fun `hasAllPermissions should return false when returned permissions is equal to request permissions`() {
+        runTest {
+            val permissions = healthDataTypeStrings.map {
+                listOf(
+                    HealthPermission.createReadPermission(HealthConnectUtils.nameToRecord(it)),
+                    HealthPermission.createWritePermission(HealthConnectUtils.nameToRecord(it))
+                )
+            }
+                .flatten()
+                .toSet()
+
+            val permissionController = mock<PermissionController>()
+            `when`(
+                healthConnectClientStub.permissionController
+            ).thenReturn(permissionController)
+
+            `when`(permissionController.getGrantedPermissions(permissions))
+                .thenReturn(permissions)
+
+            assertTrue(healthConnectAdapter.hasAllPermissions())
         }
     }
 }
