@@ -44,7 +44,7 @@ class HealthConnectAdapterTest {
 
     @BeforeAll
     fun beforeAll() {
-        healthDataTypeStrings = listOf("HeartRateSeries")
+        healthDataTypeStrings = listOf("HeartRate")
         healthConnectClientStub = mock<HealthConnectClient>()
 
         val context = mock<ComponentActivity>()
@@ -95,7 +95,7 @@ class HealthConnectAdapterTest {
             val healthData = healthConnectAdapter.getHealthData(
                 requestStartTime,
                 requestEndTime,
-                "HeartRateSeries"
+                "HeartRate"
             )
 
             assertEquals(sampleBPM, healthData.data[0]["bpm"])

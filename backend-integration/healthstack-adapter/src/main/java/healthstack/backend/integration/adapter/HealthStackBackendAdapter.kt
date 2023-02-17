@@ -16,7 +16,7 @@ class HealthStackBackendAdapter(
     }
 
     override suspend fun sync(idToken: String, healthData: HealthData) {
-        networkClient.sync(idToken, projectId, healthData)
+        networkClient.sync(idToken, projectId, healthData.instantToString())
     }
 
     override suspend fun registerUser(idToken: String, user: healthstack.backend.integration.registration.User) {
