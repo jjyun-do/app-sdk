@@ -14,7 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.survey.question.model.MultiChoiceQuestionModel
 import healthstack.kit.theme.AppTheme
@@ -53,7 +55,7 @@ class MultiChoiceQuestionComponent<T : MultiChoiceQuestionModel> : QuestionCompo
                         modifier = Modifier.testTag(candidate.toString()),
                     )
                     Text(
-                        text = candidate.toString(),
+                        text = candidate,
                         style = AppTheme.typography.body1,
                         color = AppTheme.colors.textPrimary,
                         modifier = Modifier.padding(start = 8.dp)
@@ -65,4 +67,22 @@ class MultiChoiceQuestionComponent<T : MultiChoiceQuestionModel> : QuestionCompo
             }
         }
     }
+
+    @PreviewGenerated
+    @Preview(showBackground = true)
+    @Composable
+    fun CheckBoxGroupPreview() =
+        CheckboxGroup(
+            MultiChoiceQuestionModel(
+                "id",
+                "Preview Question?",
+                "Explanation of the question",
+                candidates = listOf(
+                    "This is the sample answer 1",
+                    "This is the sample answer 2",
+                    "This is the sample answer 3 This is the sample answer 3 "
+                )
+            ),
+            modifier
+        )
 }

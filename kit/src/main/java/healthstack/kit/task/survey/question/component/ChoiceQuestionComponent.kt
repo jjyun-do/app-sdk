@@ -110,7 +110,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
         modifier: Modifier,
     ) {
         var selectedIndex by remember { mutableStateOf(question.selection) }
-        var expanded by remember { mutableStateOf(false) }
+        var expanded by remember { mutableStateOf(true) }
 
         ExposedDropdownMenuBox(
             modifier = modifier,
@@ -134,10 +134,11 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                     trailingIconColor = AppTheme.colors.primary
                 ),
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .height(56.dp),
                 readOnly = true,
                 singleLine = true,
-                shape = RoundedCornerShape(25),
+                shape = RoundedCornerShape(4.dp),
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(
                         expanded = expanded
@@ -159,7 +160,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                     DropdownMenuItem(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 10.dp, horizontal = 8.dp),
+                            .padding(vertical = 10.dp),
                         onClick = {
                             selectedIndex = index
                             question.selection = index
@@ -176,11 +177,13 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                                 disabledColor = Color(0xFFA1A1A1),
                             )
                         )
+
                         Text(
                             text = candidate.toString(),
                             style = AppTheme.typography.body2,
                             color = AppTheme.colors.textPrimary,
                             modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(start = 12.dp)
                         )
                     }

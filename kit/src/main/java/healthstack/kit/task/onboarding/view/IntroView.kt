@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import healthstack.kit.R
@@ -39,7 +40,7 @@ import healthstack.kit.task.onboarding.model.IntroModel
 import healthstack.kit.task.onboarding.model.IntroModel.IntroSection
 import healthstack.kit.task.survey.question.SubStepHolder
 import healthstack.kit.theme.AppTheme
-import healthstack.kit.ui.BottomSquareButton
+import healthstack.kit.ui.BottomRoundButton
 
 class IntroView(
     val bottomBarText: String,
@@ -55,7 +56,7 @@ class IntroView(
 
         Scaffold(
             bottomBar = {
-                BottomSquareButton(
+                BottomRoundButton(
                     text = joinButtonText
                 ) { callbackCollection.next() }
             }
@@ -204,7 +205,7 @@ fun SummaryPreview() =
     )
 
 @PreviewGenerated
-@Preview(showBackground = true)
+@Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun IntroViewPreview() {
     val introView = IntroView("Get Started")

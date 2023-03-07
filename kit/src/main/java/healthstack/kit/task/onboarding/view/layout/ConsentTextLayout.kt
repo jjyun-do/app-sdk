@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -38,6 +39,7 @@ import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.onboarding.model.ConsentTextModel
 import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.BottomBarWithGradientBackground
+import healthstack.kit.ui.ButtonShape
 import healthstack.kit.ui.LabeledCheckbox
 import healthstack.kit.ui.TopBar
 import kotlinx.coroutines.launch
@@ -75,6 +77,7 @@ fun ConsentTextLayout(
         bottomBar = {
             BottomBarWithGradientBackground(
                 text = buttonText,
+                shape = ButtonShape.ROUND,
                 buttonEnabled = allChecked && signature.isNotBlank() && isEveryPermissionActive,
             ) {
                 callbackCollection.next()
@@ -83,7 +86,7 @@ fun ConsentTextLayout(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .verticalScroll(scrollState)
                 .padding(innerPadding)
         ) {
@@ -121,11 +124,12 @@ fun ConsentTextLayout(
                 }
             }
 
+            Spacer(Modifier.height(150.dp))
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .padding(vertical = 32.dp)
                     .background(color = Color(0x33C4C4C4))
                     .clickable {
                         onClickPad()
