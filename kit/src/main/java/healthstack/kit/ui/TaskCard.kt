@@ -42,12 +42,12 @@ fun TaskCard(
     description: String,
     isActive: Boolean = true,
     buttonText: String? = null,
-    isCompleted: Boolean = true,
+    isCompleted: Boolean = false,
     onClick: () -> Unit = { },
 ) {
     val shape = RoundedCornerShape(4.dp)
 
-    if (isCompleted)
+    if (!isCompleted)
         Card(
             shape = shape,
             backgroundColor = AppTheme.colors.surface,
@@ -179,5 +179,5 @@ fun TaskCardCompletedPreview() =
         taskName = "Medical History Survey",
         description = "Please fill out this survey and help us get to know your health condition",
         buttonText = "Get started",
-        isCompleted = false
+        isCompleted = true
     )

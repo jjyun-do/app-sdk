@@ -56,7 +56,7 @@ open class SurveyTask private constructor(
             taskName = name,
             description = description,
             isActive = isActive,
-            isCompleted = isCompleted.not(),
+            isCompleted = isCompleted,
             buttonText = LocalContext.current.getString(R.string.start_task)
         ) {
             onClick()
