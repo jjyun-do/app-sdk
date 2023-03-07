@@ -18,7 +18,7 @@ abstract class QuestionComponent<T : QuestionModel<*>> : Component<T>() {
     override fun Render(model: T, callbackCollection: CallbackCollection) {
         Text(
             text = model.question,
-            style = AppTheme.typography.subHeader2,
+            style = AppTheme.typography.subHeader1,
             color = AppTheme.colors.textPrimary,
             modifier = Modifier
                 .padding(start = 12.dp, end = 12.dp)

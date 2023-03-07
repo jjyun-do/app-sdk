@@ -105,4 +105,11 @@ fun ConsentTopBarPreview2() {
     TopBar(onClickBack = null, onClickAction = nothing)
 }
 
+@PreviewGenerated
+@Preview(showBackground = true)
+@Composable
+fun ConsentTopBarPreview3() {
+    TopBar(onClickBack = nothing)
+}
+
 private val nothing: () -> Unit = { }

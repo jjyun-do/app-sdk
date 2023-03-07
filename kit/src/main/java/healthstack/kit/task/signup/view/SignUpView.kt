@@ -79,7 +79,7 @@ class SignUpView : View<SignUpModel>() {
                             painter = painterResource(R.drawable.signup_divider),
                             contentDescription = "",
                             modifier = Modifier
-                                .width(320.dp)
+                                .fillMaxWidth()
                                 .height(21.dp),
                             contentScale = ContentScale.FillWidth
                         )

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -60,8 +61,9 @@ private fun Today(today: LocalDate, modifier: Modifier) {
         AppTheme.colors.textPrimaryAccent,
         modifier.background(
             color = AppTheme.colors.primary.copy(alpha = 0.1f),
-            shape = RoundedCornerShape(2.dp)
-        )
+            shape = RoundedCornerShape(2.dp),
+        ),
+        selected = true
     )
 }
 
@@ -74,7 +76,7 @@ private fun PreviousDays(today: LocalDate, modifier: Modifier) {
 }
 
 @Composable
-private fun DayCard(date: LocalDate, textColor: Color, modifier: Modifier) {
+private fun DayCard(date: LocalDate, textColor: Color, modifier: Modifier, selected: Boolean = false) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -94,6 +96,10 @@ private fun DayCard(date: LocalDate, textColor: Color, modifier: Modifier) {
             color = textColor
         )
         Spacer(modifier = Modifier.height(5.dp))
+        if (selected) Divider(
+            color = AppTheme.colors.textPrimaryAccent,
+            thickness = 2.dp
+        )
     }
 }
 

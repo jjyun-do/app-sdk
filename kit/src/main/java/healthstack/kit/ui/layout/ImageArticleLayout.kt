@@ -21,6 +21,7 @@ import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.ImageArticleModel
 import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.BottomBar
+import healthstack.kit.ui.ButtonShape
 import healthstack.kit.ui.TopBar
 
 @Composable
@@ -31,6 +32,7 @@ fun ImageArticleLayout(
     onClickBack: () -> Unit = {},
     onComplete: () -> Unit = {},
     buttonHidden: Boolean = false,
+    buttonShape: ButtonShape = ButtonShape.SQUARE,
 ) {
     val scrollState = rememberScrollState()
     Scaffold(
@@ -44,6 +46,7 @@ fun ImageArticleLayout(
                 BottomBar(
                     text = buttonText,
                     buttonEnabled = true,
+                    shape = buttonShape
                 ) { onComplete() }
             }
         },
@@ -86,7 +89,7 @@ fun ImageArticleLayout(
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
-fun ImageArticleLayoutPreview() =
+fun ImageArticleLayoutSquarePreview() =
     ImageArticleLayout(
         "Top Bar Title",
         ImageArticleModel(
@@ -96,4 +99,20 @@ fun ImageArticleLayoutPreview() =
             R.drawable.sample_image_alpha1
         ),
         "Button Text"
+    )
+
+@PreviewGenerated
+@Preview(showBackground = true)
+@Composable
+fun ImageArticleLayoutRoundPreview() =
+    ImageArticleLayout(
+        "Top Bar Title",
+        ImageArticleModel(
+            "id",
+            "Title",
+            "Description",
+            R.drawable.sample_image_alpha1
+        ),
+        "Button Text",
+        buttonShape = ButtonShape.ROUND
     )
