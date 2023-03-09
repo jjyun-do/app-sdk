@@ -11,5 +11,5 @@ class GaitAndBalanceResultModel(
     buttonText: String? = "Back to Home", // If null, do not render bottom button
 ) :
     SimpleViewActivityModel(
-        id, title, header, body, drawableId, buttonText
+        id, title, header, body?.split("\n"), drawableId, buttonText
     )

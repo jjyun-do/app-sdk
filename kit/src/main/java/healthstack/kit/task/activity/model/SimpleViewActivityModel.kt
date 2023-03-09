@@ -1,12 +1,15 @@
 package healthstack.kit.task.activity.model
 
 import healthstack.kit.task.base.StepModel
+import healthstack.kit.ui.TextType
+import healthstack.kit.ui.TextType.PARAGRAPH
 
 abstract class SimpleViewActivityModel(
     id: String,
     title: String,
     val header: String,
-    val body: String? = null,
+    val body: List<String>? = null,
     drawableId: Int? = null,
     val buttonText: String? = null, // If null, do not render bottom button
+    val textType: TextType = PARAGRAPH,
 ) : StepModel(id, title, drawableId)

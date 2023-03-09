@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +28,9 @@ import healthstack.kit.task.base.View
 import healthstack.kit.task.survey.question.SubStepHolder
 import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.BottomRoundButton
+import healthstack.kit.ui.ListedText
+import healthstack.kit.ui.TextType.BULLET
+import healthstack.kit.ui.TextType.NUMBER
 import healthstack.kit.ui.TopBar
 
 class SimpleActivityView : View<SimpleViewActivityModel>() {
@@ -35,6 +40,7 @@ class SimpleActivityView : View<SimpleViewActivityModel>() {
         callbackCollection: CallbackCollection,
         holder: SubStepHolder?,
     ) {
+        val scrollState = rememberScrollState()
 
         Scaffold(
             topBar = {
@@ -51,7 +57,8 @@ class SimpleActivityView : View<SimpleViewActivityModel>() {
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(Modifier.height(56.dp))
@@ -80,15 +87,7 @@ class SimpleActivityView : View<SimpleViewActivityModel>() {
                 Spacer(Modifier.height(32.dp))
 
                 model.body?.let {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
-                        text = it,
-                        style = AppTheme.typography.body1,
-                        color = AppTheme.colors.textPrimary,
-                        textAlign = TextAlign.Left,
-                    )
+                    ListedText(it, model.textType)
                 }
             }
         }
@@ -96,7 +95,7 @@ class SimpleActivityView : View<SimpleViewActivityModel>() {
 }
 
 @PreviewGenerated
-@Preview(showBackground = true, device = Devices.NEXUS_6)
+@Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun SimpleViewButtonPreview() {
     val view = SimpleActivityView()
@@ -112,7 +111,7 @@ fun SimpleViewButtonPreview() {
 }
 
 @PreviewGenerated
-@Preview(showBackground = true, device = Devices.NEXUS_6)
+@Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun SimpleViewNoButtonPreview() {
     val view = SimpleActivityView()
@@ -125,6 +124,7 @@ fun SimpleViewNoButtonPreview() {
             body = "Walk unassisted for 20 steps in a straight line.\n" +
                 "Turn around and walk back to your starting point.\n" +
                 "Stand still for 20 seconds.",
+            textType = NUMBER
         ),
         CallbackCollection(),
         null
@@ -132,7 +132,28 @@ fun SimpleViewNoButtonPreview() {
 }
 
 @PreviewGenerated
-@Preview(showBackground = true, device = Devices.NEXUS_6)
+@Preview(showBackground = true, device = Devices.NEXUS_5)
+@Composable
+fun SimpleViewNoButtonBulletPreview() {
+    val view = SimpleActivityView()
+
+    return view.Render(
+        GaitAndBalanceIntroModel(
+            "id",
+            "title",
+            header = "custom header",
+            body = "Walk unassisted for 20 steps in a straight line.\n" +
+                "Turn around and walk back to your starting point.\n" +
+                "Stand still for 20 seconds.",
+            textType = BULLET
+        ),
+        CallbackCollection(),
+        null
+    )
+}
+
+@PreviewGenerated
+@Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun SimpleViewResultPreview() {
     val view = SimpleActivityView()

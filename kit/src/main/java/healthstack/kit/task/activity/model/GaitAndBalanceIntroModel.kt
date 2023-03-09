@@ -1,6 +1,8 @@
 package healthstack.kit.task.activity.model
 
 import healthstack.kit.R
+import healthstack.kit.ui.TextType
+import healthstack.kit.ui.TextType.PARAGRAPH
 
 class GaitAndBalanceIntroModel(
     id: String,
@@ -11,7 +13,8 @@ class GaitAndBalanceIntroModel(
         "3. Stand still for 20 seconds.",
     drawableId: Int? = R.drawable.ic_activity_gait_and_balance,
     buttonText: String? = null, // If null, do not render bottom button
+    textType: TextType = PARAGRAPH,
 ) :
     SimpleViewActivityModel(
-        id, title, header, body, drawableId, buttonText
+        id, title, header, body?.split("\n"), drawableId, buttonText, textType
     )
