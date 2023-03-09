@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import healthstack.backend.integration.task.ChoiceProperties
 import healthstack.backend.integration.task.Item
 import healthstack.backend.integration.task.ScaleProperties
+import healthstack.kit.task.activity.predefined.TappingSpeedActivityTask
 import healthstack.kit.task.survey.SurveyTask
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel.ViewType
@@ -42,28 +43,41 @@ data class Task(
         val response: String,
     )
 
-    fun toViewTask(): SurveyTask = SurveyTask.Builder(
-        id!!.toString(), // TODO
-        revisionId,
-        taskId,
-        properties.title,
-        properties.description,
-        {},
-        isCompleted = result != null,
-        isActive = LocalDateTime.now().let {
-            scheduledAt <= it && it <= validUntil
-        }
-    ).apply {
-        properties.items.map {
-            this.addQuestion(
-                when (it.contents.type) {
-                    CHOICE -> toChoiceQuestionModel(it)
-                    SCALE -> toSliderQuestionModel(it)
-                    else -> throw NotImplementedError("not supported content type")
-                }
-            )
-        }
-    }.build()
+    fun toViewTask() = when (properties.items.size) {
+        // TODO: need implement detailed logic using tag or other fields
+        0 -> TappingSpeedActivityTask(
+            id!!.toString(),
+            taskId,
+            properties.title,
+            properties.description,
+            isCompleted = result != null,
+            isActive = LocalDateTime.now().let {
+                scheduledAt <= it && it <= validUntil
+            }
+        )
+        else -> SurveyTask.Builder(
+            id!!.toString(), // TODO
+            revisionId,
+            taskId,
+            properties.title,
+            properties.description,
+            {},
+            isCompleted = result != null,
+            isActive = LocalDateTime.now().let {
+                scheduledAt <= it && it <= validUntil
+            }
+        ).apply {
+            properties.items.map {
+                this.addQuestion(
+                    when (it.contents.type) {
+                        CHOICE -> toChoiceQuestionModel(it)
+                        SCALE -> toSliderQuestionModel(it)
+                        else -> throw NotImplementedError("not supported content type")
+                    }
+                )
+            }
+        }.build()
+    }
 
     private fun toSliderQuestionModel(item: Item): QuestionModel<Any> {
         require(item.contents.type == SCALE)

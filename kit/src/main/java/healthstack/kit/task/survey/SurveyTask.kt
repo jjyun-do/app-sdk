@@ -25,7 +25,6 @@ open class SurveyTask private constructor(
     name: String,
     description: String,
     val step: SurveyStep,
-    private var isActive: Boolean = true,
 ) : Task(
     id,
     name,

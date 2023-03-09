@@ -6,6 +6,7 @@ import healthstack.backend.integration.task.Contents
 import healthstack.backend.integration.task.Item
 import healthstack.backend.integration.task.Option
 import healthstack.backend.integration.task.ScaleProperties
+import healthstack.kit.task.survey.SurveyTask
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel
 import healthstack.kit.task.survey.question.model.MultiChoiceQuestionModel
 import org.junit.Assert.assertEquals
@@ -127,7 +128,7 @@ class TaskTest {
             )
         )
 
-        val surveyTask = testTask.toViewTask()
+        val surveyTask = testTask.toViewTask() as SurveyTask
         val questions = surveyTask.step.subStepHolder.subSteps.map { it.model }
         assertEquals(testTask.properties.items.size, questions.size)
         assertTrue(questions[0] is ChoiceQuestionModel)
