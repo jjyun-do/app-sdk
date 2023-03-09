@@ -1,4 +1,4 @@
-package healthstack.kit.task.activity.view
+package healthstack.kit.task.activity.view.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -33,10 +33,10 @@ import healthstack.kit.ui.TextType.BULLET
 import healthstack.kit.ui.TextType.NUMBER
 import healthstack.kit.ui.TopBar
 
-class SimpleActivityView : View<SimpleViewActivityModel>() {
+open class SimpleActivityView<T : SimpleViewActivityModel> : View<T>() {
     @Composable
     override fun Render(
-        model: SimpleViewActivityModel,
+        model: T,
         callbackCollection: CallbackCollection,
         holder: SubStepHolder?,
     ) {
@@ -98,7 +98,7 @@ class SimpleActivityView : View<SimpleViewActivityModel>() {
 @Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun SimpleViewButtonPreview() {
-    val view = SimpleActivityView()
+    val view = SimpleActivityView<GaitAndBalanceIntroModel>()
 
     return view.Render(
         GaitAndBalanceIntroModel(
@@ -114,7 +114,7 @@ fun SimpleViewButtonPreview() {
 @Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun SimpleViewNoButtonPreview() {
-    val view = SimpleActivityView()
+    val view = SimpleActivityView<GaitAndBalanceIntroModel>()
 
     return view.Render(
         GaitAndBalanceIntroModel(
@@ -135,7 +135,7 @@ fun SimpleViewNoButtonPreview() {
 @Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun SimpleViewNoButtonBulletPreview() {
-    val view = SimpleActivityView()
+    val view = SimpleActivityView<GaitAndBalanceIntroModel>()
 
     return view.Render(
         GaitAndBalanceIntroModel(
@@ -156,7 +156,7 @@ fun SimpleViewNoButtonBulletPreview() {
 @Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun SimpleViewResultPreview() {
-    val view = SimpleActivityView()
+    val view = SimpleActivityView<GaitAndBalanceResultModel>()
 
     return view.Render(
         GaitAndBalanceResultModel(
