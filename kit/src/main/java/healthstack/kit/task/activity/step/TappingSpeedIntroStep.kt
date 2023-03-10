@@ -12,7 +12,7 @@ class TappingSpeedIntroStep(
     name: String,
     model: TappingSpeedIntroModel,
     view: View<TappingSpeedIntroModel> = TappingSpeedIntroView(),
-) : Step<TappingSpeedIntroModel, Unit>(id, name, model, view, {}) {
+) : Step<TappingSpeedIntroModel, Unit>(id, name, model, view, { }) {
     @Composable
     override fun Render(callbackCollection: CallbackCollection): Unit =
         view.Render(model, callbackCollection, null)

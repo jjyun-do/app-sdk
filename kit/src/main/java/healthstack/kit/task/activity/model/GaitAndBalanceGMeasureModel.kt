@@ -3,13 +3,13 @@ package healthstack.kit.task.activity.model
 import healthstack.kit.R
 import healthstack.kit.task.activity.model.common.SimpleViewActivityModel
 
-class GaitAndBalanceResultModel(
+class GaitAndBalanceGMeasureModel(
     id: String,
     title: String = "Gait & Balance",
-    header: String = "Great Job!",
-    body: String? = "Your task was successfully completed.",
-    drawableId: Int? = R.drawable.ic_activity_result,
-    buttonText: String? = "Back to Home", // If null, do not render bottom button
+    header: String,
+    body: String? = null,
+    drawableId: Int? = R.drawable.ic_activity_gait_and_balance_straight,
+    buttonText: String? = null, // If null, do not render bottom button
 ) :
     SimpleViewActivityModel(
         id, title, header, body?.split("\n"), drawableId, buttonText

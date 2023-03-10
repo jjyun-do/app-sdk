@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.activity.model.GaitAndBalanceIntroModel
 import healthstack.kit.task.activity.model.GaitAndBalanceResultModel
-import healthstack.kit.task.activity.model.SimpleViewActivityModel
+import healthstack.kit.task.activity.model.common.SimpleViewActivityModel
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.View
 import healthstack.kit.task.survey.question.SubStepHolder
@@ -77,7 +77,7 @@ open class SimpleActivityView<T : SimpleViewActivityModel> : View<T>() {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 56.dp),
+                        .padding(horizontal = 20.dp),
                     text = model.header,
                     style = AppTheme.typography.title3,
                     color = AppTheme.colors.textPrimary,

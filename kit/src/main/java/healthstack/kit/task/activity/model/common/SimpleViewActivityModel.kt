@@ -1,4 +1,4 @@
-package healthstack.kit.task.activity.model
+package healthstack.kit.task.activity.model.common
 
 import healthstack.kit.task.base.StepModel
 import healthstack.kit.ui.TextType

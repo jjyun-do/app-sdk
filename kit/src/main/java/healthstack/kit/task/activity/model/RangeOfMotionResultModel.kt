@@ -1,6 +1,7 @@
 package healthstack.kit.task.activity.model
 
 import healthstack.kit.R
+import healthstack.kit.task.activity.model.common.SimpleViewActivityModel
 import healthstack.kit.ui.TextType
 
 class RangeOfMotionResultModel(
