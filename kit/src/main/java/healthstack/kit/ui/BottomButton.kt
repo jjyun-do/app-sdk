@@ -17,21 +17,23 @@ import healthstack.kit.annotation.PreviewGenerated
 @Composable
 fun BottomSquareButton(
     text: String = "Dummy name",
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    BottomButton(text, RoundedCornerShape(0), onClick)
+    BottomButton(text, RoundedCornerShape(0), enabled, onClick)
 }
 
 @Composable
 fun BottomRoundButton(
     text: String = "Dummy name",
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    BottomButton(text, RoundedCornerShape(4.dp), onClick)
+    BottomButton(text, RoundedCornerShape(4.dp), enabled, onClick)
 }
 
 @Composable
-private fun BottomButton(text: String, shape: RoundedCornerShape, onClick: () -> Unit) {
+private fun BottomButton(text: String, shape: RoundedCornerShape, enabled: Boolean = true, onClick: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom,
@@ -40,7 +42,7 @@ private fun BottomButton(text: String, shape: RoundedCornerShape, onClick: () ->
             .height(44.dp)
             .padding(horizontal = 20.dp)
     ) {
-        KitButton(text = text, shape = shape) {
+        KitButton(text = text, shape = shape, enabled = enabled) {
             onClick()
         }
     }
@@ -50,14 +52,14 @@ private fun BottomButton(text: String, shape: RoundedCornerShape, onClick: () ->
 @Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun BottomSquareButtonPreview() {
-    BottomSquareButton("hello", nothing)
+    BottomSquareButton("hello", onClick = nothing)
 }
 
 @PreviewGenerated
 @Preview(showBackground = true, device = Devices.NEXUS_5)
 @Composable
 fun BottomRoundButtonPreview() {
-    BottomRoundButton("hello", nothing)
+    BottomRoundButton("hello", onClick = nothing)
 }
 
 private val nothing: () -> Unit = { }
