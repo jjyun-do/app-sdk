@@ -4,9 +4,8 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,19 +16,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 import kotlinx.coroutines.delay
 
 @Composable
 fun CircularTimer(
-    modifier: Modifier = Modifier.size(280.dp),
+    modifier: Modifier = Modifier,
     color: Color = AppTheme.colors.primary,
-    strokeWidth: Dp = 25.dp,
-    fontSize: TextUnit = 48.sp,
+    strokeWidth: Dp = 24.dp,
     timeSeconds: Int = 10,
 ) {
     val leftTimeSeconds = remember { mutableStateOf(timeSeconds) }
@@ -52,35 +51,74 @@ fun CircularTimer(
     }
 
     Box(
-        modifier = modifier,
+        modifier = modifier
+            .wrapContentSize(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.fillMaxSize().align(Alignment.Center),
-            color = AppTheme.colors.secondaryVariant,
+            modifier = modifier
+                .size(250.dp),
+            color = color
+                .copy(alpha = 0.2f),
             progress = 1f,
             strokeWidth = strokeWidth,
         )
 
         CircularProgressIndicator(
-            modifier = Modifier.fillMaxSize().align(Alignment.Center),
+            modifier = modifier
+                .size(250.dp),
             color = color,
             progress = progress.value,
             strokeWidth = strokeWidth,
         )
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = formatTime(leftTimeSeconds.value),
-                style = AppTheme.typography.title1,
-                color = AppTheme.colors.textPrimaryAccent,
-                textAlign = TextAlign.Center,
-                fontSize = fontSize,
-            )
-        }
+        Text(
+            text = formatTime(leftTimeSeconds.value),
+            style = AppTheme.typography.title1,
+            color = AppTheme.colors.textPrimaryAccent,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
-fun formatTime(timeSeconds: Int): String {
+private fun formatTime(timeSeconds: Int): String {
     return String.format("%02d", (timeSeconds / 60) % 60) + ":" + String.format("%02d", timeSeconds % 60)
+}
+
+@PreviewGenerated
+@Preview(showBackground = true, device = Devices.NEXUS_5)
+@Composable
+fun CircularTimerPreview() {
+    val color = AppTheme.colors.primary
+    val strokeWidth = 24.dp
+
+    Box(
+        modifier = Modifier
+            .wrapContentSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .size(250.dp),
+            color = color
+                .copy(alpha = 0.2f),
+            progress = 1f,
+            strokeWidth = strokeWidth,
+        )
+
+        CircularProgressIndicator(
+            modifier = Modifier
+                .size(250.dp),
+            color = color,
+            progress = 0.2f,
+            strokeWidth = strokeWidth,
+        )
+
+        Text(
+            text = "00:05",
+            style = AppTheme.typography.title1,
+            color = AppTheme.colors.textPrimaryAccent,
+            textAlign = TextAlign.Center,
+        )
+    }
 }
