@@ -8,13 +8,11 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -30,11 +28,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import healthstack.kit.R
 import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
+import healthstack.kit.ui.RoundButton
 import healthstack.kit.ui.SdkCard
-import healthstack.kit.ui.SquareButton
 import healthstack.kit.ui.TopBar
 import se.warting.signaturepad.SignaturePadAdapter
 import se.warting.signaturepad.SignaturePadView
@@ -43,7 +42,7 @@ import se.warting.signaturepad.SignaturePadView
 fun SignatureLayout(
     onClickDone: (String) -> Unit = {},
     onClickCancel: () -> Unit = {},
-    lockLandscapeOrientation: Boolean = false,
+    lockLandscapeOrientation: Boolean = true,
 ) {
     if (lockLandscapeOrientation) LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 
@@ -61,16 +60,15 @@ fun SignatureLayout(
         }
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
+                .padding(horizontal = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.SpaceAround
         ) {
             SdkCard(
                 modifier = Modifier
-                    .height(200.dp)
-                    .padding(horizontal = 50.dp, vertical = 10.dp)
+                    .height(189.dp)
                     .testTag("signatureView"),
-                shape = RoundedCornerShape(10.dp),
                 color = Color(0xFFF3F4F4)
             ) {
                 SignaturePadView(
@@ -81,17 +79,20 @@ fun SignatureLayout(
 
             Text(
                 "By signing this document with an electronic signature, " +
-                    "I agree that such signature will be as valid as handwritten signatures " +
-                    "to the exxtent allowed by local law"
+                    "I agree that such signature\nwill be as valid as handwritten signatures " +
+                    "to the exxtent allowed by local law",
+                color = AppTheme.colors.onSurface.copy(0.6F),
+                style = AppTheme.typography.body3.copy(lineHeight = 18.sp),
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 50.dp),
-                horizontalArrangement = Arrangement.End
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                SquareButton(
+                RoundButton(
                     modifier = Modifier
                         .height(44.dp)
                         .width(144.dp),
@@ -105,9 +106,7 @@ fun SignatureLayout(
                     }
                 )
 
-                Spacer(modifier = Modifier.width(24.dp))
-
-                SquareButton(
+                RoundButton(
                     modifier = Modifier
                         .height(44.dp)
                         .width(144.dp)
@@ -131,6 +130,7 @@ fun LockScreenOrientation(orientation: Int) {
     DisposableEffect(Unit) {
         val activity = context.findActivity() ?: return@DisposableEffect onDispose {}
         val originalOrientation = activity.requestedOrientation
+
         activity.requestedOrientation = orientation
 
         onDispose {
