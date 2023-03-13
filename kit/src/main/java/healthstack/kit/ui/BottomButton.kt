@@ -21,14 +21,6 @@ fun BottomSquareButton(
 }
 
 @Composable
-fun BottomRoundButton(
-    text: String,
-    onClick: () -> Unit,
-) {
-    BottomButton(text, RoundedCornerShape(50), onClick)
-}
-
-@Composable
 private fun BottomButton(text: String, shape: RoundedCornerShape, onClick: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,12 +39,7 @@ private fun BottomButton(text: String, shape: RoundedCornerShape, onClick: () ->
 @Preview(showBackground = true)
 @Composable
 fun BottomButtonPreview() {
-    BottomSquareButton("hello") {}
+    BottomSquareButton("hello", nothing)
 }
 
-@PreviewGenerated
-@Preview(showBackground = true)
-@Composable
-fun ButtomRoundButtonPreview() {
-    BottomRoundButton("hello") {}
-}
+private val nothing: () -> Unit = { }

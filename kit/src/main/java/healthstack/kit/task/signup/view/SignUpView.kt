@@ -74,14 +74,16 @@ class SignUpView : View<SignUpModel>() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.signup_divider),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .width(320.dp)
-                            .height(21.dp),
-                        contentScale = ContentScale.FillWidth
-                    )
+                    if (model.providers.contains(Basic)) {
+                        Image(
+                            painter = painterResource(R.drawable.signup_divider),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .width(320.dp)
+                                .height(21.dp),
+                            contentScale = ContentScale.FillWidth
+                        )
+                    }
 
                     providerToLauncher.forEach { (provider, launcher) ->
                         SignUpComponent.of(provider)({
@@ -165,8 +167,9 @@ class SignUpView : View<SignUpModel>() {
             }
 
             Spacer(modifier = Modifier.height(40.dp))
+
             if (model.providers.contains(Basic))
-                BasicSignUpComponent { }
+                SignUpComponent.of(Basic)({ })
         }
     }
 }

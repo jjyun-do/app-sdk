@@ -40,13 +40,14 @@ fun TaskCard(
     @DrawableRes id: Int = R.drawable.ic_task,
     taskName: String,
     description: String,
+    isActive: Boolean = true,
     buttonText: String? = null,
-    buttonEnabled: Boolean = true,
+    isCompleted: Boolean = true,
     onClick: () -> Unit = { },
 ) {
     val shape = RoundedCornerShape(4.dp)
 
-    if (buttonEnabled)
+    if (isCompleted)
         Card(
             shape = shape,
             backgroundColor = AppTheme.colors.surface,
@@ -100,10 +101,12 @@ fun TaskCard(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(18.dp))
-                val taskButtonName = buttonText ?: LocalContext.current.getString(R.string.start_task)
-                RoundButton(taskButtonName, modifier = Modifier.fillMaxWidth(1f)) {
-                    onClick()
+                if (isActive) {
+                    Spacer(modifier = Modifier.height(18.dp))
+                    val taskButtonName = buttonText ?: LocalContext.current.getString(R.string.start_task)
+                    RoundButton(taskButtonName, modifier = Modifier.fillMaxWidth(1f)) {
+                        onClick()
+                    }
                 }
             }
         }
@@ -166,7 +169,7 @@ fun TaskCardPreview() =
         taskName = "Medical History Survey",
         description = "Please fill out this survey and help us get to know your health condition",
         buttonText = "Get started"
-    ) { }
+    )
 
 @PreviewGenerated
 @Preview(showBackground = true)
@@ -176,5 +179,5 @@ fun TaskCardCompletedPreview() =
         taskName = "Medical History Survey",
         description = "Please fill out this survey and help us get to know your health condition",
         buttonText = "Get started",
-        buttonEnabled = false
-    ) { }
+        isCompleted = false
+    )
