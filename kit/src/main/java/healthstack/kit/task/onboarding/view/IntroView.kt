@@ -70,9 +70,11 @@ class IntroView(
             ) {
                 Surface(
                     modifier = Modifier.fillMaxWidth()
+                        .background(AppTheme.colors.background)
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
+                            .background(AppTheme.colors.background),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Box(
@@ -118,8 +120,8 @@ class IntroView(
 
                                 Text(
                                     text = model.title,
-                                    style = AppTheme.typography.appTitle,
-                                    color = AppTheme.colors.textSecondary,
+                                    style = AppTheme.typography.headline3,
+                                    color = AppTheme.colors.onPrimary,
                                 )
 
                                 Spacer(Modifier.size(20.dp))
@@ -143,7 +145,8 @@ fun Summary(summaries: List<Pair<Int, String>>) =
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
-            .padding(vertical = 10.dp),
+            .padding(vertical = 10.dp)
+            .background(AppTheme.colors.background),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         summaries.forEach { (icon, message) ->
@@ -151,6 +154,7 @@ fun Summary(summaries: List<Pair<Int, String>>) =
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxHeight()
+                    .background(AppTheme.colors.background)
             ) {
                 Image(
                     modifier = Modifier.wrapContentSize(),
@@ -176,11 +180,12 @@ fun IntroSections(sections: List<IntroModel.IntroSection>) =
             modifier = Modifier
                 .padding(vertical = 10.dp, horizontal = 24.dp)
                 .wrapContentHeight()
+                .background(AppTheme.colors.background)
                 .fillMaxWidth()
         ) {
             Text(
                 text = title,
-                style = AppTheme.typography.subHeader2,
+                style = AppTheme.typography.title2,
                 color = AppTheme.colors.textPrimary
             )
             Text(

@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -40,8 +39,8 @@ import healthstack.kit.theme.AppTheme
 fun SdkCard(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
-    color: Color = AppTheme.colors.onBackground,
-    contentColor: Color = AppTheme.colors.textPrimaryAccent,
+    color: Color = AppTheme.colors.surface,
+    contentColor: Color = AppTheme.colors.primary,
     border: BorderStroke? = null,
     elevation: Dp = 0.dp,
     content: @Composable () -> Unit,
@@ -80,7 +79,7 @@ private fun SdkCardPreview() =
             .padding(bottom = 16.dp),
         shape = RoundedCornerShape(16.dp),
         color = Color.White,
-        contentColor = AppTheme.colors.textPrimaryAccent,
+        contentColor = AppTheme.colors.primary,
         elevation = 10.dp,
     ) {
         Column(
@@ -123,8 +122,6 @@ private fun contentPreview() {
         text = "Medical eligibilities",
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.h6,
-        color = AppTheme.colors.textPrimaryAccent,
         modifier = Modifier.padding(horizontal = 16.dp)
     )
     Spacer(modifier = Modifier.height(4.dp))
@@ -132,8 +129,6 @@ private fun contentPreview() {
         text = "• Pre-existing condition(s)",
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.body1,
-        color = AppTheme.colors.textHint,
         modifier = Modifier.padding(horizontal = 22.dp)
     )
 }

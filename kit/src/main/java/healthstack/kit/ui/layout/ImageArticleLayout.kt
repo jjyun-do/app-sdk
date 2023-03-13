@@ -32,7 +32,7 @@ fun ImageArticleLayout(
     onClickBack: () -> Unit = {},
     onComplete: () -> Unit = {},
     buttonHidden: Boolean = false,
-    buttonShape: ButtonShape = ButtonShape.SQUARE,
+    buttonShape: ButtonShape = ButtonShape.ROUND,
 ) {
     val scrollState = rememberScrollState()
     Scaffold(
@@ -72,7 +72,7 @@ fun ImageArticleLayout(
             ) {
                 Text(
                     message.title,
-                    style = AppTheme.typography.title3,
+                    style = AppTheme.typography.headline3,
                     color = AppTheme.colors.textPrimary
                 )
                 Spacer(modifier = Modifier.height(10.dp))

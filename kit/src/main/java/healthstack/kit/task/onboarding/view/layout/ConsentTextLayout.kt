@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.compose.LocalImageLoader
 import coil.compose.rememberAsyncImagePainter
@@ -99,13 +98,12 @@ fun ConsentTextLayout(
                     modifier = Modifier.padding(vertical = 10.dp),
                     text = model.subTitle,
                     color = AppTheme.colors.textPrimary,
-                    style = AppTheme.typography.subHeader2
+                    style = AppTheme.typography.body1
                 )
                 Text(
                     modifier = Modifier.padding(vertical = 10.dp),
                     text = model.description,
                     style = MaterialTheme.typography.body1,
-                    lineHeight = 23.sp,
                     color = AppTheme.colors.textPrimary
                 )
 
@@ -130,7 +128,7 @@ fun ConsentTextLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .background(color = Color(0x33C4C4C4))
+                    .background(AppTheme.colors.disabled2)
                     .clickable {
                         onClickPad()
                     },

@@ -134,15 +134,16 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 title,
-                style = AppTheme.typography.title2,
-                color = AppTheme.colors.textPrimaryAccent
+                style = AppTheme.typography.headline3,
+                color = AppTheme.colors.primary
             )
             Spacer(modifier = Modifier.height(8.dp))
             Column(modifier = Modifier.padding(horizontal = 12.dp)) {
                 constraints.forEach { constraint ->
                     Text(
                         "- $constraint",
-                        color = AppTheme.colors.textPrimary
+                        color = AppTheme.colors.textPrimary,
+                        style = AppTheme.typography.subtitle2
                     )
                 }
             }
@@ -199,17 +200,18 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                 modifier = Modifier
                     .height(10.dp)
                     .wrapContentWidth()
+                    .background(AppTheme.colors.background)
                     .align(Alignment.CenterHorizontally),
             ) {
                 conditions.forEachIndexed { index, _ ->
                     Surface(
-                        modifier = Modifier.width(20.dp),
+                        modifier = Modifier.width(20.dp)
+                            .background(AppTheme.colors.background),
                     ) {
                         val selected = pagerState.currentPage == index
                         Tab(
                             modifier = Modifier
-                                .wrapContentSize()
-                                .background(Color.Transparent),
+                                .wrapContentSize(),
                             selected = selected,
                             onClick = {
                                 coroutineScope.launch {
@@ -228,7 +230,8 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                                             unselectedTabIcon
                                         }
                                     ),
-                                    modifier = Modifier.width(8.dp).height(8.dp),
+                                    modifier = Modifier.width(8.dp).height(8.dp)
+                                        .background(AppTheme.colors.background),
                                     contentDescription = null,
                                     tint = AppTheme.colors.primary
                                 )
@@ -249,7 +252,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
         contentPadding: PaddingValues = PaddingValues(horizontal = 50.dp),
         startScale: Float = 1f,
         startAlpha: Float = 1f,
-        backgroundColor: Color = AppTheme.colors.primary,
+        backgroundColor: Color = AppTheme.colors.background,
     ) {
         HorizontalPager(
             count = contents.size,
@@ -304,13 +307,14 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
             Column(
                 modifier = Modifier
                     .clickable(onClick = { onClick() })
+                    .background(backgroundColor)
                     .fillMaxSize()
             ) {
                 Box(
                     modifier = Modifier
                         .height(300.dp)
                         .fillMaxWidth()
-                        .background(AppTheme.colors.surface),
+                        .background(AppTheme.colors.background),
                 ) {
                     Image(
                         painter = painterResource(imageId),
@@ -329,8 +333,8 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                             text = content.title,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            style = AppTheme.typography.title3,
-                            color = AppTheme.colors.textPrimaryAccent,
+                            style = AppTheme.typography.headline3,
+                            color = AppTheme.colors.primary,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -340,7 +344,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                                     text = "• $subTitle",
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
-                                    style = AppTheme.typography.body1,
+                                    style = AppTheme.typography.subtitle2,
                                     color = AppTheme.colors.textPrimary,
                                     modifier = Modifier.padding(horizontal = 20.dp)
                                 )

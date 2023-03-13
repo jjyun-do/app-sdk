@@ -27,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -82,7 +81,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                 colors = SliderDefaults.colors(
                     thumbColor = AppTheme.colors.primary,
                     activeTickColor = AppTheme.colors.primary,
-                    activeTrackColor = AppTheme.colors.secondaryVariant
+                    activeTrackColor = AppTheme.colors.primary
                 )
             )
 
@@ -93,7 +92,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                 question.candidates.forEach {
                     Text(
                         text = it.toString(),
-                        style = AppTheme.typography.body4,
+                        style = AppTheme.typography.overline1,
                         color = AppTheme.colors.textPrimary,
                         modifier = Modifier
                             .padding(horizontal = 5.dp)
@@ -128,9 +127,9 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                 textStyle = AppTheme.typography.body1,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     textColor = AppTheme.colors.textPrimary,
-                    disabledTextColor = AppTheme.colors.textHint,
+                    disabledTextColor = AppTheme.colors.onSurface.copy(0.6F),
                     focusedBorderColor = AppTheme.colors.primary,
-                    unfocusedBorderColor = AppTheme.colors.border,
+                    unfocusedBorderColor = AppTheme.colors.primary.copy(0.38F),
                     trailingIconColor = AppTheme.colors.primary
                 ),
                 modifier = Modifier
@@ -144,7 +143,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                         expanded = expanded
                     )
                 },
-                placeholder = { Text(text = "Select One", color = AppTheme.colors.textHint) },
+                placeholder = { Text(text = "Select One", color = AppTheme.colors.onSurface.copy(0.6F)) },
             )
 
             ExposedDropdownMenu(
@@ -173,8 +172,8 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                             enabled = true,
                             colors = RadioButtonDefaults.colors(
                                 selectedColor = AppTheme.colors.primary,
-                                unselectedColor = AppTheme.colors.primaryVariant,
-                                disabledColor = Color(0xFFA1A1A1),
+                                unselectedColor = AppTheme.colors.primary.copy(0.3F),
+                                disabledColor = AppTheme.colors.disabled,
                             )
                         )
 
@@ -213,8 +212,8 @@ fun RadioGroup(choiceQuestion: ChoiceQuestionModel<*>, modifier: Modifier) {
                     modifier = Modifier.testTag(candidate.toString()),
                     colors = RadioButtonDefaults.colors(
                         selectedColor = AppTheme.colors.primary,
-                        unselectedColor = AppTheme.colors.primaryVariant,
-                        disabledColor = Color(0xFFA1A1A1),
+                        unselectedColor = AppTheme.colors.primary.copy(0.3F),
+                        disabledColor = AppTheme.colors.disabled,
                     )
                 )
                 Text(

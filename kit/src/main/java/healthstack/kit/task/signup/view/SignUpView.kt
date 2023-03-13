@@ -150,7 +150,7 @@ class SignUpView : View<SignUpModel>() {
                 }
                 Text(
                     text = model.title,
-                    style = AppTheme.typography.appTitle,
+                    style = AppTheme.typography.headline3,
                     color = AppTheme.colors.textPrimary
                 )
             }
@@ -160,7 +160,7 @@ class SignUpView : View<SignUpModel>() {
                 Text(
                     text = it,
                     modifier = Modifier.fillMaxWidth(),
-                    style = AppTheme.typography.body1,
+                    style = AppTheme.typography.subtitle2,
                     color = AppTheme.colors.textPrimary,
                     textAlign = TextAlign.Center
                 )

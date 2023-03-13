@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import healthstack.kit.R
 import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
@@ -80,8 +81,8 @@ fun SignatureLayout(
                 "By signing this document with an electronic signature, " +
                     "I agree that such signature\nwill be as valid as handwritten signatures " +
                     "to the exxtent allowed by local law",
-                color = AppTheme.colors.textHint,
-                style = AppTheme.typography.body3,
+                color = AppTheme.colors.onSurface.copy(0.6F),
+                style = AppTheme.typography.body3.copy(lineHeight = 18.sp),
                 modifier = Modifier
                     .fillMaxWidth()
             )

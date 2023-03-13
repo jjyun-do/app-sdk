@@ -22,7 +22,7 @@ enum class ButtonShape {
 fun KitButton(
     text: String = "",
     buttonColor: Color = AppTheme.colors.primary,
-    textColor: Color = AppTheme.colors.textSecondary,
+    textColor: Color = AppTheme.colors.surface,
     shape: RoundedCornerShape = RoundedCornerShape(
         MaterialTheme.shapes.small.topStart,
         MaterialTheme.shapes.small.topEnd,
@@ -42,7 +42,7 @@ fun KitButton(
         shape = shape,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = buttonColor,
-            disabledBackgroundColor = Color(0xFFB3C6F1)
+            disabledBackgroundColor = buttonColor.copy(alpha = 0.33F)
         ),
         elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
         border = border,
@@ -51,7 +51,7 @@ fun KitButton(
         Text(
             text = text,
             color = textColor,
-            style = AppTheme.typography.subHeader2
+            style = AppTheme.typography.title2
         )
     }
 }

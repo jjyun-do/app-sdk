@@ -33,7 +33,7 @@ import healthstack.kit.task.survey.question.model.ChoiceQuestionModel
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel.ViewType.DropMenu
 import healthstack.kit.task.survey.question.model.QuestionModel
 import healthstack.kit.theme.AppColors
-import healthstack.kit.theme.blueColors
+import healthstack.kit.theme.mainLightColors
 import healthstack.sample.R.drawable
 import healthstack.sample.registration.RegistrationModel
 import healthstack.sample.registration.RegistrationStep
@@ -45,7 +45,7 @@ object OnboardingModule {
 
     @Singleton
     @Provides
-    fun providesAppColors(): AppColors = blueColors()
+    fun providesAppColors(): AppColors = mainLightColors()
 
     @Singleton
     @Provides

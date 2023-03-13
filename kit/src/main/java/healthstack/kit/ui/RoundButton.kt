@@ -14,7 +14,7 @@ import healthstack.kit.theme.AppTheme
 fun RoundButton(
     text: String = "",
     buttonColor: Color = AppTheme.colors.primary,
-    textColor: Color = AppTheme.colors.textSecondary,
+    textColor: Color = AppTheme.colors.surface,
     border: BorderStroke? = null,
     modifier: Modifier = Modifier
         .height(44.dp)
