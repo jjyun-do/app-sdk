@@ -44,7 +44,7 @@ class TaskCardTest {
                 TaskCard(
                     taskName = "TaskName",
                     description = "Good For You",
-                    isCompleted = false,
+                    isCompleted = true,
                 )
             }
         }

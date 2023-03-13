@@ -25,8 +25,8 @@ fun RoundTextField(
     placeholder: String = "",
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
         textColor = AppTheme.colors.textPrimary,
-        backgroundColor = AppTheme.colors.lightBackground,
-        disabledTextColor = Color(0xFFF8F8F8),
+        backgroundColor = AppTheme.colors.surface,
+        disabledTextColor = AppTheme.colors.onSurface.copy(0.38F),
         cursorColor = AppTheme.colors.primary,
         focusedBorderColor = AppTheme.colors.primary,
         unfocusedBorderColor = Color.Transparent,
@@ -42,7 +42,13 @@ fun RoundTextField(
             .height(48.dp),
         onValueChange = { newValue -> onValueChange(newValue) },
         shape = RoundedCornerShape(50),
-        placeholder = { Text(text = placeholder, color = AppTheme.colors.textHint) },
+        placeholder = {
+            Text(
+                text = placeholder,
+                style = AppTheme.typography.subtitle2,
+                color = AppTheme.colors.onSurface.copy(0.6F),
+            )
+        },
         visualTransformation = if (shouldMask) PasswordVisualTransformation() else VisualTransformation.None
     )
 }
@@ -55,8 +61,8 @@ fun SquareTextField(
     placeholder: String = "",
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
         textColor = AppTheme.colors.textPrimary,
-        backgroundColor = AppTheme.colors.lightBackground,
-        disabledTextColor = Color(0xFFF8F8F8),
+        backgroundColor = AppTheme.colors.surface,
+        disabledTextColor = AppTheme.colors.onSurface.copy(0.38F),
         cursorColor = AppTheme.colors.primary,
         focusedBorderColor = AppTheme.colors.primary,
         unfocusedBorderColor = Color.Transparent,
@@ -71,7 +77,13 @@ fun SquareTextField(
             .width(312.dp)
             .height(48.dp),
         onValueChange = { newValue -> onValueChange(newValue) },
-        placeholder = { Text(text = placeholder, color = AppTheme.colors.textHint) },
+        placeholder = {
+            Text(
+                text = placeholder,
+                style = AppTheme.typography.subtitle2,
+                color = AppTheme.colors.onSurface.copy(0.6F),
+            )
+        },
         visualTransformation = if (shouldMask) PasswordVisualTransformation() else VisualTransformation.None,
     )
 }

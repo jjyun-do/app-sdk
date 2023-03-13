@@ -30,7 +30,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import healthstack.kit.R
 import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
@@ -42,12 +41,12 @@ fun TaskCard(
     description: String,
     isActive: Boolean = true,
     buttonText: String? = null,
-    isCompleted: Boolean = true,
+    isCompleted: Boolean = false,
     onClick: () -> Unit = { },
 ) {
     val shape = RoundedCornerShape(4.dp)
 
-    if (isCompleted)
+    if (!isCompleted)
         Card(
             shape = shape,
             backgroundColor = AppTheme.colors.surface,
@@ -89,15 +88,13 @@ fun TaskCard(
                     ) {
                         Text(
                             text = taskName,
-                            style = AppTheme.typography.subHeader2,
+                            style = AppTheme.typography.headline4,
                             color = AppTheme.colors.textPrimary,
-                            lineHeight = 20.sp
                         )
                         Text(
                             text = description,
                             style = AppTheme.typography.body3,
-                            color = AppTheme.colors.textHint,
-                            lineHeight = 15.sp
+                            color = AppTheme.colors.textPrimary.copy(0.6F),
                         )
                     }
                 }
@@ -134,7 +131,7 @@ fun TaskCard(
                         modifier = Modifier
                             .height(24.dp)
                             .width(24.dp),
-                        tint = AppTheme.colors.textHint
+                        tint = AppTheme.colors.primary.copy(0.05F)
                     )
                     Spacer(modifier = Modifier.width(24.dp))
                     Column(
@@ -145,15 +142,13 @@ fun TaskCard(
                     ) {
                         Text(
                             text = taskName,
-                            style = AppTheme.typography.subHeader2,
-                            color = AppTheme.colors.textHint,
-                            lineHeight = 20.sp
+                            style = AppTheme.typography.headline4,
+                            color = AppTheme.colors.textPrimary.copy(0.6F),
                         )
                         Text(
                             text = description,
                             style = AppTheme.typography.body3,
-                            color = AppTheme.colors.textHint,
-                            lineHeight = 15.sp
+                            color = AppTheme.colors.textPrimary.copy(0.6F)
                         )
                     }
                 }
@@ -179,5 +174,5 @@ fun TaskCardCompletedPreview() =
         taskName = "Medical History Survey",
         description = "Please fill out this survey and help us get to know your health condition",
         buttonText = "Get started",
-        isCompleted = false
+        isCompleted = true
     )

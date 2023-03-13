@@ -21,7 +21,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import healthstack.kit.R.drawable
 import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
@@ -31,7 +30,7 @@ fun StatusCard(@DrawableRes drawableId: Int, value: String, unit: String = "") {
     val shape = RoundedCornerShape(4.dp)
     Card(
         shape = shape,
-        backgroundColor = AppTheme.colors.surface,
+        backgroundColor = AppTheme.colors.background,
         modifier = Modifier
             .wrapContentSize()
             .shadow(elevation = 2.dp, shape = shape, clip = false)
@@ -54,18 +53,16 @@ fun StatusCard(@DrawableRes drawableId: Int, value: String, unit: String = "") {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = value,
-                style = AppTheme.typography.subHeader2,
+                style = AppTheme.typography.title2,
                 color = AppTheme.colors.textPrimary,
                 textAlign = TextAlign.Center,
-                lineHeight = 20.sp,
                 maxLines = 1
             )
             Text(
                 text = unit,
                 style = AppTheme.typography.body3,
-                color = AppTheme.colors.textHint,
+                color = AppTheme.colors.textPrimary.copy(0.6F),
                 textAlign = TextAlign.Center,
-                lineHeight = 15.sp,
                 maxLines = 2
             )
         }
