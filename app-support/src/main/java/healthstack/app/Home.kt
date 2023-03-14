@@ -119,7 +119,10 @@ fun Tasks(
     onReload: () -> Unit = { },
     onStartTask: (Task) -> Unit = { },
 ) {
-    Column {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 10.dp)
+    ) {
         Row(
             horizontalArrangement = SpaceBetween,
             verticalAlignment = CenterVertically,

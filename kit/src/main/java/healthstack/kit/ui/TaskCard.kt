@@ -53,7 +53,7 @@ fun TaskCard(
             backgroundColor = AppTheme.colors.surface,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(151.dp)
+                .wrapContentHeight()
                 .shadow(elevation = 2.dp, shape = shape, clip = false),
         ) {
             Column(
@@ -104,7 +104,7 @@ fun TaskCard(
                 if (isActive) {
                     Spacer(modifier = Modifier.height(18.dp))
                     val taskButtonName = buttonText ?: LocalContext.current.getString(R.string.start_task)
-                    RoundButton(taskButtonName, modifier = Modifier.fillMaxWidth(1f)) {
+                    RoundButton(taskButtonName, radius = 50.dp, modifier = Modifier.fillMaxWidth(1f)) {
                         onClick()
                     }
                 }
