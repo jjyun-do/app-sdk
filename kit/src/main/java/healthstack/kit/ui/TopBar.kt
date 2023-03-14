@@ -82,7 +82,7 @@ fun TopBar(
             Text(
                 text = title,
                 style = AppTheme.typography.subtitle1,
-                color = AppTheme.colors.textPrimary
+                color = AppTheme.colors.onSurface
             )
         },
         backgroundColor = AppTheme.colors.background,

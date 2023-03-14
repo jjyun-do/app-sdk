@@ -89,12 +89,12 @@ fun TaskCard(
                         Text(
                             text = taskName,
                             style = AppTheme.typography.headline4,
-                            color = AppTheme.colors.textPrimary,
+                            color = AppTheme.colors.onSurface,
                         )
                         Text(
                             text = description,
                             style = AppTheme.typography.body3,
-                            color = AppTheme.colors.textPrimary.copy(0.6F),
+                            color = AppTheme.colors.onSurface.copy(0.6F),
                         )
                     }
                 }
@@ -143,12 +143,12 @@ fun TaskCard(
                         Text(
                             text = taskName,
                             style = AppTheme.typography.headline4,
-                            color = AppTheme.colors.textPrimary.copy(0.6F),
+                            color = AppTheme.colors.onSurface.copy(0.6F),
                         )
                         Text(
                             text = description,
                             style = AppTheme.typography.body3,
-                            color = AppTheme.colors.textPrimary.copy(0.6F)
+                            color = AppTheme.colors.onSurface.copy(0.6F)
                         )
                     }
                 }

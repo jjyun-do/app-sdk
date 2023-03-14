@@ -24,7 +24,7 @@ fun RoundTextField(
     onValueChange: (String) -> Unit,
     placeholder: String = "",
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        textColor = AppTheme.colors.textPrimary,
+        textColor = AppTheme.colors.onSurface,
         backgroundColor = AppTheme.colors.surface,
         disabledTextColor = AppTheme.colors.onSurface.copy(0.38F),
         cursorColor = AppTheme.colors.primary,
@@ -60,7 +60,7 @@ fun SquareTextField(
     onValueChange: (String) -> Unit,
     placeholder: String = "",
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-        textColor = AppTheme.colors.textPrimary,
+        textColor = AppTheme.colors.onSurface,
         backgroundColor = AppTheme.colors.surface,
         disabledTextColor = AppTheme.colors.onSurface.copy(0.38F),
         cursorColor = AppTheme.colors.primary,

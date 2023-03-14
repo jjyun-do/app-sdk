@@ -19,7 +19,7 @@ abstract class QuestionComponent<T : QuestionModel<*>> : Component<T>() {
         Text(
             text = model.question,
             style = AppTheme.typography.subtitle1,
-            color = AppTheme.colors.textPrimary,
+            color = AppTheme.colors.onSurface,
             modifier = Modifier
                 .padding(horizontal = 12.dp)
         )

@@ -138,7 +138,7 @@ fun SurveyProgressView(progressText: String, progress: Float) {
         Text(
             progressText,
             style = AppTheme.typography.body2,
-            color = AppTheme.colors.textPrimary
+            color = AppTheme.colors.onSurface
         )
     }
 }

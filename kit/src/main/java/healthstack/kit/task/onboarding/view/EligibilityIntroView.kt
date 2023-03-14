@@ -118,7 +118,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
             Spacer(modifier = Modifier.height(32.dp))
             Text(
                 model.description,
-                color = AppTheme.colors.textPrimary,
+                color = AppTheme.colors.onSurface,
                 modifier = Modifier
                     .padding(24.dp),
                 style = AppTheme.typography.body1
@@ -142,7 +142,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                 constraints.forEach { constraint ->
                     Text(
                         "- $constraint",
-                        color = AppTheme.colors.textPrimary,
+                        color = AppTheme.colors.onSurface,
                         style = AppTheme.typography.subtitle2
                     )
                 }
@@ -162,7 +162,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
         ) {
             Text(
                 model.description,
-                color = AppTheme.colors.textPrimary,
+                color = AppTheme.colors.onSurface,
                 style = AppTheme.typography.body1
             )
             Spacer(modifier = Modifier.height(12.dp))
@@ -195,7 +195,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                 startAlpha = startAlpha,
                 backgroundColor = backgroundColor,
             )
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(25.dp))
             Row(
                 modifier = Modifier
                     .height(10.dp)
@@ -211,7 +211,8 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                         val selected = pagerState.currentPage == index
                         Tab(
                             modifier = Modifier
-                                .wrapContentSize(),
+                                .wrapContentSize()
+                                .background(AppTheme.colors.background),
                             selected = selected,
                             onClick = {
                                 coroutineScope.launch {
@@ -345,7 +346,7 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     style = AppTheme.typography.subtitle2,
-                                    color = AppTheme.colors.textPrimary,
+                                    color = AppTheme.colors.onSurface,
                                     modifier = Modifier.padding(horizontal = 20.dp)
                                 )
                             } else {
