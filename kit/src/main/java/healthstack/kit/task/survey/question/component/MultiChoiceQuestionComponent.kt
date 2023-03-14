@@ -5,21 +5,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.survey.question.model.MultiChoiceQuestionModel
-import healthstack.kit.theme.AppTheme
+import healthstack.kit.ui.LabeledCheckbox
 
 class MultiChoiceQuestionComponent<T : MultiChoiceQuestionModel> : QuestionComponent<T>() {
 
@@ -45,20 +41,13 @@ class MultiChoiceQuestionComponent<T : MultiChoiceQuestionModel> : QuestionCompo
                     val checkedState = remember(multiChoiceQuestionModel.id + index) {
                         mutableStateOf(multiChoiceQuestionModel.isSelected(index))
                     }
-                    Checkbox(
-                        checked = checkedState.value,
+                    LabeledCheckbox(
+                        isChecked = checkedState.value,
                         onCheckedChange = { checked ->
                             checkedState.value = checked
                             if (checked) multiChoiceQuestionModel.select(index)
                         },
-                        enabled = true,
-                        modifier = Modifier.testTag(candidate.toString()),
-                    )
-                    Text(
-                        text = candidate,
-                        style = AppTheme.typography.body1,
-                        color = AppTheme.colors.textPrimary,
-                        modifier = Modifier.padding(start = 8.dp)
+                        labelText = candidate
                     )
                 }
                 if (index != multiChoiceQuestionModel.candidates.lastIndex) {

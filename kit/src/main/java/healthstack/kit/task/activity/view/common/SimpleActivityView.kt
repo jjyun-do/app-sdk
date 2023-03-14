@@ -79,8 +79,8 @@ open class SimpleActivityView<T : SimpleViewActivityModel> : View<T>() {
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp),
                     text = model.header,
-                    style = AppTheme.typography.title3,
-                    color = AppTheme.colors.textPrimary,
+                    style = AppTheme.typography.headline3,
+                    color = AppTheme.colors.onSurface,
                     textAlign = TextAlign.Center,
                 )
 

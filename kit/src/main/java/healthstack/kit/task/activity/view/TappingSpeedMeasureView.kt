@@ -70,7 +70,7 @@ class TappingSpeedMeasureView() : View<TappingSpeedMeasureModel>() {
                         .padding(horizontal = 24.dp),
                     text = "Tap the buttons with your ${model.handType} hand",
                     style = AppTheme.typography.body1,
-                    color = AppTheme.colors.textPrimary,
+                    color = AppTheme.colors.onSurface,
                     textAlign = TextAlign.Center,
                 )
 

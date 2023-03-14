@@ -132,7 +132,7 @@ fun Tasks(
             Text(
                 title,
                 style = AppTheme.typography.title3,
-                color = AppTheme.colors.textPrimary
+                color = AppTheme.colors.onSurface
             )
             IconButton(onClick = {
                 onReload()

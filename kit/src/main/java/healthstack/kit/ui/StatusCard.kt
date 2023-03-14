@@ -23,7 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import healthstack.kit.R
 import healthstack.kit.R.drawable
 import healthstack.kit.annotation.PreviewGenerated
@@ -34,7 +33,7 @@ fun StatusCard(@DrawableRes drawableId: Int, value: String, unit: String = "") {
     val shape = RoundedCornerShape(4.dp)
     Card(
         shape = shape,
-        backgroundColor = AppTheme.colors.surface,
+        backgroundColor = AppTheme.colors.background,
         modifier = Modifier
             .wrapContentSize()
             .shadow(elevation = 2.dp, shape = shape, clip = false)
@@ -57,18 +56,16 @@ fun StatusCard(@DrawableRes drawableId: Int, value: String, unit: String = "") {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = value,
-                style = AppTheme.typography.subHeader2,
-                color = AppTheme.colors.textPrimary,
+                style = AppTheme.typography.title2,
+                color = AppTheme.colors.onSurface,
                 textAlign = TextAlign.Center,
-                lineHeight = 20.sp,
                 maxLines = 1
             )
             Text(
                 text = unit,
                 style = AppTheme.typography.body3,
-                color = AppTheme.colors.textHint,
+                color = AppTheme.colors.onSurface.copy(0.6F),
                 textAlign = TextAlign.Center,
-                lineHeight = 15.sp,
                 maxLines = 2
             )
         }
@@ -90,15 +87,15 @@ fun TaskStatus(@DrawableRes drawableId: Int, value: String, unit: String = "") {
         ) {
             Text(
                 text = value,
-                style = AppTheme.typography.title3,
-                color = AppTheme.colors.textPrimary,
+                style = AppTheme.typography.headline3,
+                color = AppTheme.colors.onSurface,
                 maxLines = 1
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = unit,
-                style = AppTheme.typography.body4,
-                color = AppTheme.colors.textHint,
+                style = AppTheme.typography.overline1,
+                color = AppTheme.colors.onSurface,
                 maxLines = 2,
                 textAlign = TextAlign.Center
             )
@@ -137,8 +134,8 @@ fun HealthDataStatusRow(@DrawableRes drawableId: Int, value: String, unit: Strin
             Row {
                 Text(
                     text = value,
-                    style = AppTheme.typography.subHeader2,
-                    color = AppTheme.colors.textPrimary,
+                    style = AppTheme.typography.headline4,
+                    color = AppTheme.colors.onSurface,
                     textAlign = TextAlign.Center,
                     maxLines = 1
                 )
@@ -146,8 +143,8 @@ fun HealthDataStatusRow(@DrawableRes drawableId: Int, value: String, unit: Strin
             Row {
                 Text(
                     text = unit,
-                    style = AppTheme.typography.body3,
-                    color = AppTheme.colors.textHint,
+                    style = AppTheme.typography.caption,
+                    color = AppTheme.colors.onSurface.copy(0.6F),
                     textAlign = TextAlign.Center,
                     maxLines = 1
                 )

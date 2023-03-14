@@ -23,10 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import healthstack.kit.task.activity.model.GuidedBreathingMeasureModel
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.View
@@ -120,20 +118,16 @@ class GuidedBreathingMeasureView : View<GuidedBreathingMeasureModel>() {
                 ) {
                     Text(
                         text = "You're inhaling",
-                        style = AppTheme.typography.body3,
-                        fontWeight = if (!state) FontWeight.Bold else FontWeight.W400,
-                        color = if (!state) AppTheme.colors.onPrimary else AppTheme.colors.textPrimary,
+                        style = if (!state) AppTheme.typography.title1 else AppTheme.typography.subtitle1,
+                        color = if (!state) AppTheme.colors.primary else AppTheme.colors.onSurface,
                         textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
                     )
                     Spacer(modifier = Modifier.size(20.dp))
                     Text(
                         text = "You're exhaling",
-                        style = AppTheme.typography.body3,
-                        fontWeight = if (state) FontWeight.Bold else FontWeight.W400,
-                        color = if (state) AppTheme.colors.onPrimary else AppTheme.colors.textPrimary,
+                        style = if (state) AppTheme.typography.title1 else AppTheme.typography.subtitle1,
+                        color = if (state) AppTheme.colors.primary else AppTheme.colors.onSurface,
                         textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
                     )
                 }
 
@@ -151,10 +145,9 @@ class GuidedBreathingMeasureView : View<GuidedBreathingMeasureModel>() {
                                 top = 0.dp
                             ),
                         text = "$curCycle/${model.numCycle}",
-                        style = AppTheme.typography.title2,
-                        color = AppTheme.colors.textPrimary,
+                        style = AppTheme.typography.headline2,
+                        color = AppTheme.colors.onSurface,
                         textAlign = TextAlign.Center,
-                        fontSize = 30.sp
                     )
                     Text(
                         modifier = Modifier
@@ -164,10 +157,9 @@ class GuidedBreathingMeasureView : View<GuidedBreathingMeasureModel>() {
                                 left = 4.dp,
                             ),
                         text = "cycles",
-                        style = AppTheme.typography.title2,
-                        color = AppTheme.colors.textPrimary,
+                        style = AppTheme.typography.title1,
+                        color = AppTheme.colors.onSurface,
                         textAlign = TextAlign.Center,
-                        fontSize = 20.sp
                     )
                 }
             }

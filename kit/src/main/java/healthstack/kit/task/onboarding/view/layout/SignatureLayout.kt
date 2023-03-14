@@ -21,13 +21,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import healthstack.kit.R
 import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
@@ -47,7 +47,6 @@ fun SignatureLayout(
 
     val mutableSvg = remember { mutableStateOf("") }
     var signaturePadAdapter: SignaturePadAdapter? = null
-    val penColor = remember { mutableStateOf(Color.Black) }
 
     Scaffold(
         topBar = {
@@ -68,11 +67,11 @@ fun SignatureLayout(
                 modifier = Modifier
                     .height(189.dp)
                     .testTag("signatureView"),
-                color = Color(0xFFF3F4F4)
+                color = AppTheme.colors.disabled.copy(0.2F)
             ) {
                 SignaturePadView(
                     onReady = { signaturePadAdapter = it },
-                    penColor = penColor.value
+                    penColor = AppTheme.colors.onSurface
                 )
             }
 
@@ -80,8 +79,8 @@ fun SignatureLayout(
                 "By signing this document with an electronic signature, " +
                     "I agree that such signature\nwill be as valid as handwritten signatures " +
                     "to the exxtent allowed by local law",
-                color = AppTheme.colors.textHint,
-                style = AppTheme.typography.body3,
+                color = AppTheme.colors.onSurface.copy(0.6F),
+                style = AppTheme.typography.body3.copy(lineHeight = 18.sp),
                 modifier = Modifier
                     .fillMaxWidth()
             )

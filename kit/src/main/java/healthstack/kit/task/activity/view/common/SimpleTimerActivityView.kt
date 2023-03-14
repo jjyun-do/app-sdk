@@ -57,7 +57,7 @@ open class SimpleTimerActivityView<T : SimpleTimerActivityModel> : View<T>() {
                         .padding(horizontal = 20.dp),
                     text = model.header,
                     style = AppTheme.typography.title3,
-                    color = AppTheme.colors.textPrimary,
+                    color = AppTheme.colors.onSurface,
                     textAlign = TextAlign.Center,
                 )
 

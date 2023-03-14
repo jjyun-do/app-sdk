@@ -74,8 +74,8 @@ fun CircularTimer(
 
         Text(
             text = formatTime(leftTimeSeconds.value),
-            style = AppTheme.typography.title1,
-            color = AppTheme.colors.textPrimaryAccent,
+            style = AppTheme.typography.headline1,
+            color = AppTheme.colors.primary,
             textAlign = TextAlign.Center,
         )
     }
@@ -116,8 +116,8 @@ fun CircularTimerPreview() {
 
         Text(
             text = "00:05",
-            style = AppTheme.typography.title1,
-            color = AppTheme.colors.textPrimaryAccent,
+            style = AppTheme.typography.headline1,
+            color = AppTheme.colors.primary,
             textAlign = TextAlign.Center,
         )
     }

@@ -24,10 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import healthstack.kit.task.activity.model.ColorWordChallengeMeasureModel
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.View
@@ -90,7 +88,7 @@ class ColorWordChallengeMeasureView : View<ColorWordChallengeMeasureModel>() {
                     color = when (state) {
                         1 -> Color.Green
                         2 -> Color.Red
-                        else -> AppTheme.colors.textPrimary
+                        else -> AppTheme.colors.onSurface
                     },
                     textAlign = TextAlign.Center,
                 )
@@ -102,11 +100,9 @@ class ColorWordChallengeMeasureView : View<ColorWordChallengeMeasureModel>() {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = model.colorWords[testset[cur][testset[cur][0]]],
-                        style = AppTheme.typography.title1,
-                        fontWeight = FontWeight.Bold,
+                        style = AppTheme.typography.headline2,
                         color = Color(textColor),
                         textAlign = TextAlign.Center,
-                        fontSize = 30.sp
                     )
                 }
 

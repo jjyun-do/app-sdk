@@ -54,7 +54,7 @@ fun WeeklyCard(
 private fun NextDays(today: LocalDate, modifier: Modifier) {
     val x = if (today.dayOfWeek == DayOfWeek.SUNDAY) 0 else today.dayOfWeek.value
     for (d in 1 until (7 - x)) {
-        DayCard(today.plusDays(d.toLong()), AppTheme.colors.textPrimaryAccent, modifier)
+        DayCard(today.plusDays(d.toLong()), AppTheme.colors.primary.copy(0.38F), modifier)
     }
 }
 
@@ -62,9 +62,9 @@ private fun NextDays(today: LocalDate, modifier: Modifier) {
 private fun Today(today: LocalDate, modifier: Modifier) {
     DayCard(
         today,
-        AppTheme.colors.textPrimaryAccent,
+        AppTheme.colors.primary,
         modifier.background(
-            color = AppTheme.colors.primary.copy(alpha = 0.1f),
+            color = AppTheme.colors.primary.copy(0.1F),
             shape = RoundedCornerShape(2.dp),
         ),
         selected = true
@@ -75,7 +75,7 @@ private fun Today(today: LocalDate, modifier: Modifier) {
 private fun PreviousDays(today: LocalDate, modifier: Modifier) {
     if (today.dayOfWeek == DayOfWeek.SUNDAY) return
     for (d in (today.dayOfWeek.value) downTo 1) {
-        DayCard(today.minusDays(d.toLong()), Color(0xFFB3C6F1), modifier)
+        DayCard(today.minusDays(d.toLong()), AppTheme.colors.disabled, modifier)
     }
 }
 
@@ -88,20 +88,20 @@ private fun DayCard(date: LocalDate, textColor: Color, modifier: Modifier, selec
         Spacer(modifier = Modifier.height(5.dp))
         Text(
             date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH),
-            style = AppTheme.typography.body3,
+            style = AppTheme.typography.caption,
             modifier = Modifier.height(16.dp),
             color = textColor
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             date.dayOfMonth.toString(),
-            style = AppTheme.typography.title3,
+            style = AppTheme.typography.headline3,
             modifier = Modifier.height(26.dp),
             color = textColor
         )
         Spacer(modifier = Modifier.height(5.dp))
         if (selected) Divider(
-            color = AppTheme.colors.textPrimaryAccent,
+            color = AppTheme.colors.primary,
             thickness = 2.dp
         )
     }

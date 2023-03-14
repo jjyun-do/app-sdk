@@ -34,7 +34,7 @@ fun ListedText(
     type: TextType = PARAGRAPH,
     horizontalPadding: Dp = 24.dp,
     fontStyle: TextStyle = AppTheme.typography.body1,
-    fontColor: Color = AppTheme.colors.textPrimary,
+    fontColor: Color = AppTheme.colors.onSurface,
     textAlign: TextAlign = TextAlign.Center, // Only for the paragraph type
 ) = when (type) {
     NUMBER -> bodies.forEachIndexed { idx, body ->
@@ -59,7 +59,7 @@ fun ListedText(
                     .wrapContentHeight(),
                 style = fontStyle,
                 color = fontColor,
-                textAlign = TextAlign.Left,
+                textAlign = TextAlign.Justify,
             )
         }
     }
@@ -86,7 +86,7 @@ fun ListedText(
                     .wrapContentHeight(),
                 style = fontStyle,
                 color = fontColor,
-                textAlign = TextAlign.Left,
+                textAlign = TextAlign.Justify,
             )
         }
     }

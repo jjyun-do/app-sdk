@@ -39,9 +39,9 @@ fun GoogleSignInButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(44.dp),
-            border = BorderStroke(width = 1.dp, AppTheme.colors.border),
+            border = BorderStroke(width = 1.dp, AppTheme.colors.primary),
             colors = ButtonDefaults.buttonColors(backgroundColor = AppTheme.colors.background),
-            shape = RoundedCornerShape(2.dp),
+            shape = RoundedCornerShape(4.dp),
             onClick = onClick
         ) {
             Row(
@@ -62,7 +62,7 @@ fun GoogleSignInButton(
                 Text(
                     text = "Continue with Google",
                     color = AppTheme.colors.primary,
-                    style = AppTheme.typography.subHeader2
+                    style = AppTheme.typography.title2
                 )
             }
         }

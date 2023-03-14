@@ -150,8 +150,8 @@ class SignUpView : View<SignUpModel>() {
                 }
                 Text(
                     text = model.title,
-                    style = AppTheme.typography.appTitle,
-                    color = AppTheme.colors.textPrimary
+                    style = AppTheme.typography.headline3,
+                    color = AppTheme.colors.onSurface
                 )
             }
             Spacer(modifier = Modifier.height(25.dp))
@@ -160,8 +160,8 @@ class SignUpView : View<SignUpModel>() {
                 Text(
                     text = it,
                     modifier = Modifier.fillMaxWidth(),
-                    style = AppTheme.typography.body1,
-                    color = AppTheme.colors.textPrimary,
+                    style = AppTheme.typography.subtitle2,
+                    color = AppTheme.colors.onSurface,
                     textAlign = TextAlign.Center
                 )
             }
