@@ -52,7 +52,7 @@ fun BottomBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(start = 20.dp, end = 20.dp, bottom = 24.dp)
     ) {
         if (shape == SQUARE)
             SquareButton(
@@ -93,7 +93,7 @@ fun BottomBarWithGradientBackground(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
+                .padding(start = 20.dp, end = 20.dp, bottom = 24.dp)
                 .background(
                     gradientBrush,
                 ),

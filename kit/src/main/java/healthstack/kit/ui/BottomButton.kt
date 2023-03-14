@@ -3,8 +3,8 @@ package healthstack.kit.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,8 +39,8 @@ private fun BottomButton(text: String, shape: RoundedCornerShape, enabled: Boole
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier
             .fillMaxWidth()
-            .height(44.dp)
-            .padding(horizontal = 20.dp)
+            .wrapContentHeight()
+            .padding(start = 20.dp, end = 20.dp, bottom = 24.dp)
     ) {
         KitButton(text = text, shape = shape, enabled = enabled) {
             onClick()

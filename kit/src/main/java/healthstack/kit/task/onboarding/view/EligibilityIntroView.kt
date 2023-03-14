@@ -76,6 +76,11 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                     callbackCollection.prev()
                 }
             },
+            bottomBar = {
+                BottomRoundButton(text = LocalContext.current.getString(R.string.eligibility_intro_button_text)) {
+                    callbackCollection.next()
+                }
+            }
         ) {
             Column(
                 modifier = Modifier
@@ -94,9 +99,6 @@ class EligibilityIntroView : View<EligibilityIntroModel>() {
                         .background(AppTheme.colors.background)
                         .fillMaxHeight(),
                 )
-                BottomRoundButton(text = LocalContext.current.getString(R.string.eligibility_intro_button_text)) {
-                    callbackCollection.next()
-                }
             }
         }
     }

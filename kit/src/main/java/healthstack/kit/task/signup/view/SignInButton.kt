@@ -33,7 +33,7 @@ fun GoogleSignInButton(
     Column(
         modifier = Modifier
             .wrapContentSize()
-            .padding(20.dp),
+            .padding(start = 20.dp, end = 20.dp, bottom = 24.dp),
     ) {
         Button(
             modifier = Modifier
