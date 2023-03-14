@@ -73,13 +73,13 @@ fun ImageArticleLayout(
                 Text(
                     message.title,
                     style = AppTheme.typography.headline3,
-                    color = AppTheme.colors.textPrimary
+                    color = AppTheme.colors.onSurface
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     message.description,
                     style = AppTheme.typography.body1,
-                    color = AppTheme.colors.textPrimary
+                    color = AppTheme.colors.onSurface
                 )
             }
         }

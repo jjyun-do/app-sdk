@@ -21,7 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -48,7 +47,6 @@ fun SignatureLayout(
 
     val mutableSvg = remember { mutableStateOf("") }
     var signaturePadAdapter: SignaturePadAdapter? = null
-    val penColor = remember { mutableStateOf(Color.Black) }
 
     Scaffold(
         topBar = {
@@ -69,11 +67,11 @@ fun SignatureLayout(
                 modifier = Modifier
                     .height(189.dp)
                     .testTag("signatureView"),
-                color = Color(0xFFF3F4F4)
+                color = AppTheme.colors.disabled.copy(0.2F)
             ) {
                 SignaturePadView(
                     onReady = { signaturePadAdapter = it },
-                    penColor = penColor.value
+                    penColor = AppTheme.colors.onSurface
                 )
             }
 

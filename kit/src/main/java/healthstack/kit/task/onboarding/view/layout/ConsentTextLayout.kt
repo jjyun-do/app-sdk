@@ -26,7 +26,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
@@ -97,14 +96,14 @@ fun ConsentTextLayout(
                 Text(
                     modifier = Modifier.padding(vertical = 10.dp),
                     text = model.subTitle,
-                    color = AppTheme.colors.textPrimary,
+                    color = AppTheme.colors.onSurface,
                     style = AppTheme.typography.body1
                 )
                 Text(
                     modifier = Modifier.padding(vertical = 10.dp),
                     text = model.description,
                     style = MaterialTheme.typography.body1,
-                    color = AppTheme.colors.textPrimary
+                    color = AppTheme.colors.onSurface
                 )
 
                 model.checkBoxTexts.forEachIndexed { index, consentMessage ->
@@ -128,7 +127,7 @@ fun ConsentTextLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .background(AppTheme.colors.disabled2)
+                    .background(AppTheme.colors.disabled.copy(0.2F))
                     .clickable {
                         onClickPad()
                     },
@@ -138,12 +137,12 @@ fun ConsentTextLayout(
                         modifier = Modifier.align(alignment = Alignment.Center),
                         text = "Tap to sign.",
                         style = AppTheme.typography.body1,
-                        color = AppTheme.colors.textPrimary
+                        color = AppTheme.colors.onSurface
                     )
                 else
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        color = Color(0xFFF8F8F8)
+                        color = AppTheme.colors.disabled.copy(0.2F)
                     ) {
                         val imageLoader = ImageLoader
                             .Builder(LocalContext.current)

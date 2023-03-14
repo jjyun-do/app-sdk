@@ -50,10 +50,9 @@ fun BottomBar(
     onClick: () -> Unit,
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(horizontal = 20.dp)
     ) {
         if (shape == SQUARE)
             SquareButton(

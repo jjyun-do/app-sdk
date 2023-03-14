@@ -47,7 +47,7 @@ fun LabeledCheckbox(
         Text(
             text = labelText,
             style = AppTheme.typography.subtitle3,
-            color = AppTheme.colors.textPrimary,
+            color = AppTheme.colors.onSurface,
         )
     }
 }

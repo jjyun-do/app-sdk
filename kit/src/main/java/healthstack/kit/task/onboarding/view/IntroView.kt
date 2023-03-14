@@ -166,7 +166,7 @@ fun Summary(summaries: List<Pair<Int, String>>) =
                     modifier = Modifier.width(80.dp),
                     text = message,
                     style = AppTheme.typography.body3,
-                    color = AppTheme.colors.textPrimary,
+                    color = AppTheme.colors.onSurface,
                     textAlign = TextAlign.Center
                 )
             }
@@ -186,13 +186,13 @@ fun IntroSections(sections: List<IntroModel.IntroSection>) =
             Text(
                 text = title,
                 style = AppTheme.typography.title2,
-                color = AppTheme.colors.textPrimary
+                color = AppTheme.colors.onSurface
             )
             Text(
                 modifier = Modifier.padding(vertical = 8.dp),
                 text = description,
                 style = AppTheme.typography.body2,
-                color = AppTheme.colors.textPrimary
+                color = AppTheme.colors.onSurface
             )
         }
     }

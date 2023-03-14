@@ -24,7 +24,6 @@ class AppColors(
     onDisabled: Color,
     disabled2: Color,
     onDisabled2: Color,
-    textPrimary: Color,
     // Data Visualization Color Palette
     dataVisualization1: Color,
     dataVisualization1Variant: Color,
@@ -89,9 +88,6 @@ class AppColors(
     var onDisabled2 by mutableStateOf(onDisabled2)
         private set
 
-    var textPrimary by mutableStateOf(textPrimary)
-        private set
-
     var dataVisualization1 by mutableStateOf(dataVisualization1)
         private set
 
@@ -154,7 +150,6 @@ class AppColors(
         onDisabled: Color = this.onDisabled,
         disabled2: Color = this.disabled2,
         onDisabled2: Color = this.onDisabled2,
-        textPrimary: Color = this.textPrimary,
         // Data Visualization Color Palette
         dataVisualization1: Color = this.dataVisualization1,
         dataVisualization1Variant: Color = this.dataVisualization1Variant,
@@ -190,7 +185,6 @@ class AppColors(
         onDisabled,
         disabled2,
         onDisabled2,
-        textPrimary,
         // Data Visualization Color Palette
         dataVisualization1,
         dataVisualization1Variant,
@@ -227,7 +221,6 @@ class AppColors(
         onDisabled = other.onDisabled
         disabled2 = other.disabled2
         onDisabled2 = other.onDisabled2
-        textPrimary = other.textPrimary
         // Data Visualization Color Palette
         dataVisualization1 = other.dataVisualization1
         dataVisualization1Variant = other.dataVisualization1Variant
@@ -269,7 +262,7 @@ class AppColors(
 fun mainLightColors(
     // Main Color Palette
     primary: Color = Color(0xFF4475E3),
-    primaryVariant: Color = Color(0xFF3D41B0),
+    primaryVariant: Color = Color(0xFFDAE3F9),
     background: Color = Color(0xFFFBFBFB),
     surface: Color = Color(0xFFFFFFFF),
     onPrimary: Color = Color(0xFFFFFFFF),
@@ -283,7 +276,6 @@ fun mainLightColors(
     onDisabled: Color = Color(0xFFFFFFFF),
     disabled2: Color = Color(0xFFF8F8F8),
     onDisabled2: Color = Color(0xFF9A9A9A),
-    textPrimary: Color = Color(0xFF474747),
     // Data Visualization Color Palette
     dataVisualization1: Color = Color(0xFF944ED7),
     dataVisualization1Variant: Color = Color(0xFF751EC7),
@@ -318,7 +310,6 @@ fun mainLightColors(
     onDisabled = onDisabled,
     disabled2 = disabled2,
     onDisabled2 = onDisabled2,
-    textPrimary = textPrimary,
     // Data Visualization Color Palette,
     dataVisualization1 = dataVisualization1,
     dataVisualization1Variant = dataVisualization1Variant,

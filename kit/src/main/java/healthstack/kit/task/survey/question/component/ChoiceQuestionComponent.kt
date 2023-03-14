@@ -93,7 +93,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                     Text(
                         text = it.toString(),
                         style = AppTheme.typography.overline1,
-                        color = AppTheme.colors.textPrimary,
+                        color = AppTheme.colors.onSurface,
                         modifier = Modifier
                             .padding(horizontal = 5.dp)
                     )
@@ -126,7 +126,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                 },
                 textStyle = AppTheme.typography.body1,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = AppTheme.colors.textPrimary,
+                    textColor = AppTheme.colors.onSurface,
                     disabledTextColor = AppTheme.colors.onSurface.copy(0.6F),
                     focusedBorderColor = AppTheme.colors.primary,
                     unfocusedBorderColor = AppTheme.colors.primary.copy(0.38F),
@@ -180,7 +180,7 @@ class ChoiceQuestionComponent<T : ChoiceQuestionModel<*>> : QuestionComponent<T>
                         Text(
                             text = candidate.toString(),
                             style = AppTheme.typography.body2,
-                            color = AppTheme.colors.textPrimary,
+                            color = AppTheme.colors.onSurface,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 12.dp)
@@ -219,7 +219,7 @@ fun RadioGroup(choiceQuestion: ChoiceQuestionModel<*>, modifier: Modifier) {
                 Text(
                     text = candidate.toString(),
                     style = AppTheme.typography.body2,
-                    color = AppTheme.colors.textPrimary,
+                    color = AppTheme.colors.onSurface,
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }
