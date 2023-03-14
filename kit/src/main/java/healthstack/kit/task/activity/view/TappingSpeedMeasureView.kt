@@ -6,16 +6,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,8 +29,8 @@ import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.View
 import healthstack.kit.task.survey.question.SubStepHolder
 import healthstack.kit.theme.AppTheme
+import healthstack.kit.ui.MinuteTextTimer
 import healthstack.kit.ui.TopBar
-import kotlinx.coroutines.delay
 
 class TappingSpeedMeasureView() : View<TappingSpeedMeasureModel>() {
     @Composable
@@ -41,7 +39,6 @@ class TappingSpeedMeasureView() : View<TappingSpeedMeasureModel>() {
         callbackCollection: CallbackCollection,
         holder: SubStepHolder?,
     ) {
-        val ticks = remember { mutableStateOf(model.measureTimeSecond) }
         val tapCount = remember { mutableStateOf(0) }
 
         Scaffold(
@@ -52,27 +49,15 @@ class TappingSpeedMeasureView() : View<TappingSpeedMeasureModel>() {
             }
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(Modifier.height(56.dp))
 
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    text = ticks.value.toString(),
-                    style = AppTheme.typography.title3,
-                    color = AppTheme.colors.textPrimary,
-                    textAlign = TextAlign.Center,
-                )
-
-                LaunchedEffect(Unit) {
-                    while (ticks.value > 0) {
-                        delay(1000)
-                        ticks.value -= 1
-                    }
+                MinuteTextTimer {
                     callbackCollection.setActivityResult(
-                        model.handType, tapCount.value
+                        model.handType, tapCount.value.toString()
                     )
                     callbackCollection.next()
                 }
@@ -82,57 +67,43 @@ class TappingSpeedMeasureView() : View<TappingSpeedMeasureModel>() {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 56.dp),
+                        .padding(horizontal = 24.dp),
                     text = "Tap the buttons with your ${model.handType} hand",
                     style = AppTheme.typography.body1,
                     color = AppTheme.colors.textPrimary,
                     textAlign = TextAlign.Center,
                 )
-                Column(
-                    modifier = Modifier.fillMaxWidth()
+
+                Spacer(Modifier.height(166.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 62.dp),
+                    horizontalArrangement = Arrangement.Center,
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .absolutePadding(
-                                top = 80.dp
-                            ),
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.ic_tapping),
-                            contentDescription = "tapping icon",
-                            modifier = Modifier
-                                .size(90.dp)
-                                .clickable(
-                                    enabled = true,
-                                    onClick = {
-                                        tapCount.value += 1
-                                    }
-                                )
-                        )
-                        Spacer(modifier = Modifier.width(50.dp))
-                        Image(
-                            painter = painterResource(R.drawable.ic_tapping),
-                            contentDescription = "tapping icon",
-                            modifier = Modifier
-                                .size(90.dp)
-                                .clickable(
-                                    enabled = true,
-                                    onClick = {
-                                        tapCount.value += 1
-                                    }
-                                )
-                        )
-                    }
+                    TappingButton(tapCount)
+                    Spacer(modifier = Modifier.width(56.dp))
+                    TappingButton(tapCount)
                 }
             }
         }
     }
 }
 
+@Composable
+fun TappingButton(tapCount: MutableState<Int>) = Image(
+    painter = painterResource(R.drawable.ic_tapping_button),
+    contentDescription = "tapping icon",
+    modifier = Modifier
+        .clickable(
+            enabled = true,
+            onClick = { tapCount.value += 1 }
+        )
+)
+
 @PreviewGenerated
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360, heightDp = 700)
 @Composable
 fun TappingSpeedMeasurePreview() {
     val view = TappingSpeedMeasureView()

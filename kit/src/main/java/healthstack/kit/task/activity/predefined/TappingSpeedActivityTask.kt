@@ -18,7 +18,7 @@ import healthstack.kit.ui.TaskCard
 class TappingSpeedActivityTask(
     id: String,
     taskId: String,
-    name: String,
+    name: String = "Tapping Speed",
     description: String,
     steps: List<Step<out StepModel, *>> = listOf(
         TappingSpeedIntroStep(
@@ -27,28 +27,49 @@ class TappingSpeedActivityTask(
                 id, name
             )
         ),
-        TappingSpeedMeasureStep(
-            id, name,
-            TappingSpeedMeasureModel(
-                id, name, null, measureTimeSecond = 20
-            )
-        ),
         TappingSpeedIntroStep(
             id, name,
             TappingSpeedIntroModel(
-                id, name, null, false
+                id, name,
+                body = "Place your phone on a flat surface.\n" +
+                    "Use two fingers on right hand to alternatively tap the buttons on the screen.\n" +
+                    "Keep tapping for 10 seconds.",
+                buttonText = "Start Exercise"
             )
         ),
         TappingSpeedMeasureStep(
             id, name,
             TappingSpeedMeasureModel(
-                id, name, null, false, 20
+                id, name, null, measureTimeSecond = 10
             )
         ),
         TappingSpeedResultStep(
             id, name,
             TappingSpeedResultModel(
-                id, name, null
+                id, name, buttonText = "Continue"
+            )
+        ),
+        TappingSpeedIntroStep(
+            id, name,
+            TappingSpeedIntroModel(
+                id, name,
+                body = "Place your phone on a flat surface.\n" +
+                    "Use two fingers on left hand to alternatively tap the buttons on the screen.\n" +
+                    "Keep tapping for 10 seconds.",
+                drawableId = R.drawable.ic_left_tapping_speed,
+                buttonText = "Start Exercise"
+            )
+        ),
+        TappingSpeedMeasureStep(
+            id, name,
+            TappingSpeedMeasureModel(
+                id, name, null, false, 10
+            )
+        ),
+        TappingSpeedResultStep(
+            id, name,
+            TappingSpeedResultModel(
+                id, name
             )
         )
     ),
@@ -63,7 +84,7 @@ class TappingSpeedActivityTask(
     @Composable
     override fun CardView(onClick: () -> Unit) {
         TaskCard(
-            id = R.drawable.ic_tapping_speed,
+            id = R.drawable.ic_right_tapping_speed,
             taskName = name,
             description = description,
             isCompleted = isCompleted,

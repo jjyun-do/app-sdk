@@ -31,7 +31,7 @@ class TaskRepositoryImpl : TaskRepository {
             )
             is ActivityTask -> taskDao.setResult(
                 task.id,
-                listOf(Result("activity", task.result.toString())),
+                listOf(Result("activity", task.result.toString().replace("=", ":"))),
                 task.startedAt.toString(),
                 LocalDateTime.now().toString()
             )

@@ -1,9 +1,15 @@
 package healthstack.kit.task.activity.model
 
-import healthstack.kit.task.base.StepModel
+import healthstack.kit.R
+import healthstack.kit.task.activity.model.common.SimpleViewActivityModel
 
 class TappingSpeedResultModel(
     id: String,
-    title: String,
-    drawableId: Int? = null,
-) : StepModel(id, title, drawableId)
+    title: String = "Tapping Speed",
+    header: String = "Great Job!",
+    body: String? = "Your task was successfully completed.",
+    drawableId: Int? = R.drawable.ic_activity_result,
+    buttonText: String? = "Back to Home",
+) : SimpleViewActivityModel(
+    id, title, header, body?.split("\n"), drawableId, buttonText
+)
