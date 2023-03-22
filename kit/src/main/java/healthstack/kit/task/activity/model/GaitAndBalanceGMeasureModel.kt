@@ -7,10 +7,10 @@ class GaitAndBalanceGMeasureModel(
     id: String,
     title: String = "Gait & Balance",
     header: String,
-    body: String? = null,
+    body: List<String>? = null,
     drawableId: Int? = R.drawable.ic_activity_gait_and_balance_straight,
     buttonText: String? = null, // If null, do not render bottom button
 ) :
     SimpleViewActivityModel(
-        id, title, header, body?.split("\n"), drawableId, buttonText
+        id, title, header, body, drawableId, buttonText
     )

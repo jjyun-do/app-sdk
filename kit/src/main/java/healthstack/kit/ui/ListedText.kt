@@ -59,7 +59,7 @@ fun ListedText(
                     .wrapContentHeight(),
                 style = fontStyle,
                 color = fontColor,
-                textAlign = TextAlign.Justify,
+                textAlign = TextAlign.Left,
             )
         }
     }
@@ -86,7 +86,7 @@ fun ListedText(
                     .wrapContentHeight(),
                 style = fontStyle,
                 color = fontColor,
-                textAlign = TextAlign.Justify,
+                textAlign = TextAlign.Left,
             )
         }
     }

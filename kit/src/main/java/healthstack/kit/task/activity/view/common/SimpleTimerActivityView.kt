@@ -47,7 +47,12 @@ open class SimpleTimerActivityView<T : SimpleTimerActivityModel> : View<T>() {
             ) {
                 Spacer(Modifier.height(56.dp))
 
-                CircularTimer(timeSeconds = model.timeSeconds)
+                CircularTimer(
+                    timeSeconds = model.timeSeconds,
+                    interactionType = model.interactionType,
+                ) {
+                    if (model.autoFlip) callbackCollection.next()
+                }
 
                 Spacer(Modifier.height(54.dp))
 
@@ -56,7 +61,7 @@ open class SimpleTimerActivityView<T : SimpleTimerActivityModel> : View<T>() {
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp),
                     text = model.header,
-                    style = AppTheme.typography.title3,
+                    style = AppTheme.typography.headline3,
                     color = AppTheme.colors.onSurface,
                     textAlign = TextAlign.Center,
                 )

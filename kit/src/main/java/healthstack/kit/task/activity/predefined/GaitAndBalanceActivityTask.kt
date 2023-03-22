@@ -14,6 +14,7 @@ import healthstack.kit.task.activity.step.common.SimpleViewActivityStep
 import healthstack.kit.task.base.Step
 import healthstack.kit.task.base.StepModel
 import healthstack.kit.ui.TaskCard
+import healthstack.kit.ui.util.InteractionType.VIBRATE
 
 class GaitAndBalanceActivityTask(
     id: String,
@@ -47,7 +48,8 @@ class GaitAndBalanceActivityTask(
             GaitAndBalanceBMeasureModel(
                 id,
                 header = "Stand still for 20 seconds",
-                timeSeconds = 20
+                timeSeconds = 20,
+                interactionType = VIBRATE,
             )
         ),
         SimpleViewActivityStep(

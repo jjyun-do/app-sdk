@@ -31,9 +31,11 @@ fun GaitAndBalanceIntroPreview() {
         GaitAndBalanceIntroModel(
             id = "id",
             textType = NUMBER,
-            body = "Walk unassisted for 20 steps in a straight line.\n" +
-                "Turn around and walk back to your starting point.\n" +
-                "Stand still for 20 seconds.",
+            body = listOf(
+                "Walk unassisted for 20 steps in a straight line.",
+                "Turn around and walk back to your starting point.\n",
+                "Stand still for 20 seconds."
+            ),
             buttonText = "Begin"
         ),
         CallbackCollection(),

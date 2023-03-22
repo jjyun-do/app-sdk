@@ -121,9 +121,11 @@ fun SimpleViewNoButtonPreview() {
             "id",
             "title",
             header = "custom header",
-            body = "Walk unassisted for 20 steps in a straight line.\n" +
-                "Turn around and walk back to your starting point.\n" +
-                "Stand still for 20 seconds.",
+            body = listOf(
+                "Walk unassisted for 20 steps in a straight line.",
+                "Turn around and walk back to your starting point.\n",
+                "Stand still for 20 seconds."
+            ),
             textType = NUMBER
         ),
         CallbackCollection(),
@@ -142,9 +144,11 @@ fun SimpleViewNoButtonBulletPreview() {
             "id",
             "title",
             header = "custom header",
-            body = "Walk unassisted for 20 steps in a straight line.\n" +
-                "Turn around and walk back to your starting point.\n" +
-                "Stand still for 20 seconds.",
+            body = listOf(
+                "Walk unassisted for 20 steps in a straight line.",
+                "Turn around and walk back to your starting point.\n",
+                "Stand still for 20 seconds."
+            ),
             textType = BULLET
         ),
         CallbackCollection(),
