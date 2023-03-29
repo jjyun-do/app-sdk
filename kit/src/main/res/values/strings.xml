@@ -2,17 +2,60 @@
     <string name="app_name" translatable="false">HealthcareResearchKit</string>
     <string name="open_source_licence" translatable="false">Open Source Licence</string>
     <string name="open_source_licence_textfiled_label" translatable="false">Licence</string>
-    <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-        nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+    <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+        exercitation ullamco laboris
+        nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+        culpa qui officia
         deserunt mollit anim id est laborum.
     </string>
-    <string name="lorem_ipsum_short" translatable="false">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+    <string name="lorem_ipsum_short" translatable="false">Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua.
     </string>
-    <string name="default_web_client_id" translatable="false">this will be updated by com.google.gms.google-services plugin</string>
-        <string name="failed_to_signin" translatable="false">failed to sign-in</string>
+    <string name="default_web_client_id" translatable="false">this will be updated by
+        com.google.gms.google-services plugin
+    </string>
+    <string name="failed_to_signin" translatable="false">failed to sign-in</string>
+    <!-- study information -->
+    <string-array name="contact_dials">
+        <item>name,dial</item>
+        <item>name,dial</item>
+    </string-array>
+    <string name="contact_email">sample@email.com</string>
+    <string name="study_explanation">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat.
+
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+    </string>
+    <string name="reward_information">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+        do
+        eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat.
+
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+    </string>
+    <string name="user_agreement_url">https://url</string>
+    <string name="privacy_polity_url">https://url</string>
+    <string name="licenses_url">https://url</string>
     <!-- localization -->
     <string name="intro_button_text">Get Started</string>
     <string name="eligibility_intro_button_text">Check Eligibility</string>

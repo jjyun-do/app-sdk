@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.google.firebase.auth.FirebaseAuth
 import healthstack.app.status.StatusDataType
 import healthstack.app.viewmodel.TaskViewModel.TasksState
 import healthstack.kit.task.base.Task
@@ -73,6 +74,8 @@ private fun DailyTaskView(
     scrollState: ScrollState,
     onStartTask: (Task) -> Unit,
 ) {
+    val firebaseAuth = FirebaseAuth.getInstance()
+
     Scaffold(
         backgroundColor = AppTheme.colors.background
     ) {
@@ -85,6 +88,16 @@ private fun DailyTaskView(
         ) {
             Spacer(Modifier.height(26.dp))
 
+            Text(
+                text = "Keep it going, ${firebaseAuth.currentUser?.displayName}!",
+                style = AppTheme.typography.headline3,
+                color = AppTheme.colors.onSurface,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 4.dp)
+            )
+
+            Spacer(Modifier.height(30.dp))
+
             WeeklyCard(date)
             Spacer(Modifier.height(32.dp))
 
@@ -92,7 +105,7 @@ private fun DailyTaskView(
             Spacer(Modifier.height(40.dp))
 
             Tasks(
-                "Active",
+                "Upcoming Tasks",
                 viewModel.activeTasks.collectAsState().value,
                 { viewModel.syncTasks() }
             ) {
@@ -105,7 +118,7 @@ private fun DailyTaskView(
             )
             Spacer(Modifier.height(32.dp))
             Tasks(
-                "Completed",
+                "Completed Tasks",
                 viewModel.completedTasks.collectAsState().value
             )
         }
@@ -121,7 +134,7 @@ fun Tasks(
 ) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 10.dp)
+            .padding(horizontal = 4.dp)
     ) {
         Row(
             horizontalArrangement = SpaceBetween,
@@ -131,7 +144,7 @@ fun Tasks(
         ) {
             Text(
                 title,
-                style = AppTheme.typography.title3,
+                style = AppTheme.typography.headline3,
                 color = AppTheme.colors.onSurface
             )
             IconButton(onClick = {
@@ -147,7 +160,9 @@ fun Tasks(
                 )
             }
         }
+
         Spacer(Modifier.height(16.dp))
+
         state.tasks.forEach {
             it.CardView {
                 onStartTask(it)

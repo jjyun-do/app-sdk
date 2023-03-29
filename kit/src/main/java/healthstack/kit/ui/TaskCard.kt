@@ -129,9 +129,8 @@ fun TaskCard(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = "",
                         modifier = Modifier
-                            .height(24.dp)
-                            .width(24.dp),
-                        tint = AppTheme.colors.primary.copy(0.05F)
+                            .size(24.dp),
+                        tint = AppTheme.colors.primary.copy(0.38F)
                     )
                     Spacer(modifier = Modifier.width(24.dp))
                     Column(
@@ -143,12 +142,12 @@ fun TaskCard(
                         Text(
                             text = taskName,
                             style = AppTheme.typography.headline4,
-                            color = AppTheme.colors.onSurface.copy(0.6F),
+                            color = AppTheme.colors.onSurface.copy(0.38F),
                         )
                         Text(
                             text = description,
                             style = AppTheme.typography.body3,
-                            color = AppTheme.colors.onSurface.copy(0.6F)
+                            color = AppTheme.colors.onSurface.copy(0.38F),
                         )
                     }
                 }
