@@ -9,10 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +29,7 @@ import healthstack.kit.ui.CircularTimer
 import healthstack.kit.ui.ListedText
 import healthstack.kit.ui.TopBar
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class RangeOfMotionMeasureView : View<RangeOfMotionMeasureModel>() {
     @Composable
@@ -37,10 +39,23 @@ class RangeOfMotionMeasureView : View<RangeOfMotionMeasureModel>() {
         holder: SubStepHolder?,
     ) {
         var isCompleted by remember { mutableStateOf(false) }
+        val scope = rememberCoroutineScope()
 
-        LaunchedEffect(Unit) {
-            delay(model.timeSeconds * 1000)
-            isCompleted = true
+        DisposableEffect(Unit) {
+            model.init()
+
+            scope.launch {
+                delay(model.timeSeconds * 1000)
+                isCompleted = true
+
+                callbackCollection.setActivityResult("${model.handType}_times(ms)", model.timeMillis)
+                callbackCollection.setActivityResult("${model.handType}_accelerometer", model.accelerometer)
+                callbackCollection.setActivityResult("${model.handType}_gyroscope", model.gyroscope)
+            }
+
+            onDispose {
+                model.close()
+            }
         }
 
         Scaffold(
@@ -66,7 +81,9 @@ class RangeOfMotionMeasureView : View<RangeOfMotionMeasureModel>() {
                 Spacer(Modifier.height(26.dp))
 
                 Box(
-                    modifier = Modifier.fillMaxWidth().height(300.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularTimer(

@@ -70,6 +70,7 @@ class RangeOfMotionActivityTask(
                     "Place phone in your left hand.",
                     "Straighten your left arm and move it in a full circle for 20 sec",
                 ),
+                isRightHand = false,
             )
         ),
         SimpleViewActivityStep(
