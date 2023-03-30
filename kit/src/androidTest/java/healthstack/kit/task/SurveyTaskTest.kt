@@ -12,7 +12,7 @@ import healthstack.kit.task.survey.SurveyTask
 import healthstack.kit.task.survey.question.model.MultiChoiceQuestionModel
 import healthstack.kit.task.survey.question.model.TextInputQuestionModel
 import healthstack.kit.theme.AppTheme
-import healthstack.kit.theme.darkBlueColors
+import healthstack.kit.theme.mainLightColors
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
@@ -57,7 +57,7 @@ class SurveyTaskTest {
     fun testSurveyTaskCardView() {
         surveyTask.isCompleted = false
         rule.setContent {
-            AppTheme(darkBlueColors()) {
+            AppTheme(mainLightColors()) {
                 surveyTask.CardView {
                 }
             }
@@ -70,7 +70,7 @@ class SurveyTaskTest {
     fun testCompletedSurveyTaskCardView() {
         surveyTask.isCompleted = true
         rule.setContent {
-            AppTheme(darkBlueColors()) {
+            AppTheme(mainLightColors()) {
                 surveyTask.CardView {
                 }
             }
@@ -94,7 +94,7 @@ class SurveyTaskTest {
         assertNotNull(state.title)
 
         rule.setContent {
-            AppTheme(darkBlueColors()) {
+            AppTheme(mainLightColors()) {
                 surveyTask.Render()
             }
         }
@@ -137,7 +137,7 @@ class SurveyTaskTest {
         test.canceled = { isCanceled = true }
 
         rule.setContent {
-            AppTheme(darkBlueColors()) {
+            AppTheme(mainLightColors()) {
                 test.Render()
             }
         }

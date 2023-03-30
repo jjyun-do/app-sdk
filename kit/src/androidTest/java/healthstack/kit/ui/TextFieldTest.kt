@@ -8,8 +8,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performTextReplacement
 import healthstack.kit.theme.AppTheme
-import healthstack.kit.theme.blueColors
-import healthstack.kit.theme.darkBlueColors
+import healthstack.kit.theme.mainLightColors
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -24,9 +23,7 @@ class TextFieldTest {
     fun testMaskTextFieldTest() {
         var text = "text message"
         rule.setContent {
-            val colors = darkBlueColors()
-            colors.updateColorsFrom(blueColors())
-            AppTheme(colors = colors) {
+            AppTheme(mainLightColors()) {
                 RoundTextField(
                     modifier = Modifier.testTag(testTag),
                     value = text,
@@ -47,7 +44,7 @@ class TextFieldTest {
     fun testUnmaskTextFieldTest() {
         var text = "text message"
         rule.setContent {
-            AppTheme(colors = darkBlueColors()) {
+            AppTheme(mainLightColors()) {
                 RoundTextField(
                     modifier = Modifier.testTag(testTag),
                     value = text,

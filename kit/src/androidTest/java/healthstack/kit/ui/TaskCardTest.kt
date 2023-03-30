@@ -6,8 +6,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import healthstack.kit.R
 import healthstack.kit.theme.AppTheme
-import healthstack.kit.theme.darkBlueColors
-import healthstack.kit.theme.lightColors
+import healthstack.kit.theme.mainLightColors
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +20,7 @@ class TaskCardTest {
         var clicked = false
         val onClick = { clicked = true }
         rule.setContent {
-            AppTheme(colors = darkBlueColors()) {
+            AppTheme(mainLightColors()) {
                 TaskCard(
                     taskName = "TaskName",
                     description = "Good For You",
@@ -40,7 +39,7 @@ class TaskCardTest {
     @Test
     fun testDisabledTaskButton() {
         rule.setContent {
-            AppTheme(colors = lightColors()) {
+            AppTheme(mainLightColors()) {
                 TaskCard(
                     taskName = "TaskName",
                     description = "Good For You",
