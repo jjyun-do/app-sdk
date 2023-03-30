@@ -21,6 +21,7 @@ object Versions {
 
     object AndroidX {
         const val CORE_KTX = "1.7.0"
+        const val CORE_SPLASHSCREEN = "1.0.0"
         const val COMPAT = "1.4.1"
         const val WORK = "2.7.1"
         const val CONCURRENT = "1.1.0"
@@ -155,7 +156,7 @@ object AppDependencies {
     const val OKHTTP = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
     const val OKHTTP_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}"
     const val OKHTTP_MOCKWEB_SERVER = "com.squareup.okhttp3:mockwebserver:${Versions.OKHTTP}"
-    
+
     val httpClientImplLibs = arrayListOf<String>().apply {
         add(RETROFIT)
         add(RETROFIT_GSON)
@@ -238,6 +239,7 @@ object AppDependencies {
     const val SIGNATURE = "se.warting.signature:signature-pad:${Versions.SIGNATURE_PAD}"
     const val COIL_SVG = "io.coil-kt:coil-svg:${Versions.COIL}"
     const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
+    const val CORE_SPLASHSCREEN = "androidx.core:core-splashscreen:${Versions.AndroidX.CORE_SPLASHSCREEN}"
 
     val composeImplLibs = arrayListOf<String>().apply {
         add(MATERIAL)
