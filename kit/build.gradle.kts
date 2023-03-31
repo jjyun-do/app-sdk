@@ -70,6 +70,7 @@ dependencies {
     implementation(platform(AppDependencies.FIREBASE_BOM))
     implementation(AppDependencies.authImplLibs)
     implementation(AppDependencies.ANDROIDX_NAVIGATION_COMPOSE)
+    implementation(AppDependencies.ANDROIDX_DATASTORE)
     implementation(AppDependencies.composeImplLibs)
     implementation(AppDependencies.ACCOMPANIST_PAGER)
     implementation(AppDependencies.SIGNATURE)
