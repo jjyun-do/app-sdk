@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         var keepSplashScreen = true
         val delay = 1250L
-        installSplashScreen().setKeepOnScreenCondition { keepSplashScreen }
+        installSplashScreen().setKeepOnScreenCondition { keepSplashScreen && (savedInstanceState == null) }
         Handler(Looper.getMainLooper()).postDelayed({ keepSplashScreen = false }, delay)
 
         super.onCreate(savedInstanceState)
