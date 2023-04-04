@@ -73,6 +73,7 @@ dependencies {
     implementation(AppDependencies.ANDROIDX_DATASTORE)
     implementation(AppDependencies.composeImplLibs)
     implementation(AppDependencies.ACCOMPANIST_PAGER)
+    implementation(AppDependencies.ACCOMPANIST_SYSTEMUI)
     implementation(AppDependencies.SIGNATURE)
     implementation(AppDependencies.coilImplLibs)
     implementation(AppDependencies.SUPPORT_ANNOTATION)

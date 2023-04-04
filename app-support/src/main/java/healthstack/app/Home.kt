@@ -16,7 +16,10 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,17 +31,24 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
+import healthstack.app.pref.AppStage
+import healthstack.app.pref.AppStage.Profile
+import healthstack.app.pref.AppStage.StudyInformation
 import healthstack.app.status.StatusDataType
+import healthstack.app.viewmodel.TaskViewModel
 import healthstack.app.viewmodel.TaskViewModel.TasksState
 import healthstack.kit.task.base.Task
 import healthstack.kit.theme.AppTheme
+import healthstack.kit.ui.DropdownMenuItemData
+import healthstack.kit.ui.TopBarWithDropDown
 import healthstack.kit.ui.WeeklyCard
 import java.time.LocalDate
 
 @Composable
 fun Home(
     dataTypeStatus: List<StatusDataType>,
-    viewModel: healthstack.app.viewmodel.TaskViewModel,
+    viewModel: TaskViewModel,
+    changeNavigation: (AppStage) -> Unit,
 ) {
     val scrollState = rememberScrollState()
     var selectedTask by remember {
@@ -51,6 +61,7 @@ fun Home(
             dataTypeStatus,
             viewModel,
             scrollState,
+            changeNavigation
         ) { selectedTask = it }
     } else {
         selectedTask?.let { task ->
@@ -72,12 +83,28 @@ private fun DailyTaskView(
     dataTypeStatus: List<StatusDataType>,
     viewModel: healthstack.app.viewmodel.TaskViewModel,
     scrollState: ScrollState,
+    changeNavigation: (AppStage) -> Unit,
     onStartTask: (Task) -> Unit,
 ) {
     val firebaseAuth = FirebaseAuth.getInstance()
 
     Scaffold(
-        backgroundColor = AppTheme.colors.background
+        backgroundColor = AppTheme.colors.background,
+        topBar = {
+            TopBarWithDropDown(
+                "Keep it going, ${firebaseAuth.currentUser?.displayName}!",
+                AppTheme.typography.headline3,
+                AppTheme.colors.onSurface,
+                listOf<DropdownMenuItemData>(
+                    DropdownMenuItemData("Profile", Icons.Default.Person) { changeNavigation(Profile) },
+                    DropdownMenuItemData("Settings", Icons.Default.Settings) { },
+                    DropdownMenuItemData(
+                        "Study Information",
+                        Icons.Default.Info
+                    ) { changeNavigation(StudyInformation) },
+                )
+            )
+        }
     ) {
         Column(
             modifier = Modifier
@@ -86,18 +113,7 @@ private fun DailyTaskView(
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(Modifier.height(26.dp))
-
-            Text(
-                text = "Keep it going, ${firebaseAuth.currentUser?.displayName}!",
-                style = AppTheme.typography.headline3,
-                color = AppTheme.colors.onSurface,
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 4.dp)
-            )
-
-            Spacer(Modifier.height(30.dp))
-
+            Spacer(Modifier.height(10.dp))
             WeeklyCard(date)
             Spacer(Modifier.height(32.dp))
 

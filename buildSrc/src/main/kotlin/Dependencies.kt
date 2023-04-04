@@ -71,6 +71,7 @@ object Versions {
     const val COIL = "2.2.1"
     const val MATERIAL_UI = "1.4.0"
     const val ACCOMPANIST_PAGER = "0.25.0"
+    const val ACCOMPANIST_SYSTEMUI = "0.25.1"
     const val SIGNATURE_PAD = "0.0.18"
 }
 
@@ -235,6 +236,8 @@ object AppDependencies {
     const val COMPOSE_MATERIAL_ANDROID_ICON_EXT =
         "androidx.compose.material:material-icons-extended:${Versions.Compose.UI}"
     const val COMPOSE_ACTIVITY = "androidx.activity:activity-compose:${Versions.Compose.ACTIVITY}"
+    const val ACCOMPANIST_SYSTEMUI =
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST_SYSTEMUI}"
     const val ACCOMPANIST_PAGER = "com.google.accompanist:accompanist-pager:${Versions.ACCOMPANIST_PAGER}"
     const val SIGNATURE = "se.warting.signature:signature-pad:${Versions.SIGNATURE_PAD}"
     const val COIL_SVG = "io.coil-kt:coil-svg:${Versions.COIL}"

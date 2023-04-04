@@ -2,7 +2,6 @@ package healthstack.kit.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,38 +22,35 @@ import healthstack.kit.theme.AppTheme
 fun PlainText(
     header: String,
     body: String,
-    article: @Composable () -> Unit = {},
+    article: (@Composable () -> Unit)? = null,
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = header,
-                style = AppTheme.typography.headline4,
-                color = AppTheme.colors.onSurface
-            )
-        }
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = header,
+            style = AppTheme.typography.headline4,
+            color = AppTheme.colors.onSurface,
+        )
 
-        Box(
-            Modifier.padding(vertical = 16.dp)
-                .wrapContentHeight()
-                .fillMaxWidth()
-        ) {
-            article()
-        }
+        if (article != null)
+            Box(
+                Modifier.padding(vertical = 16.dp)
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+            ) {
+                article()
+            }
 
-        Row(
-            Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = body,
-                style = AppTheme.typography.body2,
-                color = AppTheme.colors.onSurface
-            )
-        }
+        Text(
+            modifier = Modifier.padding(top = 16.dp)
+                .fillMaxWidth(),
+            text = body,
+            style = AppTheme.typography.body2,
+            color = AppTheme.colors.onSurface,
+        )
     }
 }
 
