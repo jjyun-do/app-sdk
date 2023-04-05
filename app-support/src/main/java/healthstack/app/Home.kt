@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import healthstack.app.pref.AppStage
 import healthstack.app.pref.AppStage.Profile
+import healthstack.app.pref.AppStage.Settings
 import healthstack.app.pref.AppStage.StudyInformation
 import healthstack.app.status.StatusDataType
 import healthstack.app.viewmodel.TaskViewModel
@@ -97,7 +98,7 @@ private fun DailyTaskView(
                 AppTheme.colors.onSurface,
                 listOf<DropdownMenuItemData>(
                     DropdownMenuItemData("Profile", Icons.Default.Person) { changeNavigation(Profile) },
-                    DropdownMenuItemData("Settings", Icons.Default.Settings) { },
+                    DropdownMenuItemData("Settings", Icons.Default.Settings) { changeNavigation(Settings) },
                     DropdownMenuItemData(
                         "Study Information",
                         Icons.Default.Info

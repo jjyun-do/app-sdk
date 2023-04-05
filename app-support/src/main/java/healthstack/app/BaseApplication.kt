@@ -16,6 +16,7 @@ import healthstack.app.sync.SyncManager
 import healthstack.app.task.repository.TaskRepository
 import healthstack.app.task.repository.TaskRepositoryImpl
 import healthstack.kit.info.MyProfileView
+import healthstack.kit.info.SettingsView
 import healthstack.kit.info.StudyInfoView
 import healthstack.kit.task.onboarding.OnboardingTask
 import healthstack.kit.task.signup.SignUpTask
@@ -77,6 +78,9 @@ private fun Main(
         }
         composable(AppStage.StudyInformation.name) {
             StudyInfoView(home = { changeNavigation(Home) }).Render()
+        }
+        composable(AppStage.Settings.name) {
+            SettingsView(home = { changeNavigation(Home) }, initialize = { changeNavigation(Onboarding) }).Render()
         }
         composable(Onboarding.name) {
             onboardingTask.callback = { changeNavigation(SignUp) }

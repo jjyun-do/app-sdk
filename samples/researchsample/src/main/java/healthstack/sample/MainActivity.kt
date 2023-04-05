@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
                         onboardingTask,
                         signUpTask,
                         healthDataToDisplay,
-                        healthDataSyncSpecs
+                        healthDataSyncSpecs,
                     )
                 }
             }
