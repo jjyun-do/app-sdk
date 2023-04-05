@@ -46,6 +46,7 @@ import org.json.JSONObject
 open class SurveyView(
     private val pageable: Boolean = true,
     private val isEligibility: Boolean = false,
+    private val isSurveyWithSection: Boolean = false,
 ) : View<SurveyModel>() {
 
     @Composable
@@ -59,8 +60,9 @@ open class SurveyView(
         BackHandler(true) {
             callbackCollection.prev()
         }
-
-        if (pageable)
+        if (isSurveyWithSection)
+            SectionPageSurveyLayout(model, callbackCollection, subStepHolder)
+        else if (pageable)
             MultiPageSurveyLayout(model, callbackCollection, subStepHolder, isEligibility)
         else
             SinglePageSurveyLayout(model, callbackCollection, subStepHolder, isEligibility)
@@ -79,6 +81,7 @@ fun MultiPageSurveyLayout(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val preferenceDataStore = PreferenceDataStore(context)
+    val subStep = subStepHolder.subSteps.first()
 
     Scaffold(
         topBar = {
@@ -92,16 +95,16 @@ fun MultiPageSurveyLayout(
                 rightButtonText = getNextButtonMessage(index, subStepHolder, context),
                 onClickLeftButton = { index -= 1 },
                 onClickRightButton = {
-                    if (subStepHolder.subSteps[index].model.getResponse() == null) {
+                    if (subStep[index].model.getResponse() == null) {
                         ViewUtil.showToastMessage(context, "Please input answer")
                         return@BottomBar
                     }
 
-                    if (index == subStepHolder.size - 1) {
+                    if (index == subStep.size - 1) {
                         callbackCollection.setEligibility(subStepHolder.isSufficient())
                         if (isEligibility)
                             scope.launch {
-                                val profile: Map<String, Any?> = subStepHolder.subSteps.associate {
+                                val profile: Map<String, Any?> = subStep.associate {
                                     it.model.id to it.model.getResponse()
                                 }
                                 preferenceDataStore.setProfile(JSONObject(profile).toString())
@@ -123,18 +126,19 @@ fun MultiPageSurveyLayout(
                 .verticalScroll(scrollState)
         ) {
             SurveyProgressView(
-                "${index + 1} out of ${subStepHolder.size}",
-                (index + 1) / subStepHolder.size.toFloat()
+                "${index + 1} out of ${subStep.size}",
+                (index + 1) / subStep.size.toFloat()
             )
             Spacer(modifier = Modifier.height(30.dp))
-            subStepHolder.subSteps[index].Render(callbackCollection)
+            subStep[index].Render(callbackCollection)
         }
     }
 }
 
 @Composable
 private fun getNextButtonMessage(index: Int, subStepHolder: SubStepHolder?, context: Context) =
-    if (index == subStepHolder!!.size - 1) context.getString(string.complete) else context.getString(string.next)
+    if (index == subStepHolder!!.subSteps[0].size - 1) context.getString(string.complete)
+    else context.getString(string.next)
 
 @Composable
 fun SurveyProgressView(progressText: String, progress: Float) {
@@ -165,10 +169,11 @@ fun SinglePageSurveyLayout(
     subStepHolder: SubStepHolder,
     isEligibility: Boolean,
 ) {
-    val scrollSate = rememberScrollState()
+    val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val preferenceDataStore = PreferenceDataStore(context)
+    val subStep = subStepHolder.subSteps.first()
 
     Scaffold(
         topBar = {
@@ -182,10 +187,10 @@ fun SinglePageSurveyLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollSate)
+                .verticalScroll(scrollState)
         ) {
             Spacer(modifier = Modifier.height(28.dp))
-            subStepHolder.subSteps.forEachIndexed { _, questionSubStep ->
+            subStep.forEachIndexed { _, questionSubStep ->
                 Row(
                     Modifier.padding(horizontal = 24.dp)
                 ) {
@@ -200,12 +205,81 @@ fun SinglePageSurveyLayout(
                     callbackCollection.setEligibility(subStepHolder.isSufficient())
                     if (isEligibility)
                         scope.launch {
-                            val profile: Map<String, Any?> = subStepHolder.subSteps.associate {
+                            val profile: Map<String, Any?> = subStep.associate {
                                 it.model.id to it.model.getResponse()
                             }
                             preferenceDataStore.setProfile(JSONObject(profile).toString())
                         }
                     callbackCollection.next()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SectionPageSurveyLayout(
+    model: SurveyModel,
+    callbackCollection: CallbackCollection,
+    subStepHolder: SubStepHolder
+) {
+    val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val preferenceDataStore = PreferenceDataStore(context)
+    var index by remember { mutableStateOf(0) }
+
+    Scaffold(
+        topBar = {
+            TopBar(title = model.title) {
+                callbackCollection.prev()
+            }
+        },
+        bottomBar = {
+            BottomBar(
+                leftButtonText = context.getString(string.previous),
+                rightButtonText = if (index == subStepHolder.subSteps.size - 1) context.getString(string.complete)
+                else context.getString(string.next),
+                onClickLeftButton = { index -= 1 },
+                onClickRightButton = {
+                    if (subStepHolder.subSteps[index].any { it.model.getResponse() == null }
+                    ) {
+                        ViewUtil.showToastMessage(context, "Please input answer")
+                        return@BottomBar
+                    }
+
+                    if (index == subStepHolder.subSteps.size - 1) {
+                        callbackCollection.setEligibility(subStepHolder.isSufficient())
+                        callbackCollection.next()
+                        return@BottomBar
+                    }
+                    index += 1
+                },
+                leftButtonEnabled = index != 0
+            )
+        },
+        backgroundColor = AppTheme.colors.background,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .padding(horizontal = 24.dp)
+                .verticalScroll(scrollState)
+        ) {
+            SurveyProgressView(
+                "${index + 1} out of ${subStepHolder.subSteps.size}",
+                (index + 1) / subStepHolder.subSteps.size.toFloat()
+            )
+            Spacer(modifier = Modifier.height(28.dp))
+            subStepHolder.subSteps[index].forEachIndexed { _, questionSubStep ->
+                Row(
+                    Modifier.padding(horizontal = 24.dp)
+                ) {
+                    Column {
+                        questionSubStep.Render(callbackCollection)
+                        Spacer(modifier = Modifier.height(48.dp))
+                    }
                 }
             }
         }
@@ -276,7 +350,7 @@ fun EligibilityCheckerViewPreview() {
     val subStepHolder = SubStepHolder(
         "eligibility",
         "eligibility-checker",
-        questionnaireSubSteps
+        listOf(questionnaireSubSteps),
     )
 
     view.Render(

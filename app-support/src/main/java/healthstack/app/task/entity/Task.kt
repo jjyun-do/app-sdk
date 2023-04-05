@@ -68,7 +68,8 @@ data class Task(
             }
         ).apply {
             properties.items.map {
-                this.addQuestion(
+                if (it.type == "SECTION") this.addSection()
+                else this.addQuestion(
                     when (it.contents.type) {
                         CHOICE -> toChoiceQuestionModel(it)
                         SCALE -> toSliderQuestionModel(it)

@@ -129,7 +129,7 @@ class TaskTest {
         )
 
         val surveyTask = testTask.toViewTask() as SurveyTask
-        val questions = surveyTask.step.subStepHolder.subSteps.map { it.model }
+        val questions = surveyTask.step.subStepHolder.subSteps.first().map { it.model }
         assertEquals(testTask.properties.items.size, questions.size)
         assertTrue(questions[0] is ChoiceQuestionModel)
         assertTrue(questions[1] is MultiChoiceQuestionModel)

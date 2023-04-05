@@ -99,9 +99,11 @@ class TaskRepositoryImpl : TaskRepository {
 }
 
 fun SubStepHolder.getResult(): List<Result> =
-    subSteps.map {
-        Result(
-            it.model.id,
-            it.getResult().toString()
-        )
+    subSteps.flatMap { section ->
+        section.map {
+            Result(
+                it.model.id,
+                it.getResult().toString()
+            )
+        }
     }
