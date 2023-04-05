@@ -7,9 +7,9 @@ class TappingSpeedResultModel(
     id: String,
     title: String = "Tapping Speed",
     header: String = "Great Job!",
-    body: String? = "Your task was successfully completed.",
+    body: List<String>? = listOf("Your task was successfully completed."),
     drawableId: Int? = R.drawable.ic_activity_result,
     buttonText: String? = "Back to Home",
 ) : SimpleViewActivityModel(
-    id, title, header, body?.split("\n"), drawableId, buttonText
+    id, title, header, body, drawableId, buttonText
 )

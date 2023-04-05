@@ -19,6 +19,8 @@ class GuidedBreathingActivityTask(
     taskId: String,
     name: String,
     description: String,
+    completionTitle: String,
+    completionDescription: List<String>?,
     steps: List<Step<out StepModel, *>> = listOf(
         SimpleViewActivityStep(
             id, name, GuidedBreathingIntroModel(id, name),
@@ -27,7 +29,7 @@ class GuidedBreathingActivityTask(
             id, name, GuidedBreathingMeasureModel(id, name),
         ),
         SimpleViewActivityStep(
-            id, name, GuidedBreathingResultModel(id, name),
+            id, name, GuidedBreathingResultModel(id, name, header = completionTitle, body = completionDescription),
         ),
     ),
     isCompleted: Boolean = false,

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import healthstack.backend.integration.task.ChoiceProperties
 import healthstack.backend.integration.task.Item
 import healthstack.backend.integration.task.ScaleProperties
-import healthstack.kit.task.activity.predefined.TappingSpeedActivityTask
+import healthstack.kit.task.activity.predefined.PredefinedTaskUtil
 import healthstack.kit.task.survey.SurveyTask
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel.ViewType
@@ -24,6 +24,7 @@ data class Task(
     val id: Int? = null,
     val revisionId: Int,
     val taskId: String,
+    val type: String,
     val properties: Properties,
     val result: List<Result>? = null,
     val createdAt: LocalDateTime = LocalDateTime.now(),
@@ -34,7 +35,7 @@ data class Task(
 ) {
     data class Properties(
         val title: String,
-        val description: String,
+        val description: String?,
         val items: List<Item>,
     )
 
@@ -43,24 +44,26 @@ data class Task(
         val response: String,
     )
 
-    fun toViewTask() = when (properties.items.size) {
-        // TODO: need implement detailed logic using tag or other fields
-        0 -> TappingSpeedActivityTask(
+    fun toViewTask() = when (this.type) {
+        "ACTIVITY" -> PredefinedTaskUtil.generatePredefinedTask(
             id!!.toString(),
             taskId,
             properties.title,
-            properties.description,
+            properties.description ?: "",
             isCompleted = result != null,
             isActive = LocalDateTime.now().let {
                 scheduledAt <= it && it <= validUntil
-            }
+            },
+            properties.items[0].contents.completionTitle ?: "",
+            listOf(properties.items[0].contents.completionDescription ?: ""),
+            activityType = this.properties.items[0].contents.type
         )
-        else -> SurveyTask.Builder(
+        "SURVEY" -> SurveyTask.Builder(
             id!!.toString(), // TODO
             revisionId,
             taskId,
             properties.title,
-            properties.description,
+            properties.description ?: "",
             {},
             isCompleted = result != null,
             isActive = LocalDateTime.now().let {
@@ -78,6 +81,7 @@ data class Task(
                 )
             }
         }.build()
+        else -> throw IllegalArgumentException("not supported task type")
     }
 
     private fun toSliderQuestionModel(item: Item): QuestionModel<Any> {
@@ -86,7 +90,7 @@ data class Task(
 
         return ChoiceQuestionModel(
             item.name,
-            item.contents.title,
+            item.contents.title!!,
             item.contents.explanation,
             null,
             null,
@@ -102,27 +106,28 @@ data class Task(
         require(item.contents.type == CHOICE)
         require(item.contents.itemProperties is ChoiceProperties)
 
-        return if (item.contents.itemProperties.tag.uppercase() == "CHECKBOX")
+        return if (item.contents.itemProperties!!.tag.uppercase() == "CHECKBOX")
             toMultiChoiceQuestionModel(item) as QuestionModel<Any>
         else ChoiceQuestionModel(
             item.name,
-            item.contents.title,
+            item.contents.title!!,
             item.contents.explanation,
             null,
             null,
             (item.contents.itemProperties as ChoiceProperties).options.map { option -> option.value },
             ViewType.values()
-                .first { type -> type.name.equals(item.contents.itemProperties.tag, ignoreCase = true) }
+                .first { type -> type.name.equals(item.contents.itemProperties!!.tag, ignoreCase = true) }
         )
     }
 
-    private fun toMultiChoiceQuestionModel(item: Item): MultiChoiceQuestionModel =
-        MultiChoiceQuestionModel(
+    private fun toMultiChoiceQuestionModel(item: Item): MultiChoiceQuestionModel {
+        return MultiChoiceQuestionModel(
             item.name,
-            item.contents.title,
+            item.contents.title!!,
             item.contents.explanation,
             null,
             null,
             (item.contents.itemProperties as ChoiceProperties).options.map { option -> option.value },
         )
+    }
 }

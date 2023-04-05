@@ -8,9 +8,8 @@ import healthstack.kit.task.activity.ActivityTask
 import healthstack.kit.task.activity.model.TappingSpeedIntroModel
 import healthstack.kit.task.activity.model.TappingSpeedMeasureModel
 import healthstack.kit.task.activity.model.TappingSpeedResultModel
-import healthstack.kit.task.activity.step.TappingSpeedIntroStep
 import healthstack.kit.task.activity.step.TappingSpeedMeasureStep
-import healthstack.kit.task.activity.step.TappingSpeedResultStep
+import healthstack.kit.task.activity.step.common.SimpleViewActivityStep
 import healthstack.kit.task.base.Step
 import healthstack.kit.task.base.StepModel
 import healthstack.kit.ui.TaskCard
@@ -20,14 +19,16 @@ class TappingSpeedActivityTask(
     taskId: String,
     name: String = "Tapping Speed",
     description: String,
+    completionTitle: String,
+    completionDescription: List<String>?,
     steps: List<Step<out StepModel, *>> = listOf(
-        TappingSpeedIntroStep(
+        SimpleViewActivityStep(
             id, name,
             TappingSpeedIntroModel(
                 id, name
             )
         ),
-        TappingSpeedIntroStep(
+        SimpleViewActivityStep(
             id, name,
             TappingSpeedIntroModel(
                 id, name,
@@ -43,13 +44,14 @@ class TappingSpeedActivityTask(
                 id, name, null, measureTimeSecond = 10
             )
         ),
-        TappingSpeedResultStep(
+        SimpleViewActivityStep(
             id, name,
             TappingSpeedResultModel(
-                id, name, buttonText = "Continue"
+                id, name, header = completionTitle, body = completionDescription,
+                buttonText = "Continue"
             )
         ),
-        TappingSpeedIntroStep(
+        SimpleViewActivityStep(
             id, name,
             TappingSpeedIntroModel(
                 id, name,
@@ -66,10 +68,10 @@ class TappingSpeedActivityTask(
                 id, name, null, false, 10
             )
         ),
-        TappingSpeedResultStep(
+        SimpleViewActivityStep(
             id, name,
             TappingSpeedResultModel(
-                id, name
+                id, name, header = completionTitle, body = completionDescription
             )
         )
     ),

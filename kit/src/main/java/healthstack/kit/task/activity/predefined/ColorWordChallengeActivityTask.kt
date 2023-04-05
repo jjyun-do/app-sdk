@@ -19,6 +19,8 @@ class ColorWordChallengeActivityTask(
     taskId: String,
     name: String,
     description: String,
+    completionTitle: String,
+    completionDescription: List<String>?,
     steps: List<Step<out StepModel, *>> = listOf(
         SimpleViewActivityStep(
             id, name, ColorWordChallengeIntroModel(id, name)
@@ -27,7 +29,7 @@ class ColorWordChallengeActivityTask(
             id, name, ColorWordChallengeMeasureModel(id, name),
         ),
         SimpleViewActivityStep(
-            id, name, ColorWordChallengeResultModel(id, name)
+            id, name, ColorWordChallengeResultModel(id, name, header = completionTitle, body = completionDescription)
         ),
     ),
     isCompleted: Boolean = false,

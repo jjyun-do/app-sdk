@@ -27,6 +27,7 @@ class TaskTest {
             description = "property description",
             items = emptyList()
         ),
+        type = "SURVEY",
         scheduledAt = LocalDateTime.now(),
         validUntil = LocalDateTime.now().plusDays(1)
     )

@@ -20,7 +20,8 @@ data class TaskSpec(
     @SerializedName("id")
     val taskId: String,
     val title: String,
-    val description: String,
+    val type: String,
+    val description: String?,
     val schedule: String,
     val startTime: String,
     val endTime: String,
@@ -59,11 +60,13 @@ data class Item(
  */
 data class Contents(
     val type: String,
-    val title: String,
+    val required: Boolean,
+    val title: String? = null,
     val explanation: String? = null,
     @SerializedName("properties")
-    val itemProperties: ItemProperties,
-    val required: Boolean,
+    val itemProperties: ItemProperties? = null,
+    val completionTitle: String? = null,
+    val completionDescription: String? = null,
 )
 
 /**

@@ -21,6 +21,8 @@ class GaitAndBalanceActivityTask(
     taskId: String,
     name: String = "Gait & Balance",
     description: String,
+    completionTitle: String,
+    completionDescription: List<String>?,
     steps: List<Step<out StepModel, *>> = listOf(
         SimpleViewActivityStep(
             id, name,
@@ -54,7 +56,7 @@ class GaitAndBalanceActivityTask(
         ),
         SimpleViewActivityStep(
             id, name,
-            GaitAndBalanceResultModel(id, name)
+            GaitAndBalanceResultModel(id, name, header = completionTitle, body = completionDescription)
         )
     ),
     isCompleted: Boolean = false,

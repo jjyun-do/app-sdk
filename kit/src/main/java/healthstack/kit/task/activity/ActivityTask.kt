@@ -12,7 +12,7 @@ import healthstack.kit.task.base.StepModel
 import healthstack.kit.ui.TaskCard
 import java.time.LocalDateTime
 
-open class ActivityTask(
+abstract class ActivityTask(
     id: String,
     val taskId: String,
     name: String,

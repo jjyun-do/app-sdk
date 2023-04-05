@@ -19,6 +19,8 @@ class RangeOfMotionActivityTask(
     taskId: String,
     name: String,
     description: String,
+    completionTitle: String,
+    completionDescription: List<String>?,
     steps: List<Step<out StepModel, *>> = listOf(
         SimpleViewActivityStep(
             id, name, RangeOfMotionIntroModel(id, name)
@@ -42,7 +44,15 @@ class RangeOfMotionActivityTask(
             id, name, RangeOfMotionMeasureModel(id, name),
         ),
         SimpleViewActivityStep(
-            id, name, RangeOfMotionResultModel(id, name, buttonText = "Continue")
+            id,
+            name,
+            RangeOfMotionResultModel(
+                id,
+                name,
+                header = completionTitle,
+                body = completionDescription,
+                buttonText = "Continue"
+            )
         ),
         SimpleViewActivityStep(
             id,
@@ -79,7 +89,8 @@ class RangeOfMotionActivityTask(
             RangeOfMotionResultModel(
                 id,
                 name,
-                body = listOf("Your left arm circumduction movement score has been recorded."),
+                header = completionTitle,
+                body = completionDescription,
             )
         ),
     ),
@@ -97,7 +108,8 @@ class RangeOfMotionActivityTask(
             id = R.drawable.ic_activity_range_of_motion_right_arm,
             taskName = name,
             description = description,
-            isActive = isCompleted.not(),
+            isCompleted = isCompleted,
+            isActive = isActive,
             buttonText = LocalContext.current.getString(string.start_task)
         ) {
             onClick()

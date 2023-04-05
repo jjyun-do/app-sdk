@@ -19,6 +19,8 @@ class ReactionTimeActivityTask(
     taskId: String,
     name: String,
     description: String,
+    completionTitle: String,
+    completionDescription: List<String>?,
     steps: List<Step<out StepModel, *>> = listOf(
         SimpleViewActivityStep(
             id, name, ReactionTimeIntroModel(id, name),
@@ -27,7 +29,7 @@ class ReactionTimeActivityTask(
             id, name, ReactionTimeMeasureModel(id, name),
         ),
         SimpleViewActivityStep(
-            id, name, ReactionTimeResultModel(id, name),
+            id, name, ReactionTimeResultModel(id, name, header = completionTitle, body = completionDescription),
         ),
     ),
     isCompleted: Boolean = false,
