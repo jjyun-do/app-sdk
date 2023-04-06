@@ -10,10 +10,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import healthstack.kit.sensor.SensorType.ACCELEROMETER
+import healthstack.kit.sensor.SensorType.GYROSCOPE
 import healthstack.kit.task.activity.model.common.SimpleTimerActivityModel
 import healthstack.kit.task.base.CallbackCollection
 import healthstack.kit.task.base.View
@@ -22,6 +26,8 @@ import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.CircularTimer
 import healthstack.kit.ui.ListedText
 import healthstack.kit.ui.TopBar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 open class SimpleTimerActivityView<T : SimpleTimerActivityModel> : View<T>() {
     @Composable
@@ -31,6 +37,29 @@ open class SimpleTimerActivityView<T : SimpleTimerActivityModel> : View<T>() {
         holder: SubStepHolder?,
     ) {
         val scrollState = rememberScrollState()
+        val scope = rememberCoroutineScope()
+
+        DisposableEffect(Unit) {
+            model.init()
+
+            scope.launch {
+                delay(model.timeSeconds * 1000)
+
+                if (model.sensors.isNotEmpty())
+                    callbackCollection.setActivityResult("${model.dataPrefix}_times(ms)", model.timeMillis)
+                if (model.sensors.contains(GYROSCOPE))
+                    callbackCollection.setActivityResult("${model.dataPrefix}_${GYROSCOPE.id}", model.gyroscope ?: "")
+                if (model.sensors.contains(ACCELEROMETER))
+                    callbackCollection.setActivityResult(
+                        "${model.dataPrefix}_${ACCELEROMETER.id}",
+                        model.accelerometer ?: ""
+                    )
+            }
+
+            onDispose {
+                model.close()
+            }
+        }
 
         Scaffold(
             topBar = {

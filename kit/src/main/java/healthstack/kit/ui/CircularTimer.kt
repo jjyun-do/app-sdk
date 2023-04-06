@@ -32,7 +32,7 @@ fun CircularTimer(
     modifier: Modifier = Modifier,
     color: Color = AppTheme.colors.primary,
     strokeWidth: Dp = 24.dp,
-    timeSeconds: Int = 10,
+    timeSeconds: Long = 10,
     interactionType: InteractionType = InteractionType.NOTHING,
     callback: () -> Unit = {},
 ) {
@@ -54,7 +54,7 @@ fun CircularTimer(
         progress.animateTo(
             targetValue = 0f,
             animationSpec = tween(
-                durationMillis = timeSeconds * 1000,
+                durationMillis = (timeSeconds * 1000).toInt(),
                 easing = LinearEasing
             )
         )
@@ -91,7 +91,7 @@ fun CircularTimer(
     }
 }
 
-private fun formatTime(timeSeconds: Int): String {
+private fun formatTime(timeSeconds: Long): String {
     return String.format("%02d", (timeSeconds / 60) % 60) + ":" + String.format("%02d", timeSeconds % 60)
 }
 
