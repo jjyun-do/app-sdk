@@ -1,6 +1,5 @@
 package healthstack.app
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +15,10 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.InsertChart
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
@@ -40,6 +42,8 @@ import healthstack.app.viewmodel.TaskViewModel
 import healthstack.app.viewmodel.TaskViewModel.TasksState
 import healthstack.kit.task.base.Task
 import healthstack.kit.theme.AppTheme
+import healthstack.kit.ui.BottomBarNavigation
+import healthstack.kit.ui.BottomNavItem
 import healthstack.kit.ui.DropdownMenuItemData
 import healthstack.kit.ui.TopBarWithDropDown
 import healthstack.kit.ui.WeeklyCard
@@ -52,42 +56,10 @@ fun Home(
     changeNavigation: (AppStage) -> Unit,
 ) {
     val scrollState = rememberScrollState()
+    val firebaseAuth = FirebaseAuth.getInstance()
     var selectedTask by remember {
         mutableStateOf<Task?>(null)
     }
-
-    if (selectedTask == null) {
-        DailyTaskView(
-            LocalDate.now(),
-            dataTypeStatus,
-            viewModel,
-            scrollState,
-            changeNavigation
-        ) { selectedTask = it }
-    } else {
-        selectedTask?.let { task ->
-            task.callback = {
-                viewModel.done(task)
-                selectedTask = null
-            }
-            task.canceled = {
-                selectedTask = null
-            }
-            task.Render()
-        }
-    }
-}
-
-@Composable
-private fun DailyTaskView(
-    date: LocalDate,
-    dataTypeStatus: List<StatusDataType>,
-    viewModel: healthstack.app.viewmodel.TaskViewModel,
-    scrollState: ScrollState,
-    changeNavigation: (AppStage) -> Unit,
-    onStartTask: (Task) -> Unit,
-) {
-    val firebaseAuth = FirebaseAuth.getInstance()
 
     Scaffold(
         backgroundColor = AppTheme.colors.background,
@@ -105,6 +77,18 @@ private fun DailyTaskView(
                     ) { changeNavigation(StudyInformation) },
                 )
             )
+        },
+        bottomBar = {
+            BottomBarNavigation(
+                listOf(
+                    BottomNavItem("Home", Icons.Default.Home) {
+                    },
+                    BottomNavItem("Insights", Icons.Default.InsertChart) {
+                    },
+                    BottomNavItem("Education", Icons.Default.MenuBook) {
+                    }
+                )
+            )
         }
     ) {
         Column(
@@ -114,36 +98,63 @@ private fun DailyTaskView(
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(Modifier.height(10.dp))
-            WeeklyCard(date)
-            Spacer(Modifier.height(32.dp))
-
-            StatusCards(dataTypeStatus, viewModel)
-            Spacer(Modifier.height(40.dp))
-
-            Tasks(
-                "Upcoming Tasks",
-                viewModel.activeTasks.collectAsState().value,
-                { viewModel.syncTasks() }
-            ) {
-                onStartTask(it)
+            if (selectedTask == null) {
+                DailyTaskView(
+                    LocalDate.now(),
+                    dataTypeStatus,
+                    viewModel,
+                ) { selectedTask = it }
+            } else {
+                selectedTask?.let { task ->
+                    task.callback = {
+                        viewModel.done(task)
+                        selectedTask = null
+                    }
+                    task.canceled = {
+                        selectedTask = null
+                    }
+                    task.Render()
+                }
             }
-            Spacer(Modifier.height(32.dp))
-            Tasks(
-                "Today",
-                viewModel.todayTasks.collectAsState().value
-            )
-            Spacer(Modifier.height(32.dp))
-            Tasks(
-                "Completed Tasks",
-                viewModel.completedTasks.collectAsState().value
-            )
         }
     }
 }
 
 @Composable
-fun Tasks(
+private fun DailyTaskView(
+    date: LocalDate,
+    dataTypeStatus: List<StatusDataType>,
+    viewModel: healthstack.app.viewmodel.TaskViewModel,
+    onStartTask: (Task) -> Unit,
+) {
+    Spacer(Modifier.height(10.dp))
+    WeeklyCard(date)
+    Spacer(Modifier.height(32.dp))
+
+    StatusCards(dataTypeStatus, viewModel)
+    Spacer(Modifier.height(40.dp))
+
+    HomeTaskCard(
+        "Upcoming Tasks",
+        viewModel.activeTasks.collectAsState().value,
+        { viewModel.syncTasks() }
+    ) {
+        onStartTask(it)
+    }
+    Spacer(Modifier.height(32.dp))
+    HomeTaskCard(
+        "Today",
+        viewModel.todayTasks.collectAsState().value
+    )
+    Spacer(Modifier.height(32.dp))
+    HomeTaskCard(
+        "Completed Tasks",
+        viewModel.completedTasks.collectAsState().value
+    )
+}
+
+@Composable
+fun HomeTaskCard(
     title: String,
     state: TasksState,
     onReload: () -> Unit = { },

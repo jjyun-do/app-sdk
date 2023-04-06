@@ -7,9 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import healthstack.app.pref.AppStage
+import healthstack.app.pref.AppStage.Education
 import healthstack.app.pref.AppStage.Home
+import healthstack.app.pref.AppStage.Insights
 import healthstack.app.pref.AppStage.Onboarding
+import healthstack.app.pref.AppStage.Profile
+import healthstack.app.pref.AppStage.Settings
 import healthstack.app.pref.AppStage.SignUp
+import healthstack.app.pref.AppStage.StudyInformation
 import healthstack.app.pref.SettingPreference
 import healthstack.app.status.StatusDataType
 import healthstack.app.sync.SyncManager
@@ -73,18 +78,20 @@ private fun Main(
         composable(Home.name) {
             Home(statusList, viewModel, changeNavigation)
         }
-        composable(AppStage.Profile.name) {
+        composable(Profile.name) {
             MyProfileView(onClickBack = { changeNavigation(Home) }).Render()
         }
-        composable(AppStage.StudyInformation.name) {
+        composable(StudyInformation.name) {
             StudyInfoView(onClickBack = { changeNavigation(Home) }).Render()
         }
-        composable(AppStage.Settings.name) {
+        composable(Settings.name) {
             SettingsView(
                 onClickBack = { changeNavigation(Home) },
                 initialize = { changeNavigation(Onboarding) }
             ).Render()
         }
+        composable(Insights.name) { }
+        composable(Education.name) { }
         composable(Onboarding.name) {
             onboardingTask.callback = { changeNavigation(SignUp) }
             onboardingTask.Render()

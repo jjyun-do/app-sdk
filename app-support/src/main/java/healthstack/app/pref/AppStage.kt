@@ -6,5 +6,7 @@ enum class AppStage {
     Home,
     Profile,
     StudyInformation,
-    Settings;
+    Settings,
+    Insights,
+    Education;
 }
