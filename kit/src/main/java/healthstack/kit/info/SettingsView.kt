@@ -19,7 +19,7 @@ import healthstack.kit.ui.AlertPopup
 import healthstack.kit.ui.TopBar
 
 class SettingsView(
-    val home: () -> Unit = {},
+    val onClickBack: () -> Unit = {},
     val initialize: () -> Unit = {},
 ) {
     @Composable
@@ -29,7 +29,7 @@ class SettingsView(
         Scaffold(
             topBar = {
                 TopBar("Settings") {
-                    home()
+                    onClickBack()
                 }
             }
         ) {

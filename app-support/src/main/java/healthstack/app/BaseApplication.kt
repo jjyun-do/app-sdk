@@ -74,13 +74,16 @@ private fun Main(
             Home(statusList, viewModel, changeNavigation)
         }
         composable(AppStage.Profile.name) {
-            MyProfileView(home = { changeNavigation(Home) }).Render()
+            MyProfileView(onClickBack = { changeNavigation(Home) }).Render()
         }
         composable(AppStage.StudyInformation.name) {
-            StudyInfoView(home = { changeNavigation(Home) }).Render()
+            StudyInfoView(onClickBack = { changeNavigation(Home) }).Render()
         }
         composable(AppStage.Settings.name) {
-            SettingsView(home = { changeNavigation(Home) }, initialize = { changeNavigation(Onboarding) }).Render()
+            SettingsView(
+                onClickBack = { changeNavigation(Home) },
+                initialize = { changeNavigation(Onboarding) }
+            ).Render()
         }
         composable(Onboarding.name) {
             onboardingTask.callback = { changeNavigation(SignUp) }

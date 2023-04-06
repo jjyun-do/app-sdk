@@ -23,7 +23,7 @@ import healthstack.kit.ui.PlainText
 import healthstack.kit.ui.TopBar
 
 class StudyInfoView(
-    val home: () -> Unit = {},
+    val onClickBack: () -> Unit = {},
 ) {
     @Composable
     fun Render() {
@@ -33,7 +33,7 @@ class StudyInfoView(
         Scaffold(
             topBar = {
                 TopBar("Study Information") {
-                    home()
+                    onClickBack()
                 }
             }
         ) {

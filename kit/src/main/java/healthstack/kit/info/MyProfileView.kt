@@ -41,8 +41,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class MyProfileView(
-    // TODO: If home() called, update profile to backend
-    val home: () -> Unit = {},
+    val onClickBack: () -> Unit = {},
 ) {
 
     enum class ProfileField(val id: String) {
@@ -75,7 +74,7 @@ class MyProfileView(
         Scaffold(
             topBar = {
                 TopBar("Profile") {
-                    home()
+                    onClickBack()
                 }
             }
         ) {
