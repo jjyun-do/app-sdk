@@ -39,6 +39,7 @@ object Versions {
     const val SUPPORT_ANNOTATION = "28"
     const val GSON = "2.9.0"
     const val CRON_QUARTZ = "2.3.2"
+    const val ANTLR = "4.11.1"
 
     const val DOKKA = "1.6.21"
 
@@ -106,6 +107,8 @@ object AppDependencies {
     const val GOOGLE_HEALTH_DATA =
         "com.google.android.libraries.healthdata:health-data-api:${Versions.Google.HEALTH_DATA}"
     const val GOOGLE_HEALTH_CONNECT = "androidx.health.connect:connect-client:${Versions.Google.HEALTH_CONNECT}"
+
+    const val ANTLR = "org.antlr:antlr4:${Versions.ANTLR}"
 
     val healthDataImplLibs = arrayListOf<String>().apply {
         add(ANDROIDX_WORK)

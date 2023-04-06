@@ -77,6 +77,8 @@ dependencies {
     implementation(AppDependencies.SIGNATURE)
     implementation(AppDependencies.coilImplLibs)
     implementation(AppDependencies.SUPPORT_ANNOTATION)
+    implementation(AppDependencies.ANTLR)
+    implementation(files("../jarfile/branch-logic-engine-0.0.1-plain.jar"))
 
     debugImplementation(AppDependencies.uiDebugLibs)
 

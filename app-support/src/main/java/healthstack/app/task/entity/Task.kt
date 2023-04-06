@@ -13,6 +13,7 @@ import healthstack.kit.task.survey.question.model.ChoiceQuestionModel.ViewType
 import healthstack.kit.task.survey.question.model.ChoiceQuestionModel.ViewType.Slider
 import healthstack.kit.task.survey.question.model.MultiChoiceQuestionModel
 import healthstack.kit.task.survey.question.model.QuestionModel
+import healthstack.kit.task.survey.question.model.SkipLogic
 import java.time.LocalDateTime
 
 internal const val CHOICE = "CHOICE"
@@ -94,6 +95,7 @@ data class Task(
             item.contents.explanation,
             null,
             null,
+            (item.contents.itemProperties as ScaleProperties).skipLogic?.map { it.translate() } ?: emptyList(),
             listOf(
                 (item.contents.itemProperties as ScaleProperties).low,
                 (item.contents.itemProperties as ScaleProperties).high
@@ -114,6 +116,7 @@ data class Task(
             item.contents.explanation,
             null,
             null,
+            (item.contents.itemProperties as ChoiceProperties).skipLogic?.map { it.translate() } ?: emptyList(),
             (item.contents.itemProperties as ChoiceProperties).options.map { option -> option.value },
             ViewType.values()
                 .first { type -> type.name.equals(item.contents.itemProperties!!.tag, ignoreCase = true) }
@@ -127,7 +130,12 @@ data class Task(
             item.contents.explanation,
             null,
             null,
+            (item.contents.itemProperties as ChoiceProperties).skipLogic?.map { it.translate() } ?: emptyList(),
             (item.contents.itemProperties as ChoiceProperties).options.map { option -> option.value },
         )
+    }
+
+    private fun healthstack.backend.integration.task.SkipLogic.translate(): SkipLogic {
+        return SkipLogic(condition, goToItemSequence)
     }
 }

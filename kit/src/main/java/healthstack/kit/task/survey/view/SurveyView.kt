@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.samsung.healthcare.branchlogicengine.evalExpression
+
 import healthstack.kit.R.string
 import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.datastore.PreferenceDataStore
@@ -121,7 +123,7 @@ fun MultiPageSurveyLayout(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(1f)
+                .fillMaxWidth()
                 .padding(horizontal = 24.dp)
                 .verticalScroll(scrollState)
         ) {
@@ -224,10 +226,9 @@ fun SectionPageSurveyLayout(
     subStepHolder: SubStepHolder
 ) {
     val scrollState = rememberScrollState()
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val preferenceDataStore = PreferenceDataStore(context)
     var index by remember { mutableStateOf(0) }
+    val navigateStack = remember { ArrayDeque<Int>() }
 
     Scaffold(
         topBar = {
@@ -240,7 +241,7 @@ fun SectionPageSurveyLayout(
                 leftButtonText = context.getString(string.previous),
                 rightButtonText = if (index == subStepHolder.subSteps.size - 1) context.getString(string.complete)
                 else context.getString(string.next),
-                onClickLeftButton = { index -= 1 },
+                onClickLeftButton = { index = navigateStack.removeLast() },
                 onClickRightButton = {
                     if (subStepHolder.subSteps[index].any { it.model.getResponse() == null }
                     ) {
@@ -249,11 +250,32 @@ fun SectionPageSurveyLayout(
                     }
 
                     if (index == subStepHolder.subSteps.size - 1) {
-                        callbackCollection.setEligibility(subStepHolder.isSufficient())
                         callbackCollection.next()
                         return@BottomBar
                     }
-                    index += 1
+
+                    val contextValueMap = subStepHolder.subSteps.flatMap { section ->
+                        section.map {
+                            it.model.id.replace("Question", "val") to it.getResult().toString()
+                        }
+                    }.toMap()
+
+                    val selectedSkipLogic = subStepHolder.subSteps[index].flatMap {
+                        it.model.skipLogics
+                    }.findLast { evalExpression(it.condition, contextValueMap) }
+
+                    navigateStack.addLast(index)
+                    if (selectedSkipLogic == null) {
+                        index += 1
+                    } else {
+                        val destination = subStepHolder.subSteps.flatMapIndexed { index, section ->
+                            section.filter {
+                                it.model.id.replace("Question", "")
+                                    .replace("Section", "").toInt() >= selectedSkipLogic.goToItemSequence
+                            }.map { index }
+                        }
+                        index = destination.first()
+                    }
                 },
                 leftButtonEnabled = index != 0
             )
@@ -263,7 +285,7 @@ fun SectionPageSurveyLayout(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .fillMaxWidth(1f)
+                .fillMaxWidth()
                 .padding(horizontal = 24.dp)
                 .verticalScroll(scrollState)
         ) {

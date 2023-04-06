@@ -76,6 +76,8 @@ data class Contents(
  */
 open class ItemProperties(
     val tag: String,
+    @SerializedName("skip_logic")
+    val skipLogic: List<SkipLogic>?
 )
 
 /**
@@ -86,8 +88,9 @@ open class ItemProperties(
  */
 class ChoiceProperties(
     tag: String,
+    skipLogic: List<SkipLogic>? = null,
     val options: List<Option>,
-) : ItemProperties(tag)
+) : ItemProperties(tag, skipLogic)
 
 /**
  * Item properties for the scale question.
@@ -100,11 +103,12 @@ class ChoiceProperties(
  */
 class ScaleProperties(
     tag: String,
+    skipLogic: List<SkipLogic>? = null,
     val low: Int,
     val high: Int,
     val lowLabel: String?,
     val highLabel: String?,
-) : ItemProperties(tag)
+) : ItemProperties(tag, skipLogic)
 
 /**
  * Stores the option.
@@ -113,4 +117,9 @@ class ScaleProperties(
  */
 data class Option(
     val value: String,
+)
+
+data class SkipLogic(
+    val condition: String,
+    val goToItemSequence: Int,
 )
