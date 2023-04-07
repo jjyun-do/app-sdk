@@ -16,6 +16,7 @@ import healthstack.app.pref.AppStage.Settings
 import healthstack.app.pref.AppStage.SignUp
 import healthstack.app.pref.AppStage.StudyInformation
 import healthstack.app.pref.SettingPreference
+import healthstack.app.refact.HealthInsightView
 import healthstack.app.status.StatusDataType
 import healthstack.app.sync.SyncManager
 import healthstack.app.task.repository.TaskRepository
@@ -90,7 +91,9 @@ private fun Main(
                 initialize = { changeNavigation(Onboarding) }
             ).Render()
         }
-        composable(Insights.name) { }
+        composable(Insights.name) {
+            HealthInsightView(changeNavigation = changeNavigation).Render()
+        }
         composable(Education.name) { }
         composable(Onboarding.name) {
             onboardingTask.callback = { changeNavigation(SignUp) }
