@@ -1,0 +1,47 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: code-large
+
+    container:
+      image: data-service-docker-local.bart.sec.samsung.net/android:31-system-jfrog
+      credentials:
+        username: ${{ secrets.BART_USER }}
+        password: ${{ secrets.BART_API_KEY }}
+
+    steps:
+      - name: ⬇️ Checkout
+        uses: code-actions/checkout@v2
+
+      - name: ⬇️ Caching...
+        uses: code-actions/cache@v3
+        with:
+          path: |
+            /root/.gradle/caches
+            /root/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: ⚡️ Check environment (Java & Android SDK)
+        run: |
+          java --version
+          sdkmanager --list
+
+      - name: 🐸 Generate AAR
+        run: ./gradlew :kit:assemble :app-support:assemble
+
+      - name: 🐋 Upload AAR
+        uses: CODE-Actions/upload-artifact@v2
+        with:
+          name: AAR
+          path: '**/**/build/outputs/aar'
+
+      - name: Stop gradle for caching
+        run: ./gradlew --stop

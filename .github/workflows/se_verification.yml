@@ -1,0 +1,34 @@
+name: se_verification
+
+on:
+  push:
+    branches:
+      - release
+      - main
+
+jobs:
+  test:
+    runs-on: code-default
+
+    steps:
+      - name: ⬇️ Checkout
+        uses: code-actions/checkout@v2
+
+      - name: ⚡️ Set environment (Java)
+        uses: code-actions/setup-java@v1
+        with:
+          java-version: 11
+          java-package: jdk
+
+      - name: ⚡️ Check environment (Java)
+        run: |
+          java --version
+
+      - name: 🐸 Execute TCA checker
+        run: java -jar .ahub/tcchecker-tca/tca-standalone-1.1.7.jar --outdir=./output --config=.ahub/tcchecker-tca/config.yaml --local=./ --logfile=./output/tcm.log
+
+      - name: 🐋 Upload TCM report
+        uses: code-actions/upload-artifact@v3
+        with:
+          name: TCM Report
+          path: ./output/
