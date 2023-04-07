@@ -176,6 +176,7 @@ private fun DailyTaskView(
             "Completed Tasks",
             viewModel.completedTasks.collectAsState().value
         )
+        Spacer(Modifier.height(60.dp))
     }
 }
 
