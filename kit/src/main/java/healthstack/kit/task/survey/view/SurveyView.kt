@@ -299,14 +299,8 @@ fun SectionPageSurveyLayout(
             )
             Spacer(modifier = Modifier.height(28.dp))
             subStepHolder.subSteps[index].forEachIndexed { _, questionSubStep ->
-                Row(
-                    Modifier.padding(horizontal = 24.dp)
-                ) {
-                    Column {
-                        questionSubStep.Render(callbackCollection)
-                        Spacer(modifier = Modifier.height(48.dp))
-                    }
-                }
+                questionSubStep.Render(callbackCollection)
+                Spacer(modifier = Modifier.height(48.dp))
             }
         }
     }

@@ -64,7 +64,8 @@ fun TopBar(
             Text(
                 text = title,
                 style = AppTheme.typography.subtitle1,
-                color = color
+                color = color,
+                maxLines = 1
             )
         },
         backgroundColor = AppTheme.colors.background,
@@ -98,6 +99,7 @@ fun TopBar(
                 text = title,
                 style = AppTheme.typography.subtitle1,
                 color = color,
+                maxLines = 1
             )
         },
         backgroundColor = AppTheme.colors.background,
@@ -120,7 +122,8 @@ fun TopBarWithDropDown(
                 text = title,
                 style = style,
                 color = color,
-                modifier = Modifier.padding(start = 10.dp)
+                modifier = Modifier.padding(start = 10.dp),
+                maxLines = 1
             )
         },
         elevation = 0.dp,
