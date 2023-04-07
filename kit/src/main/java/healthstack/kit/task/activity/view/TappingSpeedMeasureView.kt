@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +32,8 @@ import healthstack.kit.task.survey.question.SubStepHolder
 import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.MinuteTextTimer
 import healthstack.kit.ui.TopBar
+import healthstack.kit.ui.util.InteractionType.VIBRATE
+import healthstack.kit.ui.util.InteractionUtil
 
 class TappingSpeedMeasureView() : View<TappingSpeedMeasureModel>() {
     @Composable
@@ -40,6 +43,7 @@ class TappingSpeedMeasureView() : View<TappingSpeedMeasureModel>() {
         holder: SubStepHolder?,
     ) {
         val tapCount = remember { mutableStateOf(0) }
+        val composeContext = LocalContext.current
 
         Scaffold(
             topBar = {
@@ -59,6 +63,7 @@ class TappingSpeedMeasureView() : View<TappingSpeedMeasureModel>() {
                     callbackCollection.setActivityResult(
                         model.handType, tapCount.value.toString()
                     )
+                    InteractionUtil.feedback(composeContext, VIBRATE)
                     callbackCollection.next()
                 }
 

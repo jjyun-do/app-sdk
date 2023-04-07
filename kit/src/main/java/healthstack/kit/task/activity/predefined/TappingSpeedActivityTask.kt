@@ -46,13 +46,6 @@ class TappingSpeedActivityTask(
         ),
         SimpleViewActivityStep(
             id, name,
-            TappingSpeedResultModel(
-                id, name, header = completionTitle, body = completionDescription,
-                buttonText = "Continue"
-            )
-        ),
-        SimpleViewActivityStep(
-            id, name,
             TappingSpeedIntroModel(
                 id, name,
                 body = "Place your phone on a flat surface.\n" +
