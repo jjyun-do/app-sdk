@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Scaffold
@@ -22,6 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -119,13 +121,13 @@ fun MultiPageSurveyLayout(
                 leftButtonEnabled = index != 0
             )
         },
-        backgroundColor = AppTheme.colors.background
+        backgroundColor = AppTheme.colors.background,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
                 .verticalScroll(scrollState)
+                .padding(horizontal = 20.dp)
         ) {
             SurveyProgressView(
                 "${index + 1} out of ${subStep.size}",
@@ -151,9 +153,10 @@ fun SurveyProgressView(progressText: String, progress: Float) {
         LinearProgressIndicator(
             progress = progress,
             modifier = Modifier
-                .fillMaxWidth(1f)
-                .height(12.dp),
-            color = AppTheme.colors.primary
+                .fillMaxWidth()
+                .height(12.dp)
+                .clip(RoundedCornerShape(50.dp)),
+            color = AppTheme.colors.primary,
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
@@ -189,6 +192,7 @@ fun SinglePageSurveyLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .padding(horizontal = 20.dp)
                 .verticalScroll(scrollState)
         ) {
             Spacer(modifier = Modifier.height(28.dp))
@@ -223,7 +227,7 @@ fun SinglePageSurveyLayout(
 fun SectionPageSurveyLayout(
     model: SurveyModel,
     callbackCollection: CallbackCollection,
-    subStepHolder: SubStepHolder
+    subStepHolder: SubStepHolder,
 ) {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
@@ -286,7 +290,7 @@ fun SectionPageSurveyLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 20.dp)
                 .verticalScroll(scrollState)
         ) {
             SurveyProgressView(

@@ -5,14 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -59,14 +58,14 @@ fun InsightCardWithProgress(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp)
+                .wrapContentHeight()
                 .padding(horizontal = 16.dp, vertical = 19.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentWidth()
+                    .wrapContentSize()
             ) {
                 Row {
                     Text(
@@ -86,8 +85,7 @@ fun InsightCardWithProgress(
             }
             Column(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentWidth(),
+                    .wrapContentSize(),
                 verticalArrangement = Arrangement.Center
             ) {
                 LinearProgressIndicator(
@@ -98,6 +96,40 @@ fun InsightCardWithProgress(
                         .clip(RoundedCornerShape(50.dp))
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun ThinInsightCard(
+    title: String,
+    insightUnit: InsightUnit,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        shape = RoundedCornerShape(4.dp),
+        elevation = 1.dp
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(horizontal = 16.dp, vertical = 19.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+
+            Text(
+                text = title,
+                color = AppTheme.colors.onBackground,
+                style = AppTheme.typography.title1,
+            )
+            Text(
+                text = "${insightUnit.value} ${insightUnit.unit}",
+                style = AppTheme.typography.body3,
+                color = AppTheme.colors.onBackground.copy(0.6F)
+            )
         }
     }
 }

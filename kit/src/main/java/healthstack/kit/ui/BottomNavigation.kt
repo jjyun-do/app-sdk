@@ -26,32 +26,33 @@ data class BottomNavItem(val title: String, val icon: ImageVector, val onClick: 
 @Composable
 fun BottomBarNavigation(
     items: List<BottomNavItem>,
+    initial: Int = 0,
 ) {
-    val curItem = remember { mutableStateOf(items.first().title) }
+    val curItem = remember { mutableStateOf(initial) }
 
     BottomNavigation(
         modifier = Modifier.fillMaxWidth().height(60.dp),
         backgroundColor = AppTheme.colors.background,
     ) {
-        items.forEach {
+        items.forEachIndexed { index, item ->
             BottomNavigationItem(
-                selected = (curItem.value == it.title),
+                selected = (curItem.value == index),
                 onClick = {
-                    curItem.value = it.title
-                    it.onClick()
+                    curItem.value = index
+                    item.onClick()
                 },
                 selectedContentColor = AppTheme.colors.primary,
                 unselectedContentColor = AppTheme.colors.onBackground.copy(0.6F),
                 icon = {
                     Icon(
-                        imageVector = it.icon,
-                        contentDescription = "${it.title}_icon",
+                        imageVector = item.icon,
+                        contentDescription = "${item.title}_icon",
                         modifier = Modifier.size(20.dp)
                     )
                 },
                 label = {
                     Text(
-                        text = it.title,
+                        text = item.title,
                         style = AppTheme.typography.body3,
                     )
                 }

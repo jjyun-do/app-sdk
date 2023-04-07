@@ -91,11 +91,12 @@ fun TaskCard(
                             style = AppTheme.typography.headline4,
                             color = AppTheme.colors.onSurface,
                         )
-                        Text(
-                            text = description,
-                            style = AppTheme.typography.body3,
-                            color = AppTheme.colors.onSurface.copy(0.6F),
-                        )
+                        if (description.isNotEmpty())
+                            Text(
+                                text = description,
+                                style = AppTheme.typography.body3,
+                                color = AppTheme.colors.onSurface.copy(0.6F),
+                            )
                     }
                 }
                 if (isActive) {
@@ -144,11 +145,12 @@ fun TaskCard(
                             style = AppTheme.typography.headline4,
                             color = AppTheme.colors.onSurface.copy(0.38F),
                         )
-                        Text(
-                            text = description,
-                            style = AppTheme.typography.body3,
-                            color = AppTheme.colors.onSurface.copy(0.38F),
-                        )
+                        if (description.isNotEmpty())
+                            Text(
+                                text = description,
+                                style = AppTheme.typography.body3,
+                                color = AppTheme.colors.onSurface.copy(0.38F),
+                            )
                     }
                 }
             }
@@ -174,4 +176,25 @@ fun TaskCardCompletedPreview() =
         description = "Please fill out this survey and help us get to know your health condition",
         buttonText = "Get started",
         isCompleted = true
+    )
+
+@PreviewGenerated
+@Preview(showBackground = true)
+@Composable
+fun TaskCardCompleted1Preview() =
+    TaskCard(
+        taskName = "Medical History Survey",
+        description = "",
+        buttonText = "Get started",
+        isCompleted = true
+    )
+
+@PreviewGenerated
+@Preview(showBackground = true)
+@Composable
+fun TaskCardPreview1() =
+    TaskCard(
+        taskName = "Medical History Survey",
+        description = "",
+        buttonText = "Get started"
     )

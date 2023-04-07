@@ -1,5 +1,6 @@
 package healthstack.kit.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +27,7 @@ fun HorizontalTab(
 
     Column(
         Modifier.fillMaxWidth()
+            .background(AppTheme.colors.background),
     ) {
         TabRow(
             selectedTabIndex = cur.value,

@@ -2,10 +2,12 @@ package healthstack.kit.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -41,7 +43,7 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     modifier = Modifier
-                        .padding(start = 32.dp, top = 12.dp, bottom = 12.dp, end = 12.dp)
+                        .padding(start = 10.dp, top = 12.dp, bottom = 12.dp)
                         .clickable { onClickBack() },
                     contentDescription = "back button icon",
                     tint = color,
@@ -77,12 +79,14 @@ fun TopBar(
     onClickBack: (() -> Unit)? = null,
 ) {
     TopAppBar(
+        modifier = Modifier.fillMaxWidth(),
         navigationIcon = onClickBack?.let {
             {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     modifier = Modifier
-                        .padding(start = 32.dp, top = 12.dp, bottom = 12.dp, end = 12.dp)
+                        .padding(start = 10.dp, top = 12.dp, bottom = 12.dp)
+                        .wrapContentWidth()
                         .clickable { onClickBack() },
                     contentDescription = "back button icon",
                     tint = color
@@ -93,7 +97,7 @@ fun TopBar(
             Text(
                 text = title,
                 style = AppTheme.typography.subtitle1,
-                color = color
+                color = color,
             )
         },
         backgroundColor = AppTheme.colors.background,
@@ -116,7 +120,7 @@ fun TopBarWithDropDown(
                 text = title,
                 style = style,
                 color = color,
-                modifier = Modifier.padding(start = 24.dp)
+                modifier = Modifier.padding(start = 10.dp)
             )
         },
         elevation = 0.dp,
@@ -128,7 +132,7 @@ fun TopBarWithDropDown(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "open dropdown",
                     tint = color,
-                    modifier = Modifier.padding(end = 32.dp)
+                    modifier = Modifier.padding(end = 10.dp)
                 )
             }
             DropdownMenu(
@@ -175,21 +179,21 @@ data class DropdownMenuItemData(val text: String, val icon: ImageVector, val onC
 @Preview(showBackground = true)
 @Composable
 fun ConsentTopBarPreview() {
-    TopBar()
+    TopBar("Hello")
 }
 
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun ConsentTopBarPreview2() {
-    TopBar(onClickBack = null, onClickAction = nothing)
+    TopBar("Hello", onClickBack = null, onClickAction = nothing)
 }
 
 @PreviewGenerated
 @Preview(showBackground = true)
 @Composable
 fun ConsentTopBarPreview3() {
-    TopBar(onClickBack = nothing)
+    TopBar("Hello", onClickBack = nothing)
 }
 
 private val nothing: () -> Unit = { }
