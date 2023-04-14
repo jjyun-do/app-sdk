@@ -13,7 +13,7 @@
 
     <application
         android:name=".ResearchApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:usesCleartextTraffic="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"

@@ -23,6 +23,11 @@ enum class HealthInsightType(
     val week: @Composable () -> Unit,
     val all: @Composable () -> Unit,
 ) {
+    EXERCISE(
+        "Exercise",
+        {},
+        {}, {}
+    ),
 
     STEP_COUNT(
         "Step Count",
@@ -60,7 +65,7 @@ enum class HealthInsightType(
                     )
                 }
                 Spacer(Modifier.height(16.dp))
-                InsightCardWithProgress("Target Goal", 7, 7, "days")
+                InsightCardWithProgress("Target Goal", 64984, 42000, "steps")
                 Spacer(Modifier.height(16.dp))
                 ThinInsightCard("Stairs", InsightUnit("32", "floors"))
                 Spacer(Modifier.height(5.dp))
@@ -80,7 +85,7 @@ enum class HealthInsightType(
                     )
                 }
                 Spacer(Modifier.height(16.dp))
-                InsightCardWithProgress("Target Goal", 7, 7, "days")
+                InsightCardWithProgress("Target Goal", 526175, 504000, "steps")
                 Spacer(Modifier.height(16.dp))
                 ThinInsightCard("Stairs", InsightUnit("75", "floors"))
                 Spacer(Modifier.height(5.dp))

@@ -7,8 +7,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import healthstack.kit.annotation.PreviewGenerated
 import healthstack.kit.theme.AppTheme
 
 @Composable
@@ -35,3 +37,9 @@ fun RoundButton(
         onClick
     )
 }
+
+@Preview(showBackground = true)
+@PreviewGenerated
+@Composable
+fun RoundButtonPreview() =
+    RoundButton("Text") {}

@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.time.LocalDate
 import java.time.LocalDateTime
 import healthstack.kit.task.base.Task as ViewTask
@@ -29,12 +30,14 @@ class TaskRepositoryImpl : TaskRepository {
                 task.startedAt.toString(),
                 LocalDateTime.now().toString()
             )
+
             is ActivityTask -> taskDao.setResult(
                 task.id,
-                listOf(Result("activity", task.result.toString().replace("=", ":"))),
+                listOf(Result("activity", JSONObject(task.result as Map<*, *>).toString().replace("=", ":"))),
                 task.startedAt.toString(),
                 LocalDateTime.now().toString()
             )
+
             else -> taskDao.setSubmittedAt(task.id, LocalDateTime.now().toString())
         }
 

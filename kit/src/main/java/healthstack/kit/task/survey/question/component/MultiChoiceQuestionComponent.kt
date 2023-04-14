@@ -46,12 +46,10 @@ class MultiChoiceQuestionComponent<T : MultiChoiceQuestionModel> : QuestionCompo
                         onCheckedChange = { checked ->
                             checkedState.value = checked
                             if (checked) multiChoiceQuestionModel.select(index)
+                            else multiChoiceQuestionModel.deselect(index)
                         },
                         labelText = candidate
                     )
-                }
-                if (index != multiChoiceQuestionModel.candidates.lastIndex) {
-                    Spacer(modifier = Modifier.height(24.dp))
                 }
             }
         }

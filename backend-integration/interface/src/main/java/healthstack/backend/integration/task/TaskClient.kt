@@ -1,5 +1,6 @@
 package healthstack.backend.integration.task
 
+import java.time.Clock
 import java.time.LocalDateTime
 
 /**
@@ -17,7 +18,7 @@ interface TaskClient {
     suspend fun getTasks(
         idToken: String,
         lastSyncTime: LocalDateTime,
-        endTime: LocalDateTime = LocalDateTime.now(),
+        endTime: LocalDateTime = LocalDateTime.now(Clock.systemUTC()),
     ): List<TaskSpec>
 
     /**

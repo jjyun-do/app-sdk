@@ -2,6 +2,7 @@ package healthstack.kit.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -42,18 +43,21 @@ fun InsightCardWithProgress(
     current: Int,
     total: Int,
     unit: String,
-    onClick: () -> Unit = { },
+    onClick: (() -> Unit)? = null,
 ) {
-    val progress = (current.toFloat() / total)
+    val progress = minOf(current.toFloat() / total, 1F)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .clickable {
-                onClick()
+            .let {
+                if (onClick != null)
+                    return@let it.clickable { onClick() }
+                it
             },
         shape = RoundedCornerShape(4.dp),
-        elevation = 1.dp
+        elevation = if (onClick != null) 1.dp else 0.dp
     ) {
         Row(
             modifier = Modifier
@@ -88,13 +92,22 @@ fun InsightCardWithProgress(
                     .wrapContentSize(),
                 verticalArrangement = Arrangement.Center
             ) {
-                LinearProgressIndicator(
-                    progress = progress,
-                    color = AppTheme.colors.success,
-                    backgroundColor = AppTheme.colors.onBackground.copy(0.06F),
-                    modifier = Modifier.height(24.dp).width(200.dp)
-                        .clip(RoundedCornerShape(50.dp))
-                )
+                Box(
+                    contentAlignment = Alignment.Center
+                ) {
+                    LinearProgressIndicator(
+                        progress = progress,
+                        color = AppTheme.colors.success,
+                        backgroundColor = AppTheme.colors.onBackground.copy(0.06F),
+                        modifier = Modifier.height(24.dp).width(128.dp)
+                            .clip(RoundedCornerShape(50.dp))
+                    )
+                    Text(
+                        text = "${(progress * 100).toInt()} %",
+                        style = AppTheme.typography.overline2,
+                        color = AppTheme.colors.onPrimary
+                    )
+                }
             }
         }
     }
@@ -176,11 +189,11 @@ fun InsightCard(
             Row {
                 Text(
                     text = "Last Updated: ${
-                    lastUpdatedTime.format(
-                        DateTimeFormatter.ofLocalizedDateTime(
-                            FormatStyle.SHORT
+                        lastUpdatedTime.format(
+                            DateTimeFormatter.ofLocalizedDateTime(
+                                FormatStyle.SHORT
+                            )
                         )
-                    )
                     }",
                     style = AppTheme.typography.body3,
                     color = AppTheme.colors.onBackground.copy(0.6F)

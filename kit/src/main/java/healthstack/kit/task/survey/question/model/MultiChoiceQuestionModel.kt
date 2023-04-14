@@ -23,6 +23,11 @@ open class MultiChoiceQuestionModel(
         selections.add(index)
     }
 
+    fun deselect(index: Int) {
+        require(0 <= index && index < candidates.size)
+        selections.remove(index)
+    }
+
     fun isSelected(index: Int) = selections.contains(index)
 
     override fun getResponse(): String = selections.sorted().map { candidates[it] }.joinToString(", ")

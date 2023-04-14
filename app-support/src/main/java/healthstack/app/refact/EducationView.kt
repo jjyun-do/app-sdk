@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.InsertChart
 import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,39 +23,30 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import healthstack.app.R
 import healthstack.app.pref.AppStage
 import healthstack.app.pref.AppStage.Education
 import healthstack.app.pref.AppStage.Home
 import healthstack.app.pref.AppStage.Insights
-import healthstack.app.refact.HealthInsightType.BLOOD_PRESSURE
-import healthstack.app.refact.HealthInsightType.EXERCISE
-import healthstack.app.refact.HealthInsightType.HEART_RATE
-import healthstack.app.refact.HealthInsightType.RESPIRATORY_RATE
-import healthstack.app.refact.HealthInsightType.SLEEP
-import healthstack.app.refact.HealthInsightType.STEP_COUNT
-import healthstack.app.refact.HealthInsightType.STRESS_LEVEL
 import healthstack.kit.theme.AppTheme
 import healthstack.kit.ui.BottomBarNavigation
 import healthstack.kit.ui.BottomNavItem
-import healthstack.kit.ui.InsightCard
-import healthstack.kit.ui.InsightUnit
-import java.time.LocalDateTime
 
-class HealthInsightView(
-    val title: String = "Health Insights",
+class EducationView(
+    val title: String = "Education",
     val changeNavigation: (AppStage) -> Unit,
 ) {
 
     @Composable
     fun Render() {
-        var selectedHealth by remember {
-            mutableStateOf<HealthInsightType?>(null)
+        var selectedArticle by remember {
+            mutableStateOf<Int?>(null)
         }
 
         Scaffold(
             drawerElevation = 0.dp,
             topBar = {
-                if (selectedHealth == null)
+                if (selectedArticle == null)
                     TopAppBar(
                         title = {
                             Text(
@@ -69,7 +61,7 @@ class HealthInsightView(
                     )
             },
             bottomBar = {
-                if (selectedHealth == null)
+                if (selectedArticle == null)
                     BottomBarNavigation(
                         listOf(
                             BottomNavItem("Home", Icons.Default.Home) {
@@ -82,15 +74,16 @@ class HealthInsightView(
                                 changeNavigation(Education)
                             }
                         ),
-                        1
+                        2
                     )
             },
             modifier = Modifier
                 .fillMaxWidth(),
             backgroundColor = AppTheme.colors.background
         ) {
-            if (selectedHealth == null) {
+            if (selectedArticle == null) {
                 val scrollState = rememberScrollState()
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -98,42 +91,41 @@ class HealthInsightView(
                         .padding(horizontal = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Spacer(Modifier.padding(6.dp))
-                    InsightCard("Exercise", LocalDateTime.now().minusHours(1L)) {
-                        selectedHealth = EXERCISE
+                    Spacer(Modifier.height(24.dp))
+                    EducationCard(
+                        "Heart Health",
+                        "How to Take an ECG",
+                        "5:35 min",
+                        R.drawable.thum_1,
+                    ) {
+                        selectedArticle = 1
                     }
-                    Spacer(Modifier.height(24.dp))
-                    InsightCard(
-                        "Step Count", LocalDateTime.now().minusHours(1L), listOf(InsightUnit("1325", "steps"))
-                    ) { selectedHealth = STEP_COUNT }
-                    Spacer(Modifier.height(24.dp))
-                    InsightCard(
-                        "Blood Pressure", LocalDateTime.now().minusHours(1L), listOf(InsightUnit("120", "mmHg"))
-                    ) { selectedHealth = BLOOD_PRESSURE }
-                    Spacer(Modifier.height(24.dp))
-                    InsightCard(
-                        "Heart Rate", LocalDateTime.now().minusHours(1L), listOf(InsightUnit("78", "bpm"))
-                    ) { selectedHealth = HEART_RATE }
-                    Spacer(Modifier.height(24.dp))
-                    InsightCard(
-                        "Respiratory Rate", LocalDateTime.now().minusHours(1L), listOf(InsightUnit("14.5", "bpm"))
-                    ) { selectedHealth = RESPIRATORY_RATE }
-                    Spacer(Modifier.height(24.dp))
-                    InsightCard(
-                        "Sleep", LocalDateTime.now().minusHours(1L),
-                        listOf(
-                            InsightUnit("7", "hours"),
-                            InsightUnit("24", "minutes")
-                        )
-                    ) { selectedHealth = SLEEP }
-                    Spacer(Modifier.height(24.dp))
-                    InsightCard(
-                        "Stress Level", LocalDateTime.now().minusHours(1L),
-                        listOf(
-                            InsightUnit(value = "High", color = AppTheme.colors.errorVariant)
-                        )
-                    ) { selectedHealth = STRESS_LEVEL }
-                    Spacer(Modifier.height(65.dp))
+                    Spacer(Modifier.height(8.dp))
+                    EducationCard(
+                        "Heart Health",
+                        "Heart Stroke Prevention",
+                        "10 min read",
+                        R.drawable.thum_2,
+                    ) {
+                        selectedArticle = 2
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    EducationCard(
+                        "Heart Health",
+                        "How to Prevent a Heart Stroke? Expert Tips and Tricks",
+                        "10 min read",
+                        R.drawable.thum_3,
+                    ) {
+                        selectedArticle = 3
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    EducationCardWithIcon(
+                        "Heart Health",
+                        "Heart Stroke Prevention",
+                        "10 min read",
+                        Icons.Default.PictureAsPdf
+                    )
+                    Spacer(Modifier.height(8.dp))
                 }
             } else {
                 Column(
@@ -142,18 +134,26 @@ class HealthInsightView(
                         .padding(horizontal = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    selectedHealth?.let {
-                        if (it != EXERCISE)
-                            HealthDetailView(it, changeNavigation) {
-                                selectedHealth = null
-                            }.Render()
-                        else
-                            ExerciseView(
-                                it.title,
-                                changeNavigation
-                            ) {
-                                selectedHealth = null
-                            }.Render()
+                    selectedArticle?.let {
+                        when (it) {
+                            1 -> {
+                                FirstEducation(changeNavigation) {
+                                    selectedArticle = null
+                                }.Render()
+                            }
+
+                            2 -> {
+                                SecondEducation(changeNavigation) {
+                                    selectedArticle = null
+                                }.Render()
+                            }
+
+                            3 -> {
+                                ThirdEducation(changeNavigation) {
+                                    selectedArticle = null
+                                }.Render()
+                            }
+                        }
                     }
                 }
             }

@@ -53,7 +53,7 @@ fun TaskCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .shadow(elevation = 2.dp, shape = shape, clip = false),
+                .shadow(elevation = 1.dp, shape = shape, clip = false),
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -114,8 +114,7 @@ fun TaskCard(
             backgroundColor = AppTheme.colors.surface,
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .shadow(elevation = 2.dp, shape = shape, clip = false),
+                .wrapContentHeight(),
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -179,7 +178,7 @@ fun TaskCardCompletedPreview() =
     )
 
 @PreviewGenerated
-@Preview(showBackground = true)
+@Preview(showBackground = true, heightDp = 400)
 @Composable
 fun TaskCardCompleted1Preview() =
     TaskCard(
